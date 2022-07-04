@@ -65,7 +65,10 @@ class Neon < Formula
   end
 
   def post_install
-    system bin/"neon_local", "init" unless (var/"neon").exist?
+    unless (var/"neon").exist?
+      system bin/"neon_local", "init"
+      inreplace %W[#{var}/neon/config #{var}/neon/pageserver.toml], libexec, opt_libexec
+    end
   end
 
   test do
