@@ -5,6 +5,7 @@ class Neon < Formula
     revision: "65704708fa922b524d3ab75995c39afc5c4f562e"
   version "20220703"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220703"
