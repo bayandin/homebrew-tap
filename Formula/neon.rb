@@ -6,6 +6,12 @@ class Neon < Formula
   version "20220703"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220703"
+    sha256 big_sur:      "ba783bd2e1da0596cb99e14f42cfa5d85b52bf0471f0aa00873f3030dd363a43"
+    sha256 x86_64_linux: "d849990cd3745785ce4f9e772e4668fbd53325debb5ac1eb5150458d8c40e2b6"
+  end
+
   depends_on "rust" => :build
   depends_on "libpq" => :test
   depends_on "etcd"
