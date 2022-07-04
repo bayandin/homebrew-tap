@@ -8,9 +8,11 @@ class Neon < Formula
   revision 1
 
   bottle do
-    root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220703"
-    sha256 big_sur:      "ba783bd2e1da0596cb99e14f42cfa5d85b52bf0471f0aa00873f3030dd363a43"
-    sha256 x86_64_linux: "d849990cd3745785ce4f9e772e4668fbd53325debb5ac1eb5150458d8c40e2b6"
+    root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220703_1"
+    sha256 monterey:     "c4e7efcaca3a40bc8ec855c3f043b5cb13fd65693fcf8d89444d46c8db0fe7bd"
+    sha256 big_sur:      "4feaccfce104f9bd8e46f4d54fe06ba3c2c791af4483a89275e4fd87df6d4db4"
+    sha256 catalina:     "7e9c05b9de85303ce5384c8a93d6995bf903896154a771c775cc643f5097bae8"
+    sha256 x86_64_linux: "06c5da39f8993c617c5ce319dd13678d58cfdf460264cb8da5671b1a8b67000c"
   end
 
   depends_on "rust" => :build
