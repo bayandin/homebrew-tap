@@ -2,14 +2,13 @@ class Neon < Formula
   desc "Serverless open source alternative to AWS Aurora Postgres"
   homepage "https://neon.tech"
   url "https://github.com/neondatabase/neon.git",
-    revision: "65704708fa922b524d3ab75995c39afc5c4f562e"
-  version "20220703"
+    revision: "50821c0a3cf1328e44c3023ae0ea17d835235c6a"
+  version "20220705"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220703_1"
+    root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220705_1"
     sha256 monterey:     "c4e7efcaca3a40bc8ec855c3f043b5cb13fd65693fcf8d89444d46c8db0fe7bd"
     sha256 big_sur:      "4feaccfce104f9bd8e46f4d54fe06ba3c2c791af4483a89275e4fd87df6d4db4"
     sha256 catalina:     "7e9c05b9de85303ce5384c8a93d6995bf903896154a771c775cc643f5097bae8"
