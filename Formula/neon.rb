@@ -6,6 +6,7 @@ class Neon < Formula
   version "20220703"
   license "Apache-2.0"
   revision 1
+  head "https://github.com/neondatabase/neon.git", branch: "main"
 
   bottle do
     root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220703_1"
