@@ -8,11 +8,11 @@ class Neon < Formula
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220703_1"
-    sha256 monterey:     "c4e7efcaca3a40bc8ec855c3f043b5cb13fd65693fcf8d89444d46c8db0fe7bd"
-    sha256 big_sur:      "4feaccfce104f9bd8e46f4d54fe06ba3c2c791af4483a89275e4fd87df6d4db4"
-    sha256 catalina:     "7e9c05b9de85303ce5384c8a93d6995bf903896154a771c775cc643f5097bae8"
-    sha256 x86_64_linux: "06c5da39f8993c617c5ce319dd13678d58cfdf460264cb8da5671b1a8b67000c"
+    root_url "https://github.com/bayandin/homebrew-tap/releases/download/neon-20220708"
+    sha256 monterey:     "1968af8899e6a19e694ecc4eab22306cf07212e8b9d9f3edcf3a8ffdb53ff71a"
+    sha256 big_sur:      "fbcbf83112aa0096414648410c03a331a1791338431f81d6857e0ef93dabd80b"
+    sha256 catalina:     "a9b84f84d11fda299bc3c6c3d1e132a663715303cb68ac8d87852c5e138279b4"
+    sha256 x86_64_linux: "b36bc045de192744ca928c68016bcfeaa948f1fd764a0c2680bb9d7bf65e48cb"
   end
 
   depends_on "rust" => :build
