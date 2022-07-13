@@ -13,6 +13,8 @@ jobs:
 
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
+        with:
+          username: T3-M4
 
       - name: Pull bottles
         env:
