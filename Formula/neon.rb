@@ -2,8 +2,8 @@ class Neon < Formula
   desc "Serverless open source alternative to AWS Aurora Postgres"
   homepage "https://neon.tech"
   url "https://github.com/neondatabase/neon.git",
-    revision: "00c26ff3a3bebcc4f757ee6b475d61e29acf6dbd"
-  version "20220708"
+    revision: "f8a64512df619cd8f73d937a93640d102271312d"
+  version "20220713"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
