@@ -2,8 +2,8 @@ class Neon < Formula
   desc "Serverless open source alternative to AWS Aurora Postgres"
   homepage "https://neon.tech"
   url "https://github.com/neondatabase/neon.git",
-    revision: "00c26ff3a3bebcc4f757ee6b475d61e29acf6dbd"
-  version "20220708"
+    revision: "39c59b8df5069efb9364280cf64b8f9ecf4241b3"
+  version "20220723"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -29,18 +29,12 @@ class Neon < Formula
     depends_on "libseccomp"
   end
 
-  # Make Postgres directory configurable
-  patch :DATA
-
   def install
     pg_distrib_dir = libexec/"postgres"
-    env = { POSTGRES_DISTRIB_DIR: pg_distrib_dir }
 
-    inreplace "libs/postgres_ffi/build.rs", ".clang_arg(\"-I../../tmp_install",
-                                            ".clang_arg(\"-I#{pg_distrib_dir}"
-
-    with_env(env.merge(BUILD_TYPE: "release")) do
-      system "make"
+    with_env(POSTGRES_INSTALL_DIR: pg_distrib_dir, BUILD_TYPE: "release") do
+      system "make", "postgres"
+      system "make", "zenith"
     end
 
     %w[
@@ -49,13 +43,14 @@ class Neon < Formula
       proxy
       compute_ctl
       neon_local
-      wal_generate
+      wal_craft
       pageserver
       update_metadata
     ].each { |f| bin.install "target/release/#{f}" }
-    bin.env_script_all_files libexec/"bin", env.merge(NEON_REPO_DIR: "${NEON_REPO_DIR:-#{var}/neon}")
+    bin.env_script_all_files libexec/"bin", POSTGRES_DISTRIB_DIR: pg_distrib_dir,
+                                            NEON_REPO_DIR:        "${NEON_REPO_DIR:-#{var}/neon}"
 
-    (pg_distrib_dir/"build").rmtree
+    (pg_distrib_dir/"build").rmtree # Remove after https://github.com/neondatabase/neon/pull/2127
 
     if OS.linux?
       inreplace pg_distrib_dir/"lib/pgxs/src/Makefile.global",
@@ -114,88 +109,3 @@ class Neon < Formula
     system bin/"neon_local", "stop"
   end
 end
-
-__END__
-diff --git a/Makefile b/Makefile
-index 50e2c8ab..fbed514b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1,3 +1,6 @@
-+POSTGRES_DISTRIB_DIR ?= tmp_install
-+PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-+
- # Seccomp BPF is only available for Linux
- UNAME_S := $(shell uname -s)
- ifeq ($(UNAME_S),Linux)
-@@ -55,55 +58,55 @@ zenith: postgres-headers
- 	$(CARGO_CMD_PREFIX) cargo build $(CARGO_BUILD_FLAGS)
-
- ### PostgreSQL parts
--tmp_install/build/config.status:
-+$(POSTGRES_DISTRIB_DIR)/build/config.status:
- 	+@echo "Configuring postgres build"
--	mkdir -p tmp_install/build
--	(cd tmp_install/build && \
--	../../vendor/postgres/configure CFLAGS='$(PG_CFLAGS)' \
-+	mkdir -p $(POSTGRES_DISTRIB_DIR)/build
-+	(cd $(POSTGRES_DISTRIB_DIR)/build && \
-+	$(PROJECT_DIR)/vendor/postgres/configure CFLAGS='$(PG_CFLAGS)' \
- 		$(PG_CONFIGURE_OPTS) \
- 		$(SECCOMP) \
--		--prefix=$(abspath tmp_install) > configure.log)
-+		--prefix=$(abspath $(POSTGRES_DISTRIB_DIR)) > configure.log)
-
- # nicer alias for running 'configure'
- .PHONY: postgres-configure
--postgres-configure: tmp_install/build/config.status
-+postgres-configure: $(POSTGRES_DISTRIB_DIR)/build/config.status
-
--# Install the PostgreSQL header files into tmp_install/include
-+# Install the PostgreSQL header files into $(POSTGRES_DISTRIB_DIR)/include
- .PHONY: postgres-headers
- postgres-headers: postgres-configure
- 	+@echo "Installing PostgreSQL headers"
--	$(MAKE) -C tmp_install/build/src/include MAKELEVEL=0 install
-+	$(MAKE) -C $(POSTGRES_DISTRIB_DIR)/build/src/include MAKELEVEL=0 install
-
- # Compile and install PostgreSQL and contrib/neon
- .PHONY: postgres
- postgres: postgres-configure \
- 		  postgres-headers # to prevent `make install` conflicts with zenith's `postgres-headers`
- 	+@echo "Compiling PostgreSQL"
--	$(MAKE) -C tmp_install/build MAKELEVEL=0 install
-+	$(MAKE) -C $(POSTGRES_DISTRIB_DIR)/build MAKELEVEL=0 install
- 	+@echo "Compiling contrib/neon"
--	$(MAKE) -C tmp_install/build/contrib/neon install
-+	$(MAKE) -C $(POSTGRES_DISTRIB_DIR)/build/contrib/neon install
- 	+@echo "Compiling contrib/neon_test_utils"
--	$(MAKE) -C tmp_install/build/contrib/neon_test_utils install
-+	$(MAKE) -C $(POSTGRES_DISTRIB_DIR)/build/contrib/neon_test_utils install
- 	+@echo "Compiling pg_buffercache"
--	$(MAKE) -C tmp_install/build/contrib/pg_buffercache install
-+	$(MAKE) -C $(POSTGRES_DISTRIB_DIR)/build/contrib/pg_buffercache install
- 	+@echo "Compiling pageinspect"
--	$(MAKE) -C tmp_install/build/contrib/pageinspect install
-+	$(MAKE) -C $(POSTGRES_DISTRIB_DIR)/build/contrib/pageinspect install
-
-
- .PHONY: postgres-clean
- postgres-clean:
--	$(MAKE) -C tmp_install/build MAKELEVEL=0 clean
-+	$(MAKE) -C $(POSTGRES_DISTRIB_DIR)/build MAKELEVEL=0 clean
-
- # This doesn't remove the effects of 'configure'.
- .PHONY: clean
- clean:
--	cd tmp_install/build && $(MAKE) clean
-+	cd $(POSTGRES_DISTRIB_DIR)/build && $(MAKE) clean
- 	$(CARGO_CMD_PREFIX) cargo clean
-
- # This removes everything
- .PHONY: distclean
- distclean:
--	rm -rf tmp_install
-+	rm -rf $(POSTGRES_DISTRIB_DIR)
- 	$(CARGO_CMD_PREFIX) cargo clean
-
- .PHONY: fmt
