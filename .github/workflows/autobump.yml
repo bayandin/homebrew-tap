@@ -19,7 +19,6 @@ jobs:
       REVISION: ${{ github.event.inputs.revision }}
       VERSION: ${{ github.event.inputs.version }}
       HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
-      HOMEBREW_NO_INSTALL_FROM_API: 1
 
     steps:
       - name: Set up Homebrew
@@ -46,6 +45,7 @@ jobs:
 
           git -C "$(brew --repo bayandin/tap)" remote set-url --push origin "https://T3-M4:${HOMEBREW_GITHUB_API_TOKEN}@github.com/bayandin/homebrew-tap.git"
 
+          brew tap homebrew/core
           brew bump-formula-pr \
             --version="${version}" \
             --revision="${revision}" \
