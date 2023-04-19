@@ -1,0 +1,55 @@
+name: brew bump-formula-pr
+on:
+  schedule:
+    # At 08:30 on Friday
+    - cron: '30 8 * * 5'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Set Neon version"
+        required: false
+      revision:
+        description: "Set Neon revision"
+        required: false
+jobs:
+  bump-formula-pr:
+    runs-on: ubuntu-latest
+
+    env:
+      REVISION: ${{ github.event.inputs.revision }}
+      VERSION: ${{ github.event.inputs.version }}
+      HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
+      HOMEBREW_NO_INSTALL_FROM_API: 1
+
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Set up git
+        uses: Homebrew/actions/git-user-config@master
+        with:
+          username: ${{ (github.event_name == 'workflow_dispatch' && github.actor) || 'T3-M4' }}
+
+      - name: brew bump-formula-pr
+        run: |
+          if [ -z "${VERSION}" ]; then
+            version=$(date +%Y%m%d)
+          else
+            version=${VERSION}
+          fi
+
+          if [ -z "${REVISION}" ]; then
+            revision=$(git ls-remote https://github.com/neondatabase/neon.git HEAD | awk '{ print $1 }')
+          else
+            revision=${REVISION}
+          fi
+
+          git -C "$(brew --repo bayandin/tap)" remote set-url --push origin "https://T3-M4:${HOMEBREW_GITHUB_API_TOKEN}@github.com/bayandin/homebrew-tap.git"
+
+          brew bump-formula-pr \
+            --version="${version}" \
+            --revision="${revision}" \
+            --strict \
+            --no-browse \
+            --no-fork \
+            bayandin/tap/neon-postgres
