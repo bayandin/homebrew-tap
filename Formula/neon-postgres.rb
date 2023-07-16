@@ -1,11 +1,11 @@
 class NeonPostgres < Formula
-  desc "Serverless Postgres"
-  homepage "https://neon.tech"
+  desc "Neon's fork of PostgreSQL"
+  homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
     tag:      "release-3509",
     revision: "33360ed96d2583c342d903b03c745f50fc258664"
   license "Apache-2.0"
-  head "https://github.com/neondatabase/neon.git", branch: "main"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -13,113 +13,87 @@ class NeonPostgres < Formula
     sha256 x86_64_linux: "78c06baf3a123c39293a16166b76889776788f6c24d00b45124b275c01b7ff7d"
   end
 
-  depends_on "bison" => :build
-  depends_on "flex" => :build
-  depends_on "rust" => :build
-  depends_on "libpq" => :test
+  depends_on "docbook" => :build
+  depends_on "docbook-xsl" => :build
+  depends_on "pkg-config" => :build
+  depends_on "icu4c"
+  depends_on "lz4"
   depends_on "openssl@3"
-  depends_on "protobuf"
   depends_on "readline"
-  uses_from_macos "llvm" => :build
+  depends_on "zstd"
+
   uses_from_macos "curl"
+  uses_from_macos "libxml2"
+  uses_from_macos "libxslt"
 
   on_linux do
     depends_on "libseccomp"
   end
 
-  def install
-    pg_install_dir = libexec/"postgres"
+  def pg_versions
+    %w[v14 v15]
+  end
 
-    ENV["POSTGRES_INSTALL_DIR"] = pg_install_dir
-    ENV["BUILD_TYPE"] = "release"
-    ENV["OPENSSL_PREFIX"] = Formula["openssl@3"].opt_prefix
+  def install
+    ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
+
+    ENV.prepend "LDFLAGS", "-L#{Formula["openssl@3"].opt_lib} -L#{Formula["readline"].opt_lib}"
+    ENV.prepend "CPPFLAGS", "-I#{Formula["openssl@3"].opt_include} -I#{Formula["readline"].opt_include}"
 
     if OS.linux?
       ENV.prepend "LDFLAGS", "-L#{Formula["curl"].opt_lib}"
       ENV.prepend "CPPFLAGS", "-I#{Formula["curl"].opt_include}"
     end
 
-    system "make", "postgres"
-    system "make", "neon-pg-ext"
-    system "make", "neon"
+    pg_versions.each do |v|
+      cd "vendor/postgres-#{v}" do
+        args = %W[
+          --prefix=#{libexec}/#{v}
+          --datadir=#{HOMEBREW_PREFIX}/share/#{name}/#{v}
+          --libdir=#{HOMEBREW_PREFIX}/lib/#{name}/#{v}
+          --includedir=#{HOMEBREW_PREFIX}/include/#{name}/#{v}
+          --enable-debug
+          --with-icu
+          --with-libxml
+          --with-libxslt
+          --with-lz4
+          --with-ssl=openssl
+          --with-uuid=e2fs
+        ]
+        args << "--with-zstd" if v != "v14"
+        args << "PG_SYSROOT=#{MacOS.sdk_path}" if MacOS.sdk_root_needed?
 
-    %w[
-      compute_ctl
-      neon_local
-      pagectl
-      pageserver
-      pg_sni_router
-      proxy
-      safekeeper
-      storage_broker
-      trace
-      wal_craft
-    ].each { |f| bin.install "target/release/#{f}" }
-    bin.env_script_all_files libexec/"bin", POSTGRES_DISTRIB_DIR: pg_install_dir,
-                                            NEON_REPO_DIR:        "${NEON_REPO_DIR:-#{var}/neon}"
-
-    (pg_install_dir/"build").rmtree
-
-    if OS.linux?
-      %w[v14 v15].each do |v|
-        inreplace pg_install_dir/v/"lib/pgxs/src/Makefile.global",
-                  "LD = #{HOMEBREW_PREFIX}/Homebrew/Library/Homebrew/shims/linux/super/ld",
-                  "LD = #{HOMEBREW_PREFIX}/bin/ld"
+        system "./configure", *args
+        system "make"
+        system "make", "install-world", "datadir=#{pkgshare}/#{v}",
+                                        "includedir_internal=#{include/name/v}/internal",
+                                        "includedir_server=#{include/name/v}/server",
+                                        "includedir=#{include/name/v}",
+                                        "libdir=#{lib/name/v}",
+                                        "pkgincludedir=#{include/name/v}",
+                                        "pkglibdir=#{lib/name/v}"
       end
-    end
-  end
 
-  def post_install
-    unless (var/"neon").exist?
-      system bin/"neon_local", "init"
-      inreplace %W[#{var}/neon/config #{var}/neon/pageserver.toml], libexec, opt_libexec
+      ln_s lib/name/v, libexec/v/"lib"
+      ln_s include/name/v, libexec/v/"include"
+      ln_s include/name/v/"server", libexec/v/"include/server"
+
+      next unless OS.linux?
+
+      inreplace libexec/v/"lib/pgxs/src/Makefile.global",
+                "LD = #{HOMEBREW_PREFIX}/Homebrew/Library/Homebrew/shims/linux/super/ld",
+                "LD = #{HOMEBREW_PREFIX}/bin/ld"
     end
   end
 
   test do
-    neon_repo_dir = testpath/"neon"
-    ENV["NEON_REPO_DIR"] = neon_repo_dir
-    ENV.prepend_path "PATH", Formula["openssl@3"].opt_bin
+    pg_versions.each do |v|
+      pg_config = libexec/v/"bin/pg_config"
 
-    system bin/"neon_local", "init"
-
-    sk_http_port = free_port
-    sk_pg_port = free_port
-    ps_http_port = free_port
-    ps_pg_port = free_port
-    broker_port = free_port
-
-    inreplace neon_repo_dir/"config" do |s|
-      s.gsub! "http_port = 7676", "http_port = #{sk_http_port}"
-      s.gsub! "pg_port = 5454", "pg_port = #{sk_pg_port}"
-      s.gsub! "listen_http_addr = \"127.0.0.1:9898\"", "listen_http_addr = \"127.0.0.1:#{ps_http_port}\""
-      s.gsub! "listen_pg_addr = \"127.0.0.1:64000\"", "listen_pg_addr = \"127.0.0.1:#{ps_pg_port}\""
-      s.gsub! "listen_addr = \"127.0.0.1:50051\"", "listen_addr = \"127.0.0.1:#{broker_port}\""
+      assert_equal "#{HOMEBREW_PREFIX}/share/#{name}/#{v}", shell_output("#{pg_config} --sharedir").chomp
+      assert_equal "#{HOMEBREW_PREFIX}/lib/#{name}/#{v}", shell_output("#{pg_config} --libdir").chomp
+      assert_equal "#{HOMEBREW_PREFIX}/lib/#{name}/#{v}", shell_output("#{pg_config} --pkglibdir").chomp
+      assert_equal "#{HOMEBREW_PREFIX}/include/#{name}/#{v}", shell_output("#{pg_config} --includedir").chomp
     end
-
-    inreplace neon_repo_dir/"pageserver.toml" do |s|
-      s.gsub! "listen_http_addr ='127.0.0.1:9898'", "listen_http_addr = \"127.0.0.1:#{ps_http_port}\""
-      s.gsub! "listen_pg_addr ='127.0.0.1:64000'", "listen_pg_addr = \"127.0.0.1:#{ps_pg_port}\""
-      s.gsub! "broker_endpoint ='http://127.0.0.1:50051/'", "broker_endpoint = \"http://127.0.0.1:#{broker_port}/\""
-    end
-
-    system bin/"neon_local", "start"
-    system bin/"neon_local", "tenant", "create", "--set-default"
-    system bin/"neon_local", "endpoint", "start", "main"
-
-    test_command = %W[
-      #{Formula["libpq"].opt_bin}/psql
-      --port=55432
-      --host=127.0.0.1
-      --username=cloud_admin
-      --dbname=postgres
-      --tuples-only
-      --command="SELECT 40 + 2"
-    ].join(" ")
-
-    output = shell_output test_command
-    assert_equal "42", output.strip
-  ensure
-    system bin/"neon_local", "stop"
   end
 end
