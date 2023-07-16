@@ -4,9 +4,13 @@ on:
     branches:
       - main
   pull_request:
+concurrency:
+  group: "tests-${{ github.ref }}"
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   test-bot:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-22.04, macos-13]
     runs-on: ${{ matrix.os }}
