@@ -5,6 +5,12 @@ class NeonExtension < Formula
   sha256 "465e01f00fa60a506c32cb08446c7d1920383f01599219fc38ecbfb2201a85eb"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 ventura:      "bce41e6bda6d85699f9060d02e7af2cae5ab06d9304cbb1dac80a6ea4a86722e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "c15c102e9494a81c3ccf112f1080b5beed361db3151bf4598d3a040f0717e960"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def pg_versions
