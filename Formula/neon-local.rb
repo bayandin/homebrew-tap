@@ -5,6 +5,12 @@ class NeonLocal < Formula
   sha256 "465e01f00fa60a506c32cb08446c7d1920383f01599219fc38ecbfb2201a85eb"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, ventura:      "44110f5b5a5a45481b4804725d97c28237054c72fc65538b0018cff07915a834"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "8b9da95bba713a133ad0e8c9089014c891ef08e7921bddcaf04090fa6885ab01"
+  end
+
   depends_on "bayandin/tap/neon-extension"
   depends_on "bayandin/tap/neon-postgres"
   depends_on "bayandin/tap/neon-storage"
