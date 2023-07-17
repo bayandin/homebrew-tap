@@ -4,6 +4,7 @@ class NeonExtension < Formula
   url "https://github.com/neondatabase/neon/archive/refs/tags/release-3509.tar.gz"
   sha256 "465e01f00fa60a506c32cb08446c7d1920383f01599219fc38ecbfb2201a85eb"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
