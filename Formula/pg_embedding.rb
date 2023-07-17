@@ -5,6 +5,7 @@ class PgEmbedding < Formula
   version "0.1.0"
   sha256 "030846df723652f99a8689ce63b66fa0c23477a7fd723533ab8a6b28ab70730f"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
