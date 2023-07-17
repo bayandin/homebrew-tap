@@ -5,6 +5,12 @@ class NeonStorage < Formula
   sha256 "465e01f00fa60a506c32cb08446c7d1920383f01599219fc38ecbfb2201a85eb"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, ventura:      "988d000830436491cebc2c5ddc83d0e119f37f7582c09a42b267fb3462bc8e67"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "60e597b423956c6d7660fa0cc95c3dc9435b4ffd07a2920ded72c759603bb663"
+  end
+
   depends_on "bayandin/tap/neon-postgres" => :build
   depends_on "rust" => :build
   depends_on "openssl@3"
