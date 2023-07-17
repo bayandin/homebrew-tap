@@ -5,7 +5,7 @@ class NeonPostgres < Formula
     tag:      "release-3509",
     revision: "33360ed96d2583c342d903b03c745f50fc258664"
   license "Apache-2.0"
-  revision 1
+  revision 2
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
