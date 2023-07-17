@@ -6,6 +6,12 @@ class PgEmbedding < Formula
   sha256 "030846df723652f99a8689ce63b66fa0c23477a7fd723533ab8a6b28ab70730f"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, ventura:      "9163c2e2cb6f2b27c251bf0f330368d7cef5a5b41e4e52cde378ed018487ce9a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "ca5a71fc4fec236e8cffa60c755e59089378d889d064951befc96ce922b624ba"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def pg_versions
