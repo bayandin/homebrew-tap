@@ -5,6 +5,13 @@ class PostgresqlHll < Formula
   sha256 "9a18288e884f197196b0d29b9f178ba595b0dfc21fbf7a8699380e77fa04c1e9"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "74b3efafbb0178d04cb39df373f0659508a9c5ccfd10a4ce59c9884448ee6b3f"
+    sha256 cellar: :any_skip_relocation, ventura:       "72886da938b5751386fe27ea5b4e1bd33dc5f93dc69e7939640bda26962a51f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1e421a88e784963a930eeb77eb551f1260655a2e466989e322803e4f596e15d4"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def pg_versions
