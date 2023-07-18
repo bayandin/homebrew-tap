@@ -26,7 +26,9 @@ class PgEmbedding < Formula
 
   def install
     pg_versions.each do |v|
-      system "make", "PG_CONFIG=#{neon_postgres.opt_libexec/v}/bin/pg_config"
+      ENV["PG_CONFIG"] = neon_postgres.opt_libexec/v/"bin/pg_config"
+      system "make", "clean"
+      system "make"
 
       mkdir_p lib/neon_postgres.name/v
       mv "embedding.so", lib/neon_postgres.name/v
@@ -34,8 +36,6 @@ class PgEmbedding < Formula
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "embedding.control", share/neon_postgres.name/v/"extension"
       cp Dir["embedding--*.sql"], share/neon_postgres.name/v/"extension"
-
-      rm_f Dir["*.o"]
     end
   end
 
@@ -47,7 +47,6 @@ class PgEmbedding < Formula
 
       system pg_ctl, "initdb", "-D", testpath/"test-#{v}"
       (testpath/"test-#{v}/postgresql.conf").write <<~EOS, mode: "a+"
-
         port = #{port}
       EOS
       system pg_ctl, "start", "-D", testpath/"test-#{v}", "-l", testpath/"log-#{v}"
