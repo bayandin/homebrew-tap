@@ -1,10 +1,9 @@
 class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
-  url "https://github.com/neondatabase/neon/archive/refs/tags/release-3509.tar.gz"
-  sha256 "465e01f00fa60a506c32cb08446c7d1920383f01599219fc38ecbfb2201a85eb"
+  url "https://github.com/neondatabase/neon/archive/refs/tags/release-3568.tar.gz"
+  sha256 "bb314a6ebbe05f5d7204990a9aa32a33f924bdfde7456943a733a8765661dac8"
   license "Apache-2.0"
-  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
