@@ -1,0 +1,8 @@
+[
+    [
+        "neon-extension",
+        "neon-local",
+        "neon-postgres",
+        "neon-storage"
+    ]
+]
