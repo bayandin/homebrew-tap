@@ -5,6 +5,13 @@ class Pgvector < Formula
   sha256 "1cb70a63f8928e396474796c22a20be9f7285a8a013009deb8152445b61b72e6"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "7bd18a4d14a948e7c40e616aad696d974a2ceac330d36cfc03486ffbea2359de"
+    sha256 cellar: :any_skip_relocation, ventura:       "b8062aaab40d7a91e489be57e69466d9b7ac48362d53836475900fb64e5b6323"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5e09b6ab32b48874568ff54a0ba40258da188353b55cc324934659e25ad47595"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def pg_versions
