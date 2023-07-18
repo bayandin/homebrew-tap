@@ -5,6 +5,13 @@ class PgCron < Formula
   sha256 "6f7f0980c03f1e2a6a747060e67bf4a303ca2a50e941e2c19daeed2b44dec744"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 arm64_ventura: "b670ad612ca059a9a646cee02c222dd2414f7e82bb4fe787027e3b1163c91684"
+    sha256 cellar: :any,                 ventura:       "8bf8cdc02a691ca58787775d4bdf7907a85f2da972bb4ddb6155e00a1797cde2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e2b76979d78b29e0ebf320438c0b60cb19c0c87b6ca7eedb45f242a88b6a3151"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def pg_versions
