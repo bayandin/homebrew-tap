@@ -1,11 +1,10 @@
 class PgEmbedding < Formula
   desc "HNSW algorithm for vector similarity search in PostgreSQL"
   homepage "https://github.com/neondatabase/pg_embedding"
-  url "https://github.com/neondatabase/pg_embedding/archive/eeb3ba7c3a60c95b2604dd543c64b2f1bb4a3703.tar.gz"
-  version "0.1.0"
-  sha256 "030846df723652f99a8689ce63b66fa0c23477a7fd723533ab8a6b28ab70730f"
+  url "https://github.com/neondatabase/pg_embedding/archive/10b7060e8e42e6cf3395362ccefd9cf97ee05dd8.tar.gz"
+  version "0.2.0"
+  sha256 "f543fc03c0a679960e20a0907ca66ea306ecd2d7a040ea323b7bdbdef206928e"
   license "Apache-2.0"
-  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -26,6 +25,8 @@ class PgEmbedding < Formula
   end
 
   def install
+    inreplace "Makefile", "EXTVERSION = 0.1.0", "EXTVERSION = 0.2.0"
+
     pg_versions.each do |v|
       ENV["PG_CONFIG"] = neon_postgres.opt_libexec/v/"bin/pg_config"
       system "make", "clean"
