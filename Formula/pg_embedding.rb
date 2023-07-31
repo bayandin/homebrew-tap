@@ -1,9 +1,8 @@
 class PgEmbedding < Formula
   desc "HNSW algorithm for vector similarity search in PostgreSQL"
   homepage "https://github.com/neondatabase/pg_embedding"
-  url "https://github.com/neondatabase/pg_embedding/archive/10b7060e8e42e6cf3395362ccefd9cf97ee05dd8.tar.gz"
-  version "0.2.0"
-  sha256 "f543fc03c0a679960e20a0907ca66ea306ecd2d7a040ea323b7bdbdef206928e"
+  url "https://github.com/neondatabase/pg_embedding/archive/refs/tags/0.3.1.tar.gz"
+  sha256 "c4ae84eef36fa8ec5868f6e061f39812f19ee5ba3604d428d40935685c7be512"
   license "Apache-2.0"
 
   bottle do
@@ -24,8 +23,6 @@ class PgEmbedding < Formula
   end
 
   def install
-    inreplace "Makefile", "EXTVERSION = 0.1.0", "EXTVERSION = 0.2.0"
-
     pg_versions.each do |v|
       ENV["PG_CONFIG"] = neon_postgres.opt_libexec/v/"bin/pg_config"
       system "make", "clean"
@@ -56,7 +53,7 @@ class PgEmbedding < Formula
           CREATE EXTENSION embedding;
           CREATE TABLE documents(id INTEGER, embedding REAL[]);
           INSERT INTO documents(id, embedding) VALUES (1, '{1.1, 2.2, 3.3}'),(2, '{4.4, 5.5, 6.6}');
-          CREATE INDEX ON documents USING hnsw(embedding) WITH (maxelements=1000, dims=3, m=8);
+          CREATE INDEX ON documents USING disk_hnsw(embedding) WITH (dims=3, m=8);
           SELECT id FROM documents ORDER BY embedding <-> array[1.1, 2.2, 3.3] LIMIT 1;
         SQL
       ensure
