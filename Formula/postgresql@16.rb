@@ -9,6 +9,13 @@ class PostgresqlAT16 < Formula
   sha256 "ba653197465180c93775b4949a89dc6fbfebae2a44587ae7168fdfd24f519b50"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 arm64_ventura: "ff43525c8b82b7bd8b5e1a8896acf6fad2689ad04e796c12e5a8907f1c3ef1ad"
+    sha256 ventura:       "a3f9cf4589f426f5bc9e54e5cfbdcf425cdf08ceecabbdb3d3b265980c663114"
+    sha256 x86_64_linux:  "f936bb3b10ac04649fc52bc702b5b37b91d70e5da76dd42a4326632165404a56"
+  end
+
   keg_only :versioned_formula
 
   depends_on "pkg-config" => :build
