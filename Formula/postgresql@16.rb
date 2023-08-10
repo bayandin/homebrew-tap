@@ -11,9 +11,9 @@ class PostgresqlAT16 < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 arm64_ventura: "ff43525c8b82b7bd8b5e1a8896acf6fad2689ad04e796c12e5a8907f1c3ef1ad"
-    sha256 ventura:       "a3f9cf4589f426f5bc9e54e5cfbdcf425cdf08ceecabbdb3d3b265980c663114"
-    sha256 x86_64_linux:  "f936bb3b10ac04649fc52bc702b5b37b91d70e5da76dd42a4326632165404a56"
+    sha256 arm64_ventura: "491a066d6970cb4576899790851c22a8b6e5b983abe35bacf18a3798cf28a9f6"
+    sha256 ventura:       "fe89250abda9228b87a9b67f4ed275cffe4b02e65b1658a2d49e1cd873821fd0"
+    sha256 x86_64_linux:  "14f563842b45fe2d81808a91b423807d303c521cdf7fca43913d2716a2358a6c"
   end
 
   keg_only :versioned_formula
