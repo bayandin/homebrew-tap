@@ -4,9 +4,9 @@
 class PostgresqlAT16 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v16beta2/postgresql-16beta2.tar.bz2"
-  version "16-beta2"
-  sha256 "ba653197465180c93775b4949a89dc6fbfebae2a44587ae7168fdfd24f519b50"
+  url "https://ftp.postgresql.org/pub/source/v16beta3/postgresql-16beta3.tar.bz2"
+  version "16-beta3"
+  sha256 "ffcf44e272662f6ac451a8d6d6ff951715db651c8d4907ec659cbde46abd52d3"
   license "PostgreSQL"
 
   bottle do
