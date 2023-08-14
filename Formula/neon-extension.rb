@@ -14,10 +14,6 @@ class NeonExtension < Formula
 
   depends_on "bayandin/tap/neon-postgres"
 
-  def pg_versions
-    %w[v14 v15]
-  end
-
   def extensions
     %w[neon neon_utils neon_walredo]
   end
@@ -27,11 +23,11 @@ class NeonExtension < Formula
   end
 
   def install
-    pg_versions.each do |v|
+    neon_postgres.pg_versions.each do |v|
       extensions.each do |ext|
         cp_r "pgxn/#{ext}", "build-#{ext}-#{v}"
         cd "build-#{ext}-#{v}" do
-          system "make", "PG_CONFIG=#{neon_postgres.opt_libexec/v}/bin/pg_config"
+          system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
 
           (lib/neon_postgres.name/v).install "#{ext}.so"
           (share/neon_postgres.name/v/"extension").install "#{ext}.control" if File.exist?("#{ext}.control")
@@ -42,9 +38,9 @@ class NeonExtension < Formula
   end
 
   test do
-    pg_versions.each do |v|
-      pg_ctl = neon_postgres.opt_libexec/v/"bin/pg_ctl"
-      psql = neon_postgres.opt_libexec/v/"bin/psql"
+    neon_postgres.pg_versions.each do |v|
+      pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
+      psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
 
       system pg_ctl, "initdb", "-D", testpath/"test-#{v}"
