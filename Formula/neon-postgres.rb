@@ -34,6 +34,10 @@ class NeonPostgres < Formula
     %w[v14 v15]
   end
 
+  def pg_bin_for(version)
+    pg_versions.to_h { |v| [v, opt_libexec/v/"bin"] }.fetch(version)
+  end
+
   def install
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
@@ -88,8 +92,9 @@ class NeonPostgres < Formula
 
   test do
     pg_versions.each do |v|
-      pg_config = libexec/v/"bin/pg_config"
+      system "#{pg_bin_for(v)}/initdb", testpath/"test-#{v}"
 
+      pg_config = pg_bin_for(v)/"pg_config"
       assert_equal "#{HOMEBREW_PREFIX}/share/#{name}/#{v}", shell_output("#{pg_config} --sharedir").chomp
       assert_equal "#{HOMEBREW_PREFIX}/lib/#{name}/#{v}", shell_output("#{pg_config} --libdir").chomp
       assert_equal "#{HOMEBREW_PREFIX}/lib/#{name}/#{v}", shell_output("#{pg_config} --pkglibdir").chomp
