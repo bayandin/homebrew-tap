@@ -16,10 +16,6 @@ class NeonLocal < Formula
   depends_on "bayandin/tap/neon-postgres"
   depends_on "bayandin/tap/neon-storage"
 
-  def pg_versions
-    %w[v14 v15]
-  end
-
   def binaries
     %w[
       compute_ctl neon_local pagectl pageserver
@@ -78,7 +74,7 @@ class NeonLocal < Formula
     end
 
     system bin/"neon_local", "start"
-    pg_versions.each do |v|
+    neon_postgres.pg_versions.each do |v|
       vv = v.delete_prefix("v")
 
       output = shell_output("#{bin}/neon_local tenant create --pg-version #{vv}")
