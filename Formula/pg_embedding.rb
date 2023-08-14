@@ -15,17 +15,13 @@ class PgEmbedding < Formula
 
   depends_on "bayandin/tap/neon-postgres"
 
-  def pg_versions
-    %w[v14 v15]
-  end
-
   def neon_postgres
     Formula["bayandin/tap/neon-postgres"]
   end
 
   def install
-    pg_versions.each do |v|
-      ENV["PG_CONFIG"] = neon_postgres.opt_libexec/v/"bin/pg_config"
+    neon_postgres.pg_versions.each do |v|
+      ENV["PG_CONFIG"] = neon_postgres.pg_bin_for(v)/"pg_config"
       system "make", "clean"
       system "make"
 
@@ -39,9 +35,9 @@ class PgEmbedding < Formula
   end
 
   test do
-    pg_versions.each do |v|
-      pg_ctl = neon_postgres.opt_libexec/v/"bin/pg_ctl"
-      psql = neon_postgres.opt_libexec/v/"bin/psql"
+    neon_postgres.pg_versions.each do |v|
+      pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
+      psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
 
       system pg_ctl, "initdb", "-D", testpath/"test-#{v}"
