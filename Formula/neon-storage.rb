@@ -17,10 +17,6 @@ class NeonStorage < Formula
   depends_on "openssl@3"
   depends_on "protobuf"
 
-  def pg_versions
-    %w[v14 v15]
-  end
-
   def binaries
     %w[
       compute_ctl neon_local pagectl pageserver
