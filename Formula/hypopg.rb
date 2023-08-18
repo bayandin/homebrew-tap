@@ -5,6 +5,13 @@ class Hypopg < Formula
   sha256 "0821011743083226fc9b813c1f2ef5897a91901b57b6bea85a78e466187c6819"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4e9ab84ffb934c68ff41ce7723d8c2ef4e9315ff0cfd9d042ed6d04f43678c06"
+    sha256 cellar: :any_skip_relocation, ventura:       "250e4b1cbb417e5c7415168b7cac1bf531ad0c80feacda1e8cd9b5d8d3709239"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "325c6777c10220e3ed6c23e30da26bc51f3e9ba790c9f655612c1aea90f3288f"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def neon_postgres
