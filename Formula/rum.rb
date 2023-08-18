@@ -5,6 +5,13 @@ class Rum < Formula
   sha256 "6ab370532c965568df6210bd844ac6ba649f53055e48243525b0b7e5c4d69a7d"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "20042d64c4616e3859c2eaf936d81ed0b29b313c80b1d107270a85bd993a5c87"
+    sha256 cellar: :any_skip_relocation, ventura:       "33c71fc86a6275d4ef794f351dabf9f8b15f00e4c3311ee6cd89c6880a155913"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2066de3809d542ec6c4932a9d51ea672f9f923847bd93e692123a43376bae651"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def neon_postgres
