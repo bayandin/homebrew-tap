@@ -35,6 +35,7 @@ In addition, you can try Neon locally with extentions from this tap. To install 
 - [`pg_embedding`](https://github.com/bayandin/homebrew-tap/blob/main/Formula/pg_embedding.rb) — HNSW algorithm for vector similarity search in PostgreSQL
 - [`pgvector`](Formula/pgvector.rb) — Open-source vector similarity search for Postgres
 - [`postgresql-hll`](Formula/postgresql-hll.rb) — PostgreSQL extension adding HyperLogLog data structures as a native data type
+- [`pgjwt`](Formula/pgjwt.rb) — PostgreSQL implementation of JWT (JSON Web Tokens)
 
 _Note: extensions provided by the tap could be different from what's [available in Neon Cloud offering](https://neon.tech/docs/extensions/pg-extensions)._
 
