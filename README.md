@@ -39,6 +39,7 @@ In addition, you can try Neon locally with extentions from this tap. To install 
 - [`hypopg`](Formula/hypopg.rb) — Hypothetical Indexes for PostgreSQL
 - [`pg_hashids`](Formula/pg_hashids.rb) — Short unique id generator for PostgreSQL, using hashids
 - [`rum`](Formula/rum.rb) — Inverted index with additional information in posting lists
+- [`pg_tiktoken`](Formula/pg_tiktoken.rb) — Tiktoken tokenizer for PostgreSQL
 
 _Note: extensions provided by the tap could be different from what's [available in Neon Cloud offering](https://neon.tech/docs/extensions/pg-extensions)._
 
