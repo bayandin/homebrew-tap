@@ -5,6 +5,13 @@ class PgTiktoken < Formula
   version "0.0.1"
   sha256 "52f60ac800993a49aa8c609961842b611b6b1949717b69ce2ec9117117e16e4a"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 arm64_ventura: "a2592e4d41af5a7ffb6c98372f18ffc7aec529011e180646a0a754445c4e81bd"
+    sha256 cellar: :any,                 ventura:       "90979bb4f6af99d46da9c6c3d16f06d54563df1c55873bb11bc88850a15fa173"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "57ece3182740811416804457d2afd310610eeb6e7d90bc986c2e332605180ace"
+  end
+
   depends_on "pgx@0.7" => :build
   depends_on "rust" => :build
   depends_on "bayandin/tap/neon-postgres"
