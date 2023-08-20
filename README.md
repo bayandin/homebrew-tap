@@ -23,16 +23,19 @@ psql -p55432 -h 127.0.0.1 -U cloud_admin postgres
 
 # Formulae in the tap
 
-- [`neon-local`](https://github.com/bayandin/homebrew-tap/blob/main/Formula/neon-local.rb). Meta-formula that installs all the required dependencies and configures Neon to run locally.
-- [`neon-postgres`](https://github.com/bayandin/homebrew-tap/blob/main/Formula/neon-postgres.rb). Compute part of Neon. The formula contains Postgres 14 and 15.
-- [`neon-storage`](https://github.com/bayandin/homebrew-tap/blob/main/Formula/neon-storage.rb). Storage part of Neon. It contains Pageserver, Safekeeper, and other required binaries.
-- [`neon-extension`](https://github.com/bayandin/homebrew-tap/blob/main/Formula/neon-extension.rb). Postgres extensions that provide communication between Compute and Storage.
+- [`neon-local`](Formula/neon-local.rb). Meta-formula that installs all the required dependencies and configures Neon to run locally.
+- [`neon-postgres`](Formula/neon-postgres.rb). Compute part of Neon. The formula contains Postgres 14 and 15.
+- [`neon-storage`](Formula/neon-storage.rb). Storage part of Neon. It contains Pageserver, Safekeeper, and other required binaries.
+- [`neon-extension`](Formula/neon-extension.rb). Postgres extensions that provide communication between Compute and Storage.
+- [`postgresql@16`](Formula/postgresql@16.rb). Pre-release version of Postgres 16.
+- [`pgrx`](Formula/pgrx.rb). Build Postgres Extensions with Rust.
+- [`pgx@0.7`](Formula/pgx@0.7.rb). Old name (and version) of `pgrx`.
 
 # Extensions:
 
 In addition, you can try Neon locally with extentions from this tap. To install them run the following command `brew install bayandin/tap/<extension>`:
 - [`pg_cron`](Formula/pg_cron.rb) — Run periodic jobs in PostgreSQL
-- [`pg_embedding`](https://github.com/bayandin/homebrew-tap/blob/main/Formula/pg_embedding.rb) — HNSW algorithm for vector similarity search in PostgreSQL
+- [`pg_embedding`](Formula/pg_embedding.rb) — HNSW algorithm for vector similarity search in PostgreSQL
 - [`pgvector`](Formula/pgvector.rb) — Open-source vector similarity search for Postgres
 - [`postgresql-hll`](Formula/postgresql-hll.rb) — PostgreSQL extension adding HyperLogLog data structures as a native data type
 - [`pgjwt`](Formula/pgjwt.rb) — PostgreSQL implementation of JWT (JSON Web Tokens)
