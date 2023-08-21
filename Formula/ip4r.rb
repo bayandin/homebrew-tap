@@ -5,6 +5,13 @@ class Ip4r < Formula
   sha256 "0f7b1f159974f49a47842a8ab6751aecca1ed1142b6d5e38d81b064b2ead1b4b"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ab033005dde12356baf3333ca25d0c143e9c7223f8bb1e5ae63e5ff2588fa9c7"
+    sha256 cellar: :any_skip_relocation, ventura:       "74ceb3382d15fd6258bc4e554c354423b0b3e5a0caa1d149f01bb26349499e3b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ffb91fa2d69545299c1f7afd4cbb6602bd4e77c213c74ee253bc35d1f93e4de4"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def neon_postgres
