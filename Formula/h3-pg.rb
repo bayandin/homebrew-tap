@@ -5,6 +5,13 @@ class H3Pg < Formula
   sha256 "5c17f09a820859ffe949f847bebf1be98511fb8f1bd86f94932512c00479e324"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 arm64_ventura: "39621f6fc11e5dc2831bca560c678e125d476aee50120a97180971dce156166d"
+    sha256 cellar: :any,                 ventura:       "0b4d3db0603fbbf538a6734f8311416b232fe58b251bbe25b3d594ebade48408"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7400284dcbb642fa7a6b4fdc005d6766075bea2ff542ceae35caec4e3dbaef74"
+  end
+
   depends_on "cmake" => :build
   depends_on "bayandin/tap/neon-postgres"
   depends_on "h3"
