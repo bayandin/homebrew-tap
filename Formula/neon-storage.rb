@@ -1,8 +1,9 @@
 class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
-  url "https://github.com/neondatabase/neon/archive/refs/tags/release-3710.tar.gz"
-  sha256 "08c265d57a682cb7bd341efe7fd79065b0bdb5a797d731fe7bc672b18f2e520e"
+  url "https://github.com/neondatabase/neon.git",
+    tag:      "release-3756",
+    revision: "4e2e44e5240959ac48bb30571eee136c0226c989"
   license "Apache-2.0"
 
   bottle do
@@ -30,15 +31,8 @@ class NeonStorage < Formula
   end
 
   def install
-    build_tag = "release-#{version}"
-    ENV["BUILD_TAG"] = build_tag
-
-    cmd = %w[git ls-remote --refs --tags https://github.com/neondatabase/neon.git]
-    git_tags = Utils.safe_popen_read(*cmd)
-    git_rev = git_tags.split("\n").find { |l| l =~ %r{refs/tags/#{build_tag}$} }&.split("\t")&.first
-
-    odie "Cannot find git revision for #{version} from #{git_tags}" if git_rev.nil?
-    ENV["GIT_VERSION"] = git_rev
+    ENV["BUILD_TAG"] = "release-#{version}"
+    ENV["GIT_VERSION"] = Utils.git_head
 
     with_env(POSTGRES_INSTALL_DIR: neon_postgres.opt_libexec) do
       system "cargo", "install", *std_cargo_args(root: libexec, path: "compute_tools")
