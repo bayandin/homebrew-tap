@@ -1,8 +1,8 @@
 class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
-  url "https://github.com/neondatabase/neon/archive/refs/tags/release-3710.tar.gz"
-  sha256 "08c265d57a682cb7bd341efe7fd79065b0bdb5a797d731fe7bc672b18f2e520e"
+  url "https://github.com/neondatabase/neon/archive/refs/tags/release-3756.tar.gz"
+  sha256 "1a6d1469df36772a6ba74f850877c72864ab28a43a5e2aecae5374304c6faffa"
   license "Apache-2.0"
 
   bottle do
