@@ -1,8 +1,8 @@
 class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
-  url "https://github.com/neondatabase/neon/archive/refs/tags/release-3756.tar.gz"
-  sha256 "1a6d1469df36772a6ba74f850877c72864ab28a43a5e2aecae5374304c6faffa"
+  url "https://github.com/neondatabase/neon/archive/refs/tags/release-3759.tar.gz"
+  sha256 "395c4bfe39f841d0f6b3107da7526fc9785b9125c17065692665ae3c9fbe9bd5"
   license "Apache-2.0"
 
   bottle do
