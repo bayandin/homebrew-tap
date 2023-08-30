@@ -8,9 +8,9 @@ class NeonStorage < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "87c28f96b8f2197683ded057ce7f031a497ec27751608864ae87440b025c6bec"
-    sha256 cellar: :any_skip_relocation, ventura:       "c780607c1f729a64d9e2592a73d1f38a89750a76d4ad0424c8f0939320b1f2a1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "32ecd4dbb73f398c28eb4ab35f49b8e207ab9f2c2e5013d484330663a8ec78ff"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "3f88f4d79abfe3621a8d38b3561c183ff9ac7c8f35774c9ba1a03e8ef21c7953"
+    sha256 cellar: :any_skip_relocation, ventura:       "12466709232befe51e0169a042ef10da66bddad9882b1134fb5d2b5b786efdbb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d8b6f680dd40df62d8c40662b9a1b6e106399371d2cad582e295bd790ebd3beb"
   end
 
   depends_on "bayandin/tap/neon-postgres" => :build
