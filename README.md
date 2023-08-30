@@ -30,6 +30,7 @@ psql -p55432 -h 127.0.0.1 -U cloud_admin postgres
 - [`postgresql@16`](Formula/postgresql@16.rb). Pre-release version of Postgres 16.
 - [`pgrx`](Formula/pgrx.rb). Build Postgres Extensions with Rust.
 - [`pgx@0.7`](Formula/pgx@0.7.rb). Old name (and version) of `pgrx`.
+- [`tpc-h`](Formula/tpc-h.rb). TPC-H benchmark with patches for MacOS and Postgres support.
 
 # Extensions:
 
