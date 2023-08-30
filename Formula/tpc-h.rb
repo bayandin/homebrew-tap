@@ -4,6 +4,13 @@ class TpcH < Formula
   url "https://github.com/bayandin/tpc-h/archive/refs/tags/v3.0.1.tar.gz"
   sha256 "fd55f79713de8cf4074a998f4ecbc1012cee529dc192ca529489830d3c951859"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d9b860f772eb3f37131429151f86148baa2b70caee54ebe56fdf063b3b5a908e"
+    sha256 cellar: :any_skip_relocation, ventura:       "fee79ff3d7f3f2d45f674916d273c0671f051d1fbf201e5c264786b881c2201c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1333691274bcfa60c96b6c2040b2f70afbe0d72f5a45259591e1b96571f464f1"
+  end
+
   depends_on "postgresql@15" => :test
 
   # Support macOS
