@@ -43,8 +43,7 @@ class Pgjwt < Formula
       system pg_ctl, "start", "-D", testpath/"test-#{v}", "-l", testpath/"log-#{v}"
       begin
         system psql, "-p", port.to_s, "-c", <<~SQL, "postgres"
-          CREATE EXTENSION pgcrypto;
-          CREATE EXTENSION pgjwt;
+          CREATE EXTENSION pgjwt CASCADE;
           SELECT sign('{"sub":"1234567890","name":"John Doe","admin":true}', 'secret');
         SQL
       ensure
