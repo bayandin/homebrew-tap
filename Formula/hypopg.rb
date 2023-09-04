@@ -5,6 +5,11 @@ class Hypopg < Formula
   sha256 "0821011743083226fc9b813c1f2ef5897a91901b57b6bea85a78e466187c6819"
   license "PostgreSQL"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
     sha256 cellar: :any_skip_relocation, arm64_ventura: "4e9ab84ffb934c68ff41ce7723d8c2ef4e9315ff0cfd9d042ed6d04f43678c06"
