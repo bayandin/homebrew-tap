@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-3819",
-    revision: "1804111a020390ac83d3517e5a4ef3c15f1656a7"
+    tag:      "release-3836",
+    revision: "07d7874bc88cc83a8b57c8d9508674277008a623"
   license "Apache-2.0"
 
   bottle do
