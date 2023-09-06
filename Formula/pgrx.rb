@@ -1,8 +1,8 @@
 class Pgrx < Formula
   desc "Build Postgres Extensions with Rust"
   homepage "https://github.com/pgcentralfoundation/pgrx"
-  url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.9.8.tar.gz"
-  sha256 "b905bc2097bf720a1266197466212bfe0815edb95ff762264bbe31dbcf6bc305"
+  url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.10.0.tar.gz"
+  sha256 "0e81776fadc4c21f6e7dff95f69a8d23d292da22c87e35bab4ae9edd15e4e686"
   license "MIT"
 
   bottle do
@@ -14,6 +14,7 @@ class Pgrx < Formula
 
   depends_on "postgresql@15" => :test
   depends_on "rust"
+  depends_on "rustfmt"
 
   def install
     system "cargo", "install", *std_cargo_args(path: "cargo-pgrx")
