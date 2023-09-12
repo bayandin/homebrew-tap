@@ -7,9 +7,9 @@ class PgEmbedding < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "65bdc70c835fc6551b621e1b41c7b65528eb5b5590ece6053d7302b304708185"
-    sha256 cellar: :any_skip_relocation, ventura:       "3bb4b10c2d58d8cc58fd6697b5840e593f46fda85ccd05b19409cf586331abd1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ddb61d28629128ceced890b169f1efc3f048a1629fbe45246df5dfa92286946"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0c44f2821febe488b34d2cd669180e488ea4f3320c2c5372f787cb104d7b245b"
+    sha256 cellar: :any_skip_relocation, ventura:       "b03ca7f9622372270b6cdb7370413645359c226ffb7e30e24ddab20cd1936091"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6cd1a66ed92655ba1840e3cefb7cb1bd6c9d11ebe5201d14ea70ab52d08e559b"
   end
 
   depends_on "bayandin/tap/neon-postgres"
