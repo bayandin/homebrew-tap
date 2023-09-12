@@ -2,8 +2,8 @@ class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-3836",
-    revision: "07d7874bc88cc83a8b57c8d9508674277008a623"
+    tag:      "release-3898",
+    revision: "0e6fdc8a587aacbc598afb9232eb81484ed3494e"
   license "Apache-2.0"
 
   bottle do
@@ -68,7 +68,7 @@ class NeonLocal < Formula
       s.gsub! "listen_addr = \"127.0.0.1:50051\"", "listen_addr = \"127.0.0.1:#{broker_port}\""
     end
 
-    inreplace neon_repo_dir/"pageserver.toml" do |s|
+    inreplace neon_repo_dir/"pageserver_1/pageserver.toml" do |s|
       s.gsub! "listen_http_addr ='127.0.0.1:9898'", "listen_http_addr = \"127.0.0.1:#{ps_http_port}\""
       s.gsub! "listen_pg_addr ='127.0.0.1:64000'", "listen_pg_addr = \"127.0.0.1:#{ps_pg_port}\""
       s.gsub! "broker_endpoint ='http://127.0.0.1:50051/'", "broker_endpoint = \"http://127.0.0.1:#{broker_port}/\""
