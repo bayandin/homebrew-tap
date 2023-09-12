@@ -1,10 +1,9 @@
 class PgEmbedding < Formula
   desc "HNSW algorithm for vector similarity search in PostgreSQL"
   homepage "https://github.com/neondatabase/pg_embedding"
-  url "https://github.com/neondatabase/pg_embedding/archive/refs/tags/0.3.5.tar.gz"
-  sha256 "0e95b27b8b6196e2cf0a0c9ec143fe2219b82e54c5bb4ee064e76398cbe69ae9"
+  url "https://github.com/neondatabase/pg_embedding/archive/refs/tags/0.3.6.tar.gz"
+  sha256 "b2e2b359335d26987778c7fae0c9bcc8ebc3530fc214113be1ddbc8a136e52ac"
   license "Apache-2.0"
-  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
