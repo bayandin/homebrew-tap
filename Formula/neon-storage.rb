@@ -5,6 +5,7 @@ class NeonStorage < Formula
     tag:      "release-3836",
     revision: "07d7874bc88cc83a8b57c8d9508674277008a623"
   license "Apache-2.0"
+  head "https://github.com/neondatabase/neon.git", branch: "main"
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -31,7 +32,7 @@ class NeonStorage < Formula
   end
 
   def install
-    ENV["BUILD_TAG"] = "release-#{version}"
+    ENV["BUILD_TAG"] = build.stable? ? "release-#{version}" : "dev-#{Utils.git_short_head}"
     ENV["GIT_VERSION"] = Utils.git_head
 
     with_env(POSTGRES_INSTALL_DIR: neon_postgres.opt_libexec) do
