@@ -2,8 +2,8 @@ class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-3898",
-    revision: "0e6fdc8a587aacbc598afb9232eb81484ed3494e"
+    tag:      "release-3916",
+    revision: "dce91b33a4ce24b1526ef1c39a95761cb0d7da2b"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -17,7 +17,7 @@ class NeonExtension < Formula
   depends_on "bayandin/tap/neon-postgres"
 
   def extensions
-    %w[neon neon_utils neon_walredo]
+    %w[neon_walredo neon neon_rmgr neon_utils]
   end
 
   def neon_postgres
@@ -25,13 +25,16 @@ class NeonExtension < Formula
   end
 
   def install
-    neon_postgres.pg_versions.each do |v|
+    neon_postgres.pg_versions_internal.each do |v|
+      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
+      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
+
+      cp_r "pgxn", "build-#{v}"
       extensions.each do |ext|
-        cp_r "pgxn/#{ext}", "build-#{ext}-#{v}"
-        cd "build-#{ext}-#{v}" do
+        cd "build-#{v}/#{ext}" do
           system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
 
-          (lib/neon_postgres.name/v).install "#{ext}.so"
+          (lib/neon_postgres.name/v).install "#{ext}.#{dlsuffix}"
           (share/neon_postgres.name/v/"extension").install "#{ext}.control" if File.exist?("#{ext}.control")
           (share/neon_postgres.name/v/"extension").install Dir["#{ext}--*.sql"]
         end
@@ -40,7 +43,7 @@ class NeonExtension < Formula
   end
 
   test do
-    neon_postgres.pg_versions.each do |v|
+    neon_postgres.pg_versions_internal.each do |v|
       pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
       psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
@@ -48,12 +51,14 @@ class NeonExtension < Formula
       system pg_ctl, "initdb", "-D", testpath/"test-#{v}"
       (testpath/"test-#{v}/postgresql.conf").write <<~EOS, mode: "a+"
 
-        shared_preload_libraries = 'neon'
+        #{"v14 v15".include?(v) ? "shared_preload_libraries = 'neon'": ""}
         port = #{port}
       EOS
       system pg_ctl, "start", "-D", testpath/"test-#{v}", "-l", testpath/"log-#{v}"
       begin
-        (extensions - %w[neon_walredo]).each do |ext|
+        (extensions - %w[neon_walredo neon_rmgr]).each do |ext|
+          next if "v14 v15".exclude?(v) && ext == "neon"
+
           system psql, "-p", port.to_s, "-c", "CREATE EXTENSION \"#{ext}\";", "postgres"
         end
       ensure
