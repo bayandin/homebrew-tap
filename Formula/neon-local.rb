@@ -2,8 +2,8 @@ class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-3898",
-    revision: "0e6fdc8a587aacbc598afb9232eb81484ed3494e"
+    tag:      "release-3916",
+    revision: "dce91b33a4ce24b1526ef1c39a95761cb0d7da2b"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -76,7 +76,7 @@ class NeonLocal < Formula
     end
 
     system bin/"neon_local", "start"
-    neon_postgres.pg_versions.each do |v|
+    neon_postgres.pg_versions_internal.each do |v|
       vv = v.delete_prefix("v")
 
       output = shell_output("#{bin}/neon_local tenant create --pg-version #{vv}")
