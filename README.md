@@ -29,7 +29,6 @@ psql -p55432 -h 127.0.0.1 -U cloud_admin postgres
   - [`neon-extension`](Formula/neon-extension.rb). Postgres extensions that provide communication between Compute and Storage
 - [`pgrx`](Formula/pgrx.rb). Build Postgres Extensions with Rust
 - [`pgx@0.7`](Formula/pgx@0.7.rb). Old name (and version) of `pgrx`
-- [`postgresql@16`](Formula/postgresql@16.rb). Pre-release version of Postgres 16
 - [`tpc-h`](Formula/tpc-h.rb). TPC-H benchmark with patches for MacOS and Postgres support
 
 # Extensions:
