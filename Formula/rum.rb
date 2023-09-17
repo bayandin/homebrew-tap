@@ -4,6 +4,7 @@ class Rum < Formula
   url "https://github.com/postgrespro/rum/archive/refs/tags/1.3.13.tar.gz"
   sha256 "6ab370532c965568df6210bd844ac6ba649f53055e48243525b0b7e5c4d69a7d"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -18,14 +19,21 @@ class Rum < Formula
     Formula["bayandin/tap/neon-postgres"]
   end
 
+  def pg_versions
+    neon_postgres.pg_versions with: "v16"
+  end
+
   def install
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
+      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
+      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
+
       ENV["USE_PGXS"] = "1"
       system "make", "clean", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "rum.so", lib/neon_postgres.name/v
+      mv "rum.#{dlsuffix}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "rum.control", share/neon_postgres.name/v/"extension"
@@ -34,7 +42,7 @@ class Rum < Formula
   end
 
   test do
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
       pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
       psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
