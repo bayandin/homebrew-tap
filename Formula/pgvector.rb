@@ -4,6 +4,7 @@ class Pgvector < Formula
   url "https://github.com/pgvector/pgvector/archive/refs/tags/v0.5.0.tar.gz"
   sha256 "d8aa3504b215467ca528525a6de12c3f85f9891b091ce0e5864dd8a9b757f77b"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -18,14 +19,21 @@ class Pgvector < Formula
     Formula["bayandin/tap/neon-postgres"]
   end
 
+  def pg_versions
+    neon_postgres.pg_versions with: "v16"
+  end
+
   def install
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
+      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
+      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
+
       ENV["PG_CONFIG"] = neon_postgres.pg_bin_for(v)/"pg_config"
       system "make", "clean"
       system "make"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "vector.so", lib/neon_postgres.name/v
+      mv "vector.#{dlsuffix}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "vector.control", share/neon_postgres.name/v/"extension"
@@ -34,7 +42,7 @@ class Pgvector < Formula
   end
 
   test do
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
       pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
       psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
