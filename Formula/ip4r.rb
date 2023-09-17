@@ -4,6 +4,7 @@ class Ip4r < Formula
   url "https://github.com/RhodiumToad/ip4r/archive/refs/tags/2.4.2.tar.gz"
   sha256 "0f7b1f159974f49a47842a8ab6751aecca1ed1142b6d5e38d81b064b2ead1b4b"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -18,8 +19,15 @@ class Ip4r < Formula
     Formula["bayandin/tap/neon-postgres"]
   end
 
+  def pg_versions
+    neon_postgres.pg_versions with: "v16"
+  end
+
   def install
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
+      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
+      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
+
       ENV["PG_CONFIG"] = neon_postgres.pg_bin_for(v)/"pg_config"
       system "make", "clean"
       system "make"
@@ -27,7 +35,7 @@ class Ip4r < Formula
 
       stage_dir = Pathname("stage-#{v}#{HOMEBREW_PREFIX}")
       mkdir_p lib/neon_postgres.name/v
-      mv Dir[stage_dir/"lib"/neon_postgres.name/v/"*.so"], lib/neon_postgres.name/v
+      mv Dir[stage_dir/"lib"/neon_postgres.name/v/"*.#{dlsuffix}"], lib/neon_postgres.name/v
 
       from_ext_dir = stage_dir/"share"/neon_postgres.name/v/"extension"
       to_ext_dir = share/neon_postgres.name/v/"extension"
@@ -39,7 +47,7 @@ class Ip4r < Formula
   end
 
   test do
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
       pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
       psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
