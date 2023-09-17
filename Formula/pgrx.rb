@@ -8,9 +8,9 @@ class Pgrx < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "5ce73c7d3cf042b2ed2887b6b84247da2ad4c7ae506e06e6afb4c396995b41ff"
-    sha256 cellar: :any_skip_relocation, ventura:       "36815d98ddd9ca57bf3d3635cd15e1b5501765e7ec0bd1f27d4ebf472e061f98"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ea06e851273ab26e29fb07322d919cf3e37bcf54a62099c42e1c3baff28adf29"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "33350995415d43a64e1b786d6fd1c05f52eb537532c98e9273a7480dc98a9434"
+    sha256 cellar: :any_skip_relocation, ventura:       "0dc8f86ff98bd77c8dca928ee7ffe179ab4a9cd08ae17ad1b4f99d572a4f23c7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2bc3044026de74e4e73a2e0baeceecf01bf8cfb7f0549400aeadc25d3c518887"
   end
 
   depends_on "postgresql@16" => :test
