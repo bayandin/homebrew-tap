@@ -4,6 +4,7 @@ class PgEmbedding < Formula
   url "https://github.com/neondatabase/pg_embedding/archive/refs/tags/0.3.6.tar.gz"
   sha256 "b2e2b359335d26987778c7fae0c9bcc8ebc3530fc214113be1ddbc8a136e52ac"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -18,14 +19,21 @@ class PgEmbedding < Formula
     Formula["bayandin/tap/neon-postgres"]
   end
 
+  def pg_versions
+    neon_postgres.pg_versions with: "v16"
+  end
+
   def install
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
+      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
+      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
+
       ENV["PG_CONFIG"] = neon_postgres.pg_bin_for(v)/"pg_config"
       system "make", "clean"
       system "make"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "embedding.so", lib/neon_postgres.name/v
+      mv "embedding.#{dlsuffix}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "embedding.control", share/neon_postgres.name/v/"extension"
@@ -34,7 +42,7 @@ class PgEmbedding < Formula
   end
 
   test do
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
       pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
       psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
