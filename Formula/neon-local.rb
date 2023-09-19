@@ -2,8 +2,8 @@ class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-3916",
-    revision: "dce91b33a4ce24b1526ef1c39a95761cb0d7da2b"
+    tag:      "release-3940",
+    revision: "52a88af0aaa5b38e9cd881b45599a25feb19c199"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -32,6 +32,10 @@ class NeonLocal < Formula
 
   def neon_storage
     Formula["bayandin/tap/neon-storage"]
+  end
+
+  def pg_versions
+    neon_postgres.pg_versions with: "v16"
   end
 
   def install
@@ -76,7 +80,7 @@ class NeonLocal < Formula
     end
 
     system bin/"neon_local", "start"
-    neon_postgres.pg_versions_internal.each do |v|
+    pg_versions.each do |v|
       vv = v.delete_prefix("v")
 
       output = shell_output("#{bin}/neon_local tenant create --pg-version #{vv}")
