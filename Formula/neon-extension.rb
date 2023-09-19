@@ -2,8 +2,8 @@ class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-3916",
-    revision: "dce91b33a4ce24b1526ef1c39a95761cb0d7da2b"
+    tag:      "release-3940",
+    revision: "52a88af0aaa5b38e9cd881b45599a25feb19c199"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -24,8 +24,12 @@ class NeonExtension < Formula
     Formula["bayandin/tap/neon-postgres"]
   end
 
+  def pg_versions
+    neon_postgres.pg_versions with: "v16"
+  end
+
   def install
-    neon_postgres.pg_versions_internal.each do |v|
+    pg_versions.each do |v|
       # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
       dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
 
@@ -43,7 +47,7 @@ class NeonExtension < Formula
   end
 
   test do
-    neon_postgres.pg_versions_internal.each do |v|
+    pg_versions.each do |v|
       pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
       psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
