@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-3916",
-    revision: "dce91b33a4ce24b1526ef1c39a95761cb0d7da2b"
+    tag:      "release-3940",
+    revision: "52a88af0aaa5b38e9cd881b45599a25feb19c199"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -31,16 +31,14 @@ class NeonPostgres < Formula
     depends_on "libseccomp"
   end
 
-  def pg_versions_internal
-    %w[v14 v15 v16]
-  end
-
-  def pg_versions
-    %w[v14 v15]
+  def pg_versions(with: nil)
+    versions = Set.new(%w[v14 v15])
+    versions.merge(Array(with))
+    versions.to_a.sort
   end
 
   def pg_bin_for(version)
-    pg_versions_internal.to_h { |v| [v, opt_libexec/v/"bin"] }.fetch(version)
+    opt_libexec/version/"bin"
   end
 
   def install
@@ -54,7 +52,7 @@ class NeonPostgres < Formula
       ENV.prepend "CPPFLAGS", "-I#{Formula["curl"].opt_include}"
     end
 
-    pg_versions_internal.each do |v|
+    pg_versions(with: "v16").each do |v|
       cd "vendor/postgres-#{v}" do
         args = %W[
           --prefix=#{libexec}/#{v}
@@ -97,7 +95,7 @@ class NeonPostgres < Formula
   end
 
   test do
-    pg_versions_internal.each do |v|
+    pg_versions(with: "v16").each do |v|
       system "#{pg_bin_for(v)}/initdb", testpath/"test-#{v}"
 
       pg_config = pg_bin_for(v)/"pg_config"
