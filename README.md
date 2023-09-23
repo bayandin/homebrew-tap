@@ -1,6 +1,6 @@
-# Neon Local Homebrew Tap
+# Bayandin's Homebrew Tap
 
-Homebrew tap that allows to install and run [Neon](http://neon.tech/) locally.
+A Homebrew tap with miscellaneous formulae, most notable is `neon-local` that allows to run [Neon](http://neon.tech/) locally.
 
 # Quick Start
 
@@ -12,9 +12,13 @@ The command installs `neon-local` and creates configuration in `"$(brew --prefix
 Based on examples from [neondatabase/neon](https://github.com/neondatabase/neon#running-neon-database) repository (instead of `cargo neon` from the documentaion, we use `neon-local`).
 ```bash
 neon-local start
-neon-local tenant create --set-default
+neon-local tenant create --set-default # use `--pg-version \d+` for a particular Postgres version
 neon-local tenant list
+neon-local endpoint start main # use `--pg-version \d+` for a particular Postgres version, should match Postgres version for the tenant
 neon-local endpoint list
+neon-local timeline branch --branch-name test
+neon-local timeline list
+neon-local endpoint start test --branch-name test
 ```
 
 ```bash
