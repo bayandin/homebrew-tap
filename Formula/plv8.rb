@@ -6,6 +6,13 @@ class Plv8 < Formula
     revision: "f23425b5115203d7b339123d5088bf82bfff51cc"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "543723d7db32aaf36f5ce1474ba95028b6b74e9ee3f0f9b9d2d4e9de57e1cf7d"
+    sha256 cellar: :any_skip_relocation, ventura:       "6f267acb84cbaa47a4a96e39f816bfb553964cf49506df2da3818690c3d7414f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f560a5dadd2a019f9a78cc08a0783fe52c8de7f28e20ddb3a42f6b316ba6fa96"
+  end
+
   depends_on "cmake" => :build
   depends_on "bayandin/tap/neon-postgres"
 
