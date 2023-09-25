@@ -13,9 +13,9 @@ class Hypopg < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "4e9ab84ffb934c68ff41ce7723d8c2ef4e9315ff0cfd9d042ed6d04f43678c06"
-    sha256 cellar: :any_skip_relocation, ventura:       "250e4b1cbb417e5c7415168b7cac1bf531ad0c80feacda1e8cd9b5d8d3709239"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "325c6777c10220e3ed6c23e30da26bc51f3e9ba790c9f655612c1aea90f3288f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ddbeaf12f875da5705cb7b5c142c3f766f6f9c14418bf9edaf246af65dc7ec4a"
+    sha256 cellar: :any_skip_relocation, ventura:       "e4963fab5d4a6116bdb0e14eb3e0b46cbd733f2fed108a5f9d23c3639fc3a201"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "80c097f5ab7d38b11b7b985061cd3943669cf578deedd15f1983986bf316790f"
   end
 
   depends_on "bayandin/tap/neon-postgres"
