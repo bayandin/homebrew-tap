@@ -23,6 +23,8 @@ class NeonPostgres < Formula
   depends_on "readline"
   depends_on "zstd"
 
+  uses_from_macos "bison" => :build
+  uses_from_macos "flex" => :build
   uses_from_macos "curl"
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
