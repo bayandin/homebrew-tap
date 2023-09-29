@@ -15,9 +15,12 @@ class NeonStorage < Formula
   end
 
   depends_on "bayandin/tap/neon-postgres" => :build
+  depends_on "pkg-config" => :build
   depends_on "rust" => :build
   depends_on "openssl@3"
   depends_on "protobuf"
+
+  uses_from_macos "llvm" => :build
 
   def binaries
     %w[
