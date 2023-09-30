@@ -5,6 +5,13 @@ class PgGraphql < Formula
   sha256 "d76d5e479a1f0233701fb336e90d1ed58054e16dc182f676dfc3afd04d82b7c6"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 arm64_ventura: "f6718a0e3fd7308fc3076d35dcc8cd9656f9b67d8984d19335387d4ce880b044"
+    sha256 cellar: :any,                 ventura:       "2d6e895618aadc93294461f9a6211cae9c762429b7f49ee6fdeedf240a50c441"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b682e5df24ca1a58771bfab260d208f976bb9ab86a78783c249ab931f168bef2"
+  end
+
   depends_on "rust" => :build
   depends_on "rustfmt" => :build
   depends_on "bayandin/tap/neon-postgres"
