@@ -1,9 +1,10 @@
 class PgTiktoken < Formula
   desc "Tiktoken tokenizer for PostgreSQL"
   homepage "https://github.com/kelvich/pg_tiktoken"
-  url "https://github.com/kelvich/pg_tiktoken/archive/801f84f08c6881c8aa30f405fafbf00eec386a72.tar.gz"
+  url "https://github.com/kelvich/pg_tiktoken/archive/26806147b17b60763039c6a6878884c41a262318.tar.gz"
   version "0.0.1"
-  sha256 "52f60ac800993a49aa8c609961842b611b6b1949717b69ce2ec9117117e16e4a"
+  sha256 "e64e55aaa38c259512d3e27c572da22c4637418cf124caba904cd50944e5004e"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -12,32 +13,51 @@ class PgTiktoken < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "57ece3182740811416804457d2afd310610eeb6e7d90bc986c2e332605180ace"
   end
 
-  depends_on "pgx@0.7" => :build
   depends_on "rust" => :build
+  depends_on "rustfmt" => :build
   depends_on "bayandin/tap/neon-postgres"
+
+  uses_from_macos "llvm" => :build
+
+  resource "pgrx" do
+    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.10.2.tar.gz"
+    sha256 "040fd7195fc350ec7c823e7c2dcafad2cf621c8696fd2ce0db7626d7fbd3d877"
+  end
 
   def neon_postgres
     Formula["bayandin/tap/neon-postgres"]
   end
 
+  def pg_versions
+    neon_postgres.pg_versions with: "v16"
+  end
+
   def install
+    resource("pgrx").stage do
+      system "cargo", "install", *std_cargo_args(root: buildpath/"pgrx", path: "cargo-pgrx")
+      ENV.prepend_path "PATH", buildpath/"pgrx/bin"
+    end
+
     # Postgres symbols won't be available until runtime
     ENV["RUSTFLAGS"] = "-Clink-arg=-Wl,-undefined,dynamic_lookup"
 
     args = []
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
       args << "--pg#{v.delete_prefix("v")}" << (neon_postgres.pg_bin_for(v)/"pg_config")
     end
-    system "cargo", "pgx", "init", *args
+    system "cargo", "pgrx", "init", *args
 
-    neon_postgres.pg_versions.each do |v|
-      system "cargo", "pgx", "package", "--profile", "release",
-                                        "--pg-config", neon_postgres.pg_bin_for(v)/"pg_config",
-                                        "--out-dir", "stage-#{v}"
+    pg_versions.each do |v|
+      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
+      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
+
+      system "cargo", "pgrx", "package", "--profile", "release",
+                                         "--pg-config", neon_postgres.pg_bin_for(v)/"pg_config",
+                                         "--out-dir", "stage-#{v}"
 
       stage_dir = Pathname("stage-#{v}#{HOMEBREW_PREFIX}")
       mkdir_p lib/neon_postgres.name/v
-      mv stage_dir/"lib/neon-postgres/#{v}/pg_tiktoken.so", lib/neon_postgres.name/v
+      mv stage_dir/"lib/neon-postgres/#{v}/pg_tiktoken.#{dlsuffix}", lib/neon_postgres.name/v
 
       from_ext_dir = stage_dir/"share/neon-postgres/#{v}/extension"
       to_ext_dir = share/neon_postgres.name/v/"extension"
@@ -49,7 +69,7 @@ class PgTiktoken < Formula
   end
 
   test do
-    neon_postgres.pg_versions.each do |v|
+    pg_versions.each do |v|
       pg_ctl = neon_postgres.pg_bin_for(v)/"pg_ctl"
       psql = neon_postgres.pg_bin_for(v)/"psql"
       port = free_port
