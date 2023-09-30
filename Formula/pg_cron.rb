@@ -7,9 +7,9 @@ class PgCron < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_ventura: "d3c7ff84337d59bab0a4697d3268b75ea33bcd6f1cfe6cf7c39c29d62ba109e1"
-    sha256 cellar: :any,                 ventura:       "e2da6e007cd7cdcface3ed3fe62ae8f37835abf368442f722e181cd9eb50695c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "487d2657fb7a42ded65ab44fb26a153d655a2c936a5ff9f7b24a470f1df20161"
+    sha256 cellar: :any,                 arm64_ventura: "c9e6c9ea1e5766dcafd0ba7b0bf0ee23f1b2bc18e748329ae5a0d11354909a3b"
+    sha256 cellar: :any,                 ventura:       "7b5c365076d9be81294ac39894a31c1140fdc81cce115833ec59bd0edf766427"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b0f5f1a5544927a78220623f4facd63a37a3801f1166f5c95a9052f4088ad1d4"
   end
 
   depends_on "bayandin/tap/neon-postgres"
