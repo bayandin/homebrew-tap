@@ -33,9 +33,10 @@ class NeonPostgres < Formula
     depends_on "libseccomp"
   end
 
-  def pg_versions(with: nil)
-    versions = Set.new(%w[v14 v15])
+  def pg_versions(with: nil, without: nil)
+    versions = Set.new(%w[v14 v15 v16])
     versions.merge(Array(with))
+    versions.subtract(Array(without))
     versions.to_a.sort
   end
 
@@ -54,7 +55,7 @@ class NeonPostgres < Formula
       ENV.prepend "CPPFLAGS", "-I#{Formula["curl"].opt_include}"
     end
 
-    pg_versions(with: "v16").each do |v|
+    pg_versions.each do |v|
       cd "vendor/postgres-#{v}" do
         args = %W[
           --prefix=#{libexec}/#{v}
@@ -97,7 +98,7 @@ class NeonPostgres < Formula
   end
 
   test do
-    pg_versions(with: "v16").each do |v|
+    pg_versions.each do |v|
       system "#{pg_bin_for(v)}/initdb", testpath/"test-#{v}"
 
       pg_config = pg_bin_for(v)/"pg_config"

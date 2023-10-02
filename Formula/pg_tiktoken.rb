@@ -29,7 +29,7 @@ class PgTiktoken < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions with: "v16"
+    neon_postgres.pg_versions
   end
 
   def install
