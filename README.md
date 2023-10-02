@@ -43,6 +43,7 @@ In addition, you can try Neon locally with extentions from this tap. To install 
 - [`pg_embedding`](Formula/pg_embedding.rb) — HNSW algorithm for vector similarity search in PostgreSQL
 - [`pg_graphql`](Formula/pg_graphql.rb) — GraphQL support for PostgreSQL
 - [`pg_hashids`](Formula/pg_hashids.rb) — Short unique id generator for PostgreSQL, using hashids
+- [`pg_jsonschema`](Formula/pg_jsonschema.rb) — PostgreSQL extension providing JSON Schema validation
 - [`pg_tiktoken`](Formula/pg_tiktoken.rb) — Tiktoken tokenizer for PostgreSQL
 - [`pgjwt`](Formula/pgjwt.rb) — PostgreSQL implementation of JWT (JSON Web Tokens)
 - [`pgvector`](Formula/pgvector.rb) — Open-source vector similarity search for Postgres
