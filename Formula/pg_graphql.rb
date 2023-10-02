@@ -1,8 +1,8 @@
 class PgGraphql < Formula
   desc "GraphQL support for PostgreSQL"
   homepage "https://supabase.github.io/pg_graphql"
-  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.3.0.tar.gz"
-  sha256 "d76d5e479a1f0233701fb336e90d1ed58054e16dc182f676dfc3afd04d82b7c6"
+  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.4.0.tar.gz"
+  sha256 "ea85d45f8af1d2382e2af847f88102f930782c00e6c612308e6f08f27309d5f7"
   license "Apache-2.0"
 
   bottle do
@@ -19,8 +19,8 @@ class PgGraphql < Formula
   uses_from_macos "llvm" => :build
 
   resource "pgrx" do
-    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.9.8.tar.gz"
-    sha256 "b905bc2097bf720a1266197466212bfe0815edb95ff762264bbe31dbcf6bc305"
+    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.10.2.tar.gz"
+    sha256 "040fd7195fc350ec7c823e7c2dcafad2cf621c8696fd2ce0db7626d7fbd3d877"
   end
 
   def neon_postgres
@@ -28,8 +28,7 @@ class PgGraphql < Formula
   end
 
   def pg_versions
-    # Add with: `with: "v16"` in the next release (>=1.4)
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions with: "v16"
   end
 
   def install
