@@ -47,6 +47,7 @@ In addition, you can try Neon locally with extentions from this tap. To install 
 - [`pg_tiktoken`](Formula/pg_tiktoken.rb) — Tiktoken tokenizer for PostgreSQL
 - [`pgjwt`](Formula/pgjwt.rb) — PostgreSQL implementation of JWT (JSON Web Tokens)
 - [`pgvector`](Formula/pgvector.rb) — Open-source vector similarity search for Postgres
+- [`plpgsql_check`](Formula/plpgsql_check.rb) — Plpgsql linter
 - [`plv8`](Formula/plv8.rb) — V8 Engine Javascript Procedural Language add-on for PostgreSQL
 - [`postgresql-hll`](Formula/postgresql-hll.rb) — PostgreSQL extension adding HyperLogLog data structures as a native data type
 - [`rum`](Formula/rum.rb) — Inverted index with additional information in posting lists

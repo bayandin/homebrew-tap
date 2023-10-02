@@ -1,5 +1,5 @@
 class PlpgsqlCheck < Formula
-  desc "Linter for the PostgreSQL language plpgsql"
+  desc "Plpgsql linter"
   homepage "https://github.com/okbob/plpgsql_check"
   url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.5.2.tar.gz"
   sha256 "7c149bc2e7216d5612e66ccfc2cfd819d331e6de53b1288f9d98dc749302fae2"
