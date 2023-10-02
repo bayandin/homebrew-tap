@@ -5,6 +5,13 @@ class PgJsonschema < Formula
   sha256 "b1bd95009c8809bd6cda9a37777f8b7df425ff1a34976c1e7a4b31cf838ace66"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 arm64_ventura: "fe7ab89b267af38dbbccc672589e2f6ea09b3be3f64e169f5505f21045f1ad69"
+    sha256 cellar: :any,                 ventura:       "6b317ecd0a87bc8e89f4450fd017c97d3c4a371f158cad7267bdf6e6236dcb8a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7d1a84f428070a3c38e993463370b6f62f02adea54eee2f763ebddf7eb7d2ba4"
+  end
+
   depends_on "rust" => :build
   depends_on "rustfmt" => :build
   depends_on "bayandin/tap/neon-postgres"
