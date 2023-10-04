@@ -9,9 +9,9 @@ class NeonExtension < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_ventura: "c0560f00e3822a466f160649c7845eceb5727a85b26d4a452bdd6f6585f2fab7"
-    sha256 cellar: :any,                 ventura:       "42ae6e93037995382211fa2ad94693fb0078d2c63ca68ddfcb7f8e86fa5edae2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ef3b1474bd2b08705a492a9eebb104ae6009272df94350d528bc59ebe640d48"
+    sha256 cellar: :any,                 arm64_ventura: "b52d605148f05f56b3b1051fb3dbd57771a425c3e08547feb794e852799f05ca"
+    sha256 cellar: :any,                 ventura:       "0a16f94ef7cecdc788d506deaf1938b7d588f3c3c060ae0d1b86c9ca680f4823"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "623541887f78c104f3af3220071b57308e8cb13920b0a4d92d937f5379b918a3"
   end
 
   depends_on "bayandin/tap/neon-postgres"
