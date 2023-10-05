@@ -5,6 +5,13 @@ class Pgtap < Formula
   sha256 "d60cf90f0efb69c3deb20ac8ef8021811b24adc61b8bc0e16002304b0f94b536"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "38cb7b0d15c3a33d13888ff384fe307da2766057984ee634fc0c35b8bdf80efc"
+    sha256 cellar: :any_skip_relocation, ventura:       "3d8016179681076642a8e00dde6e064ae76280608e0ad882ae2de671e60a573c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f6a06040a4f50d5614f3ff214029d1fb3294fba50d051051a4ab37393c24dd94"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   def neon_postgres
