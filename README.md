@@ -52,6 +52,7 @@ In addition, you can try Neon locally with extensions from this tap. To install 
 - [`plv8`](Formula/plv8.rb) — V8 Engine Javascript Procedural Language add-on for PostgreSQL
 - [`postgresql-hll`](Formula/postgresql-hll.rb) — PostgreSQL extension adding HyperLogLog data structures as a native data type
 - [`postgresql-unit`](Formula/postgresql-unit.rb) — SI Units for PostgreSQL
+- [`prefix`](Formula/prefix.rb) — Prefix Range module for PostgreSQL
 - [`rum`](Formula/rum.rb) — Inverted index with additional information in posting lists
 
 _Note: extensions provided by the tap could be different from what's [available in Neon Cloud offering](https://neon.tech/docs/extensions/pg-extensions)._
