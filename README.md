@@ -46,6 +46,7 @@ In addition, you can try Neon locally with extensions from this tap. To install 
 - [`pg_jsonschema`](Formula/pg_jsonschema.rb) — PostgreSQL extension providing JSON Schema validation
 - [`pg_tiktoken`](Formula/pg_tiktoken.rb) — Tiktoken tokenizer for PostgreSQL
 - [`pgjwt`](Formula/pgjwt.rb) — PostgreSQL implementation of JWT (JSON Web Tokens)
+- [`pgtap`](Formula/pgtap.rb) — PostgreSQL Unit Testing Suite
 - [`pgvector`](Formula/pgvector.rb) — Open-source vector similarity search for Postgres
 - [`plpgsql_check`](Formula/plpgsql_check.rb) — Plpgsql linter
 - [`plv8`](Formula/plv8.rb) — V8 Engine Javascript Procedural Language add-on for PostgreSQL
