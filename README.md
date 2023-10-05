@@ -54,6 +54,7 @@ In addition, you can try Neon locally with extentions from this tap. To install 
 - [`postgresql-unit`](Formula/postgresql-unit.rb) — SI Units for PostgreSQL
 - [`prefix`](Formula/prefix.rb) — Prefix Range module for PostgreSQL
 - [`rum`](Formula/rum.rb) — Inverted index with additional information in posting lists
+- [`timescaledb`](Formula/timescaledb.rb) — Open-source time-series SQL database optimized for fast ingest and complex queries
 
 _Note: extensions provided by the tap could be different from what's [available in Neon Cloud offering](https://neon.tech/docs/extensions/pg-extensions)._
 
