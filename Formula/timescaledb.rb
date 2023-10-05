@@ -5,6 +5,13 @@ class Timescaledb < Formula
   sha256 "1c357e6499a33653bfce3db60b24a6c533fb23c5e8997a6661b2bca07b787bd0"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 arm64_ventura: "0fea8e19d4cc1c9fc06251a04d39767d114d37f4fa76297b04a3ee9cf324cdec"
+    sha256 cellar: :any,                 ventura:       "2bab69c807d4e328eed325f63c1c060d571ad343a7cb5a965ef3cbfcac9fb517"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6a5d8565be94c460d972ed05f15638a25263141805a42fa0579347870204d8e3"
+  end
+
   depends_on "cmake" => :build
   depends_on "bayandin/tap/neon-postgres"
 
