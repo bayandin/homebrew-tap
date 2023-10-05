@@ -82,32 +82,60 @@ class NeonLocal < Formula
     system bin/"neon_local", "start"
     pg_versions.each do |v|
       vv = v.delete_prefix("v")
+      psql = lambda do |sql_query, port|
+        %W[
+          #{neon_postgres.opt_libexec/v/"bin/psql"}
+          --port=#{port}
+          --host=127.0.0.1
+          --username=cloud_admin
+          --dbname=postgres
+          --quiet
+          --no-align
+          --tuples-only
+          --command='#{sql_query}'
+        ].join(" ")
+      end
 
-      output = shell_output("#{bin}/neon_local tenant create --pg-version #{vv}")
-      assert_match(/tenant ([^ ]+) successfully created on the pageserver/, output)
-      tenant_id = output.scan(/tenant ([^ ]+) successfully created on the pageserver/).flatten.first
+      tenant_id = SecureRandom.hex
+
+      output = shell_output("#{bin}/neon_local tenant create --pg-version #{vv} --tenant-id #{tenant_id}")
+      assert_includes output, "tenant #{tenant_id} successfully created on the pageserver", output
 
       ep_pg_port = free_port
-      system bin/"neon_local", "endpoint", "start", "main-#{v}",
-                                           "--pg-version", vv,
-                                           "--tenant-id", tenant_id,
-                                           "--pg-port", ep_pg_port
+      system bin/"neon_local", "endpoint", "start", "ep-main-#{v}",
+                                                    "--pg-version", vv,
+                                                    "--tenant-id", tenant_id,
+                                                    "--pg-port", ep_pg_port
 
-      psql = neon_postgres.opt_libexec/v/"bin/psql"
-      test_command = %W[
-        #{psql}
-        --port=#{ep_pg_port}
-        --host=127.0.0.1
-        --username=cloud_admin
-        --dbname=postgres
-        --tuples-only
-        --command="SELECT VERSION();"
-      ].join(" ")
-
-      output = shell_output test_command
+      output = shell_output psql.call("SELECT VERSION()", ep_pg_port)
       assert_match "PostgreSQL #{vv}", output.strip
 
-      system bin/"neon_local", "endpoint", "stop", "main-#{v}", "--tenant-id", tenant_id
+      shell_output psql.call("CREATE TABLE test (id SERIAL); INSERT INTO test DEFAULT VALUES", ep_pg_port)
+      count_output = shell_output psql.call("SELECT COUNT(*) FROM test", ep_pg_port)
+      assert_match "1", count_output
+
+      lsn = shell_output psql.call("SELECT pg_current_wal_flush_lsn()", ep_pg_port)
+      system bin/"neon_local", "timeline", "branch",
+                                           "--tenant-id", tenant_id,
+                                           "--branch-name", "branch",
+                                           "--ancestor-start-lsn", lsn,
+                                           "--ancestor-branch-name", "main"
+      br_ep_pg_port = free_port
+      system bin/"neon_local", "endpoint", "start", "ep-branch-#{v}",
+                                                    "--pg-version", vv,
+                                                    "--branch-name", "branch",
+                                                    "--tenant-id", tenant_id,
+                                                    "--pg-port", br_ep_pg_port
+
+      count_output = shell_output psql.call("SELECT COUNT(*) FROM test", br_ep_pg_port)
+      assert_match "1", count_output
+
+      shell_output psql.call("INSERT INTO test DEFAULT VALUES", br_ep_pg_port)
+      count_output = shell_output psql.call("SELECT COUNT(*) FROM test", br_ep_pg_port)
+      assert_match "2", count_output
+
+      system bin/"neon_local", "endpoint", "stop", "ep-branch-#{v}", "--tenant-id", tenant_id
+      system bin/"neon_local", "endpoint", "stop", "ep-main-#{v}", "--tenant-id", tenant_id
     end
   ensure
     system bin/"neon_local", "stop"
