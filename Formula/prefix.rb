@@ -5,6 +5,13 @@ class Prefix < Formula
   sha256 "4342f251432a5f6fb05b8597139d3ccde8dcf87e8ca1498e7ee931ca057a8575"
   license "PostgreSQL"
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4075d7e33fb452d6d77484b8818e86379c1dbb26c12eb57fa2416e7c197db98c"
+    sha256 cellar: :any_skip_relocation, ventura:       "37e2aa50772470cb7666fbd77db74efb51d8b40c29728e22db704a5802234745"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0ef1fbb10f28248d6b4d535633bd1c69a853bfb7cf34b64391f34569022c868a"
+  end
+
   depends_on "bayandin/tap/neon-postgres"
 
   resource "homebrew-prefixes.fr.csv" do
