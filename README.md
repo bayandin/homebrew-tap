@@ -9,7 +9,7 @@ brew install bayandin/tap/neon-local
 ```
 The command installs `neon-local` and creates configuration in `"$(brew --prefix)/var/neon"` directory.
 
-Based on examples from [neondatabase/neon](https://github.com/neondatabase/neon#running-neon-database) repository (instead of `cargo neon` from the documentaion, we use `neon-local`).
+Based on examples from [neondatabase/neon](https://github.com/neondatabase/neon#running-neon-database) repository (instead of `cargo neon` from the documentation, we use `neon-local`).
 ```bash
 neon-local start
 neon-local tenant create --set-default # use `--pg-version \d+` for a particular Postgres version
@@ -35,7 +35,7 @@ psql -p55432 -h 127.0.0.1 -U cloud_admin postgres
 
 # Extensions:
 
-In addition, you can try Neon locally with extentions from this tap. To install them run the following command `brew install bayandin/tap/<extension>`:
+In addition, you can try Neon locally with extensions from this tap. To install them run the following command `brew install bayandin/tap/<extension>`:
 - [`h3-pg`](Formula/h3-pg.rb) — PostgreSQL bindings for H3, a hierarchical hexagonal geospatial indexing system
 - [`hypopg`](Formula/hypopg.rb) — Hypothetical Indexes for PostgreSQL
 - [`ip4r`](Formula/ip4r.rb) — IPv4/v6 and IPv4/v6 range index type for PostgreSQL
