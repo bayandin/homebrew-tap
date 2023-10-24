@@ -1,8 +1,8 @@
 class PostgresqlUnit < Formula
   desc "SI Units for PostgreSQL"
   homepage "https://github.com/df7cb/postgresql-unit"
-  url "https://github.com/df7cb/postgresql-unit/archive/refs/tags/7.7.tar.gz"
-  sha256 "411d05beeb97e5a4abf17572bfcfbb5a68d98d1018918feff995f6ee3bb03e79"
+  url "https://github.com/df7cb/postgresql-unit/archive/refs/tags/7.8.tar.gz"
+  sha256 "4709d439fba972ec4a0581f6a1504d120a0891dff706cc2c3b82025b000bf89d"
   license "GPL-3.0-or-later"
 
   bottle do
