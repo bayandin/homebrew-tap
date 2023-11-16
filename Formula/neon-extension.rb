@@ -2,8 +2,8 @@ class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4049",
-    revision: "49377abd98fb059ed34c2753970b261f78609a8f"
+    tag:      "release-4179",
+    revision: "3710c32aaed4d699451c850fcf7a0dc21520539e"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -30,17 +30,20 @@ class NeonExtension < Formula
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       cp_r "pgxn", "build-#{v}"
       extensions.each do |ext|
         cd "build-#{v}/#{ext}" do
-          system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
+          system "make", "install", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config",
+                                    "DESTDIR=#{buildpath}/stage-#{v}-#{ext}"
 
-          (lib/neon_postgres.name/v).install "#{ext}.#{dlsuffix}"
-          (share/neon_postgres.name/v/"extension").install "#{ext}.control" if File.exist?("#{ext}.control")
-          (share/neon_postgres.name/v/"extension").install Dir["#{ext}--*.sql"]
+          stage_dir = buildpath/"stage-#{v}-#{ext}#{HOMEBREW_PREFIX}"
+          share_dir = share/neon_postgres.name/v
+          lib_dir = lib/neon_postgres.name/v
+          lib_dir.install stage_dir/"lib"/neon_postgres.name/v/"#{ext}.#{neon_postgres.dlsuffix(v)}"
+          if File.exist?(stage_dir/"share"/neon_postgres.name/v/"extension/#{ext}.control")
+            (share_dir/"extension").install stage_dir/"share"/neon_postgres.name/v/"extension/#{ext}.control"
+          end
+          (share_dir/"extension").install Dir[stage_dir/"share"/neon_postgres.name/v/"extension/#{ext}--*.sql"]
         end
       end
     end
