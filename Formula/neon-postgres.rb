@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4049",
-    revision: "49377abd98fb059ed34c2753970b261f78609a8f"
+    tag:      "release-4179",
+    revision: "3710c32aaed4d699451c850fcf7a0dc21520539e"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -42,6 +42,11 @@ class NeonPostgres < Formula
 
   def pg_bin_for(version)
     opt_libexec/version/"bin"
+  end
+
+  def dlsuffix(version)
+    # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
+    (OS.linux? || "v14 v15".include?(version)) ? "so" : "dylib"
   end
 
   def install
