@@ -1,8 +1,8 @@
 class Timescaledb < Formula
   desc "Time-series SQL database optimized for fast ingest and complex queries"
   homepage "https://www.timescale.com/"
-  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.12.2.tar.gz"
-  sha256 "d24cd29aad411d3e41d543d1a30827c48f8e01a48563650db5fac145ad7a01eb"
+  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.13.0.tar.gz"
+  sha256 "584a351c7775f0e067eaa0e7277ea88cab9077cc4c455cbbf09a5d9723dce95d"
   license "Apache-2.0"
 
   bottle do
@@ -20,7 +20,7 @@ class Timescaledb < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions without: "v16"
+    neon_postgres.pg_versions
   end
 
   def install
@@ -33,9 +33,6 @@ class Timescaledb < Formula
     ]
 
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       rm_rf "build"
       system "./bootstrap", *common_args, "-DPG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       cd "build" do
@@ -45,7 +42,7 @@ class Timescaledb < Formula
 
       stage_dir = Pathname("stage-#{v}#{HOMEBREW_PREFIX}")
       mkdir_p lib/neon_postgres.name/v
-      mv Dir[stage_dir/"lib"/neon_postgres.name/v/"*.#{dlsuffix}"], lib/neon_postgres.name/v
+      mv Dir[stage_dir/"lib"/neon_postgres.name/v/"*.#{neon_postgres.dlsuffix(v)}"], lib/neon_postgres.name/v
 
       from_ext_dir = stage_dir/"share"/neon_postgres.name/v/"extension"
       to_ext_dir = share/neon_postgres.name/v/"extension"
