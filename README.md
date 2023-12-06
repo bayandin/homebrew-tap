@@ -14,11 +14,13 @@ Based on examples from [neondatabase/neon](https://github.com/neondatabase/neon#
 neon-local start
 neon-local tenant create --set-default # use `--pg-version \d+` for a particular Postgres version
 neon-local tenant list
-neon-local endpoint start main # use `--pg-version \d+` for a particular Postgres version, should match Postgres version for the tenant
+neon_local endpoint create main  # use `--pg-version \d+` for a particular Postgres version, should match Postgres version for the tenant
+neon-local endpoint start main
 neon-local endpoint list
 neon-local timeline branch --branch-name test
 neon-local timeline list
-neon-local endpoint start test --branch-name test
+neon_local endpoint create test --branch-name test
+neon-local endpoint start test
 ```
 
 ```bash
