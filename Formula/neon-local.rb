@@ -2,8 +2,8 @@ class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4277",
-    revision: "e65be4c2dcb26011fcb963e8445854305795286e"
+    tag:      "release-4344",
+    revision: "60af392e4506f880de81a14cc5c361cb0af8a47c"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -102,10 +102,11 @@ class NeonLocal < Formula
       assert_includes output, "tenant #{tenant_id} successfully created on the pageserver", output
 
       ep_pg_port = free_port
-      system bin/"neon_local", "endpoint", "start", "ep-main-#{v}",
-                                                    "--pg-version", vv,
-                                                    "--tenant-id", tenant_id,
-                                                    "--pg-port", ep_pg_port
+      system bin/"neon_local", "endpoint", "create", "ep-main-#{v}",
+                                                     "--pg-version", vv,
+                                                     "--tenant-id", tenant_id,
+                                                     "--pg-port", ep_pg_port
+      system bin/"neon_local", "endpoint", "start", "ep-main-#{v}"
 
       output = shell_output psql.call("SELECT VERSION()", ep_pg_port)
       assert_match "PostgreSQL #{vv}", output.strip
@@ -121,11 +122,12 @@ class NeonLocal < Formula
                                            "--ancestor-start-lsn", lsn,
                                            "--ancestor-branch-name", "main"
       br_ep_pg_port = free_port
-      system bin/"neon_local", "endpoint", "start", "ep-branch-#{v}",
-                                                    "--pg-version", vv,
-                                                    "--branch-name", "branch",
-                                                    "--tenant-id", tenant_id,
-                                                    "--pg-port", br_ep_pg_port
+      system bin/"neon_local", "endpoint", "create", "ep-branch-#{v}",
+                                                     "--pg-version", vv,
+                                                     "--branch-name", "branch",
+                                                     "--tenant-id", tenant_id,
+                                                     "--pg-port", br_ep_pg_port
+      system bin/"neon_local", "endpoint", "start", "ep-branch-#{v}"
 
       count_output = shell_output psql.call("SELECT COUNT(*) FROM test", br_ep_pg_port)
       assert_match "1", count_output
@@ -134,8 +136,8 @@ class NeonLocal < Formula
       count_output = shell_output psql.call("SELECT COUNT(*) FROM test", br_ep_pg_port)
       assert_match "2", count_output
 
-      system bin/"neon_local", "endpoint", "stop", "ep-branch-#{v}", "--tenant-id", tenant_id
-      system bin/"neon_local", "endpoint", "stop", "ep-main-#{v}", "--tenant-id", tenant_id
+      system bin/"neon_local", "endpoint", "stop", "--destroy", "ep-branch-#{v}"
+      system bin/"neon_local", "endpoint", "stop", "--destroy", "ep-main-#{v}"
     end
   ensure
     system bin/"neon_local", "stop"
