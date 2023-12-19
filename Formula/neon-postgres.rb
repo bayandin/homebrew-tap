@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4414",
-    revision: "3633742de99655f67e768731fc77e8e6758f9a1b"
+    tag:      "release-4456",
+    revision: "306c7a18134c13e5a9e08631684c73044c47e95c"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
