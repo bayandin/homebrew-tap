@@ -2,8 +2,8 @@ class Plv8 < Formula
   desc "V8 Engine Javascript Procedural Language add-on for PostgreSQL"
   homepage "https://plv8.github.io/"
   url "https://github.com/plv8/plv8.git",
-    tag:      "v3.2.0",
-    revision: "f23425b5115203d7b339123d5088bf82bfff51cc"
+    tag:      "v3.2.1",
+    revision: "f2f3f9bf46fbbb400aa74f0ae61aeb3aa8ae82bf"
   license "PostgreSQL"
 
   bottle do
@@ -29,13 +29,10 @@ class Plv8 < Formula
                           "-DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=#{ENV.cc} -DCMAKE_CXX_COMPILER=#{ENV.cxx}"
 
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "make", "clean", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       mkdir_p lib/neon_postgres.name/v
-      mv "plv8-#{version}.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "plv8-#{version}.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "plv8.control", share/neon_postgres.name/v/"extension"
