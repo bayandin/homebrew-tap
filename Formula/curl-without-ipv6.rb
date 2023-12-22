@@ -15,6 +15,13 @@ class CurlWithoutIpv6 < Formula
     regex(/href=.*?curl[._-]v?(.*?)\.t/i)
   end
 
+  bottle do
+    root_url "https://ghcr.io/v2/bayandin/tap"
+    sha256 cellar: :any,                 arm64_ventura: "c2ba6ffd06dd8b1c87783095ff51f4729b65d92cc8541a75461f881cb29b9ca8"
+    sha256 cellar: :any,                 ventura:       "c64910f1e171f79ac939414c1913134ca369d86e6040dca2dc8ce8c5b1c386fc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1e279503b5dde213932e2b87eb9b40cf6c2a8cbf3547dff16a38c643c19fbb7a"
+  end
+
   head do
     url "https://github.com/curl/curl.git", branch: "master"
 
