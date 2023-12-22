@@ -1,8 +1,8 @@
 class PlpgsqlCheck < Formula
   desc "Plpgsql linter"
   homepage "https://github.com/okbob/plpgsql_check"
-  url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.7.0.tar.gz"
-  sha256 "c3871b3ce5165a0a90df636e71f23a9dc9ef33032575b81fb5a73406f228c6b1"
+  url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.7.1.tar.gz"
+  sha256 "7af35b8e015ff8014b148a227ec2bb29737ce734c8bc0c4bea9f5970a733ec82"
   license "PostgreSQL"
 
   bottle do
@@ -24,14 +24,11 @@ class PlpgsqlCheck < Formula
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "make", "clean", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "plpgsql_check.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "plpgsql_check.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "plpgsql_check.control", share/neon_postgres.name/v/"extension"
