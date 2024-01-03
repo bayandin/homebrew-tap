@@ -1,8 +1,8 @@
 class PgGraphql < Formula
   desc "GraphQL support for PostgreSQL"
   homepage "https://supabase.github.io/pg_graphql"
-  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.4.2.tar.gz"
-  sha256 "fbd9be434577e85e788c023acc3e10bf0f4080a79fef5bb01a720ec83ad6937d"
+  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.4.3.tar.gz"
+  sha256 "68e3f2bd81b1aeae4605181bb70b71bfcbc7194ab0c13945587467f0f353e6f2"
   license "Apache-2.0"
 
   bottle do
@@ -19,8 +19,8 @@ class PgGraphql < Formula
   uses_from_macos "llvm" => :build
 
   resource "pgrx" do
-    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.10.2.tar.gz"
-    sha256 "040fd7195fc350ec7c823e7c2dcafad2cf621c8696fd2ce0db7626d7fbd3d877"
+    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.11.2.tar.gz"
+    sha256 "2f818d18c86fa292428766c9af52313cd80030e041948d67716f7c4005e4ff38"
   end
 
   def neon_postgres
@@ -50,16 +50,13 @@ class PgGraphql < Formula
     system "cargo", "pgrx", "init", *args
 
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "cargo", "pgrx", "package", "--profile", "release",
                                         "--pg-config", neon_postgres.pg_bin_for(v)/"pg_config",
                                         "--out-dir", "stage-#{v}"
 
       stage_dir = Pathname("stage-#{v}#{HOMEBREW_PREFIX}")
       mkdir_p lib/neon_postgres.name/v
-      mv stage_dir/"lib/neon-postgres/#{v}/pg_graphql.#{dlsuffix}", lib/neon_postgres.name/v
+      mv stage_dir/"lib/neon-postgres/#{v}/pg_graphql.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       from_ext_dir = stage_dir/"share/neon-postgres/#{v}/extension"
       to_ext_dir = share/neon_postgres.name/v/"extension"
