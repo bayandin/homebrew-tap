@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4525",
-    revision: "aa72a22661ca841868ab11b21137c47e6c07c3e3"
+    tag:      "release-4604",
+    revision: "93450f11f5f34a1e7435d9e73727f38036b92457"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -24,9 +24,9 @@ class NeonStorage < Formula
 
   def binaries
     %w[
-      compute_ctl neon_local pagectl pageserver
-      pg_sni_router proxy s3_scrubber safekeeper
-      storage_broker trace wal_craft
+      compute_ctl neon_local pagebench pagectl
+      pageserver pg_sni_router proxy s3_scrubber
+      safekeeper storage_broker trace wal_craft
     ]
   end
 
@@ -44,6 +44,7 @@ class NeonStorage < Formula
       system "cargo", "install", *std_cargo_args(root: libexec, path: "libs/postgres_ffi/wal_craft")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/ctl")
+      system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/pagebench")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "proxy")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "s3_scrubber")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "safekeeper")
@@ -53,10 +54,11 @@ class NeonStorage < Formula
   end
 
   test do
-    (binaries - %w[wal_craft]).each do |file|
+    (binaries - %w[pagebench wal_craft]).each do |file|
       system libexec/"bin"/file, "--version"
     end
 
     system libexec/"bin/wal_craft", "--help"
+    system libexec/"bin/pagebench", "--help"
   end
 end
