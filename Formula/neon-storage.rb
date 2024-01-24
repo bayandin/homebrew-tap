@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4604",
-    revision: "93450f11f5f34a1e7435d9e73727f38036b92457"
+    tag:      "release-4642",
+    revision: "a1a74eef2c60c283bc038b65b99db2ed0c68f5bb"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -24,8 +24,8 @@ class NeonStorage < Formula
 
   def binaries
     %w[
-      compute_ctl neon_local pagebench pagectl
-      pageserver pg_sni_router proxy s3_scrubber
+      attachment_service compute_ctl neon_local pagebench
+      pagectl pageserver pg_sni_router proxy s3_scrubber
       safekeeper storage_broker trace wal_craft
     ]
   end
@@ -38,9 +38,20 @@ class NeonStorage < Formula
     ENV["BUILD_TAG"] = build.stable? ? "release-#{version}" : "dev-#{Utils.git_short_head}"
     ENV["GIT_VERSION"] = Utils.git_head
 
+    # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
+    # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
+    if OS.mac?
+      inreplace "control_plane/src/endpoint.rs", "cmd.args([\"--http-port\", &self.http_address.port().to_string()])",
+                                                <<~EOS
+                                                  cmd.args(["--http-port", &self.http_address.port().to_string()])
+                                                     .env("DYLD_LIBRARY_PATH", "#{Formula["bayandin/tap/curl-without-ipv6"].opt_lib}")
+                                                EOS
+    end
+
     with_env(POSTGRES_INSTALL_DIR: neon_postgres.opt_libexec) do
       system "cargo", "install", *std_cargo_args(root: libexec, path: "compute_tools")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane")
+      system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane/attachment_service")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "libs/postgres_ffi/wal_craft")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver")
       system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/ctl")
