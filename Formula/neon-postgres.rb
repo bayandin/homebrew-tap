@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4604",
-    revision: "93450f11f5f34a1e7435d9e73727f38036b92457"
+    tag:      "release-4642",
+    revision: "a1a74eef2c60c283bc038b65b99db2ed0c68f5bb"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -25,11 +25,17 @@ class NeonPostgres < Formula
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
-  uses_from_macos "curl"
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
 
+  # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
+  # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
+  on_macos do
+    depends_on "bayandin/tap/curl-without-ipv6"
+  end
+
   on_linux do
+    depends_on "curl"
     depends_on "libseccomp"
   end
 
