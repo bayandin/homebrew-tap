@@ -2,8 +2,8 @@ class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4642",
-    revision: "a1a74eef2c60c283bc038b65b99db2ed0c68f5bb"
+    tag:      "release-4713",
+    revision: "1ec3e39d4e777d53d78eea8eba7d21f37942b000"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
