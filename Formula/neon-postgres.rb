@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4642",
-    revision: "a1a74eef2c60c283bc038b65b99db2ed0c68f5bb"
+    tag:      "release-4713",
+    revision: "1ec3e39d4e777d53d78eea8eba7d21f37942b000"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -28,15 +28,9 @@ class NeonPostgres < Formula
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
 
-  # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
-  # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
-  on_macos do
-    depends_on "bayandin/tap/curl-without-ipv6"
-  end
-
   on_linux do
-    depends_on "curl"
     depends_on "libseccomp"
+    depends_on "util-linux"
   end
 
   def pg_versions(with: nil, without: nil)
@@ -50,6 +44,10 @@ class NeonPostgres < Formula
     opt_libexec/version/"bin"
   end
 
+  def pg_lib_for(version)
+    opt_libexec/version/"lib"
+  end
+
   def dlsuffix(version)
     # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
     (OS.linux? || "v14 v15".include?(version)) ? "so" : "dylib"
@@ -58,14 +56,7 @@ class NeonPostgres < Formula
   def install
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
-    ENV.prepend "LDFLAGS", "-L#{Formula["openssl@3"].opt_lib} -L#{Formula["readline"].opt_lib}"
-    ENV.prepend "CPPFLAGS", "-I#{Formula["openssl@3"].opt_include} -I#{Formula["readline"].opt_include}"
-
-    if OS.linux?
-      ENV.prepend "LDFLAGS", "-L#{Formula["curl"].opt_lib}"
-      ENV.prepend "CPPFLAGS", "-I#{Formula["curl"].opt_include}"
-    end
-
+    deps = %w[openssl@3 readline]
     pg_versions.each do |v|
       cd "vendor/postgres-#{v}" do
         args = %W[
@@ -73,6 +64,8 @@ class NeonPostgres < Formula
           --datadir=#{HOMEBREW_PREFIX}/share/#{name}/#{v}
           --libdir=#{HOMEBREW_PREFIX}/lib/#{name}/#{v}
           --includedir=#{HOMEBREW_PREFIX}/include/#{name}/#{v}
+          --with-includes=#{deps.map { |d| Formula[d].opt_include }.join(" ")}
+          --with-libraries=#{deps.map { |d| Formula[d].opt_lib }.join(" ")}
           --enable-debug
           --with-icu
           --with-libxml
@@ -82,7 +75,7 @@ class NeonPostgres < Formula
           --with-uuid=e2fs
         ]
         args << "--with-zstd" if v != "v14"
-        args << "PG_SYSROOT=#{MacOS.sdk_path}" if MacOS.sdk_root_needed?
+        args << "PG_SYSROOT=#{MacOS.sdk_path}" if OS.mac? && MacOS.sdk_root_needed?
 
         system "./configure", *args
         system "make"
