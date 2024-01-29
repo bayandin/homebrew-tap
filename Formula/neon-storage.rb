@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4642",
-    revision: "a1a74eef2c60c283bc038b65b99db2ed0c68f5bb"
+    tag:      "release-4713",
+    revision: "1ec3e39d4e777d53d78eea8eba7d21f37942b000"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -14,13 +14,19 @@ class NeonStorage < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "88c87bf0a437c6278a10376a3c20e20b9a0bb36296f3b515f6c51880a7b4937f"
   end
 
-  depends_on "bayandin/tap/neon-postgres" => :build
   depends_on "pkg-config" => :build
   depends_on "rust" => :build
+  depends_on "bayandin/tap/neon-postgres"
   depends_on "openssl@3"
   depends_on "protobuf"
 
   uses_from_macos "llvm" => :build
+
+  on_linux do
+    # `attachment_service` got linked with system libpq on Linux.
+    # Not sure how to prevent it from doing that, so just depend on it to make audit happy
+    depends_on "libpq"
+  end
 
   def binaries
     %w[
@@ -35,9 +41,6 @@ class NeonStorage < Formula
   end
 
   def install
-    ENV["BUILD_TAG"] = build.stable? ? "release-#{version}" : "dev-#{Utils.git_short_head}"
-    ENV["GIT_VERSION"] = Utils.git_head
-
     # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
     # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
     if OS.mac?
@@ -48,20 +51,27 @@ class NeonStorage < Formula
                                                 EOS
     end
 
-    with_env(POSTGRES_INSTALL_DIR: neon_postgres.opt_libexec) do
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "compute_tools")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane/attachment_service")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "libs/postgres_ffi/wal_craft")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/ctl")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/pagebench")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "proxy")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "s3_scrubber")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "safekeeper")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_broker")
-      system "cargo", "install", *std_cargo_args(root: libexec, path: "trace")
-    end
+    ENV["BUILD_TAG"] = build.stable? ? "release-#{version}" : "dev-#{Utils.git_short_head}"
+    ENV["GIT_VERSION"] = Utils.git_head
+    ENV["POSTGRES_INSTALL_DIR"] = neon_postgres.opt_libexec
+    ENV["POSTGRES_DISTRIB_DIR"] = neon_postgres.opt_libexec
+
+    ENV["PQ_LIB_DIR"] = neon_postgres.pg_lib_for("v16") if OS.mac?
+    mkdir_p libexec/"control_plane/attachment_service"
+    cp_r "control_plane/attachment_service/migrations", libexec/"control_plane/attachment_service/"
+
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "compute_tools")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane/attachment_service")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "libs/postgres_ffi/wal_craft")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/ctl")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/pagebench")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "proxy")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "s3_scrubber")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "safekeeper")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_broker")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "trace")
   end
 
   test do
