@@ -4,6 +4,7 @@ class Pgvector < Formula
   url "https://github.com/pgvector/pgvector/archive/refs/tags/v0.6.0.tar.gz"
   sha256 "b0cf4ba1ab016335ac8fb1cada0d2106235889a194fffeece217c5bda90b2f19"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -13,6 +14,8 @@ class Pgvector < Formula
   end
 
   depends_on "bayandin/tap/neon-postgres"
+
+  patch :DATA
 
   def neon_postgres
     Formula["bayandin/tap/neon-postgres"]
@@ -65,3 +68,61 @@ class Pgvector < Formula
     end
   end
 end
+
+__END__
+From 5518a806a70e7f40d5054a762ccda7d5e6b0d31c Mon Sep 17 00:00:00 2001
+From: Heikki Linnakangas <heikki.linnakangas@iki.fi>
+Date: Tue, 30 Jan 2024 14:33:00 +0200
+Subject: [PATCH] Make v0.6.0 work with Neon
+
+Now that the WAL-logging happens as a separate step at the end of the
+build, we need a few neon-specific hints to make it work.
+---
+ src/hnswbuild.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/src/hnswbuild.c b/src/hnswbuild.c
+index 680789ba..41c5b709 100644
+--- a/src/hnswbuild.c
++++ b/src/hnswbuild.c
+@@ -1089,13 +1089,41 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
+ 	SeedRandom(42);
+ #endif
+
++#ifdef NEON_SMGR
++	smgr_start_unlogged_build(index->rd_smgr);
++#endif
++
+ 	InitBuildState(buildstate, heap, index, indexInfo, forkNum);
+
+ 	BuildGraph(buildstate, forkNum);
+
++#ifdef NEON_SMGR
++	smgr_finish_unlogged_build_phase_1(index->rd_smgr);
++#endif
++
+ 	if (RelationNeedsWAL(index))
++	{
+ 		log_newpage_range(index, forkNum, 0, RelationGetNumberOfBlocks(index), true);
+
++#ifdef NEON_SMGR
++		{
++#if PG_VERSION_NUM >= 160000
++			RelFileLocator rlocator = index->rd_smgr->smgr_rlocator.locator;
++#else
++			RelFileNode rlocator = index->rd_smgr->smgr_rnode.node;
++#endif
++
++			SetLastWrittenLSNForBlockRange(XactLastRecEnd, rlocator,
++										   MAIN_FORKNUM, 0, RelationGetNumberOfBlocks(index));
++			SetLastWrittenLSNForRelation(XactLastRecEnd, rlocator, MAIN_FORKNUM);
++		}
++#endif
++	}
++
++#ifdef NEON_SMGR
++	smgr_end_unlogged_build(index->rd_smgr);
++#endif
++
+ 	FreeBuildState(buildstate);
+ }
