@@ -2,7 +2,7 @@ class PgJsonschema < Formula
   desc "PostgreSQL extension providing JSON Schema validation"
   homepage "https://github.com/supabase/pg_jsonschema"
   url "https://github.com/supabase/pg_jsonschema/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "b1bd95009c8809bd6cda9a37777f8b7df425ff1a34976c1e7a4b31cf838ace66"
+  sha256 "9118fc508a6e231e7a39acaa6f066fcd79af17a5db757b47d2eefbe14f7794f0"
   license "Apache-2.0"
 
   bottle do
