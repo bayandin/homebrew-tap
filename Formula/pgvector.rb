@@ -4,7 +4,7 @@ class Pgvector < Formula
   url "https://github.com/pgvector/pgvector/archive/refs/tags/v0.6.0.tar.gz"
   sha256 "b0cf4ba1ab016335ac8fb1cada0d2106235889a194fffeece217c5bda90b2f19"
   license "PostgreSQL"
-  revision 1
+  revision 2
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -27,15 +27,12 @@ class Pgvector < Formula
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       ENV["PG_CONFIG"] = neon_postgres.pg_bin_for(v)/"pg_config"
       system "make", "clean"
       system "make"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "vector.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "vector.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "vector.control", share/neon_postgres.name/v/"extension"
@@ -73,7 +70,7 @@ __END__
 From 5518a806a70e7f40d5054a762ccda7d5e6b0d31c Mon Sep 17 00:00:00 2001
 From: Heikki Linnakangas <heikki.linnakangas@iki.fi>
 Date: Tue, 30 Jan 2024 14:33:00 +0200
-Subject: [PATCH] Make v0.6.0 work with Neon
+Subject: [PATCH 1/2] Make v0.6.0 work with Neon
 
 Now that the WAL-logging happens as a separate step at the end of the
 build, we need a few neon-specific hints to make it work.
@@ -126,3 +123,57 @@ index 680789ba..41c5b709 100644
 +
  	FreeBuildState(buildstate);
  }
+
+
+From de575210ae7321cc685165fdfbb5e7b44a707d5a Mon Sep 17 00:00:00 2001
+From: Heikki Linnakangas <heikki.linnakangas@iki.fi>
+Date: Thu, 1 Feb 2024 17:37:36 +0200
+Subject: [PATCH 2/2] Fix: rd_smgr might not be open yet.
+
+---
+ src/hnswbuild.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/hnswbuild.c b/src/hnswbuild.c
+index 41c5b709..bfa657a0 100644
+--- a/src/hnswbuild.c
++++ b/src/hnswbuild.c
+@@ -1090,7 +1090,7 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
+ #endif
+
+ #ifdef NEON_SMGR
+-	smgr_start_unlogged_build(index->rd_smgr);
++	smgr_start_unlogged_build(RelationGetSmgr(index));
+ #endif
+
+ 	InitBuildState(buildstate, heap, index, indexInfo, forkNum);
+@@ -1098,7 +1098,7 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
+ 	BuildGraph(buildstate, forkNum);
+
+ #ifdef NEON_SMGR
+-	smgr_finish_unlogged_build_phase_1(index->rd_smgr);
++	smgr_finish_unlogged_build_phase_1(RelationGetSmgr(index));
+ #endif
+
+ 	if (RelationNeedsWAL(index))
+@@ -1108,9 +1108,9 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
+ #ifdef NEON_SMGR
+ 		{
+ #if PG_VERSION_NUM >= 160000
+-			RelFileLocator rlocator = index->rd_smgr->smgr_rlocator.locator;
++			RelFileLocator rlocator = RelationGetSmgr(index)->smgr_rlocator.locator;
+ #else
+-			RelFileNode rlocator = index->rd_smgr->smgr_rnode.node;
++			RelFileNode rlocator = RelationGetSmgr(index)->smgr_rnode.node;
+ #endif
+
+ 			SetLastWrittenLSNForBlockRange(XactLastRecEnd, rlocator,
+@@ -1121,7 +1121,7 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
+ 	}
+
+ #ifdef NEON_SMGR
+-	smgr_end_unlogged_build(index->rd_smgr);
++	smgr_end_unlogged_build(RelationGetSmgr(index));
+ #endif
+
+ 	FreeBuildState(buildstate);
