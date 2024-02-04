@@ -68,6 +68,8 @@ class CurlWithoutIpv6 < Formula
     #   FATAL:  postmaster became multithreaded during startup
     #
     # Disabling IPv6 support in curl a possible workaround for the issue
+    #
+    # Ref https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
     args << "--disable-ipv6"
 
     args << if OS.mac?
