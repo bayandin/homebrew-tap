@@ -5,6 +5,7 @@ class NeonExtension < Formula
     tag:      "release-4781",
     revision: "b9238059d6feb796dc0a8c1331aeaae8b22cb338"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   bottle do
@@ -15,16 +16,7 @@ class NeonExtension < Formula
   end
 
   depends_on "bayandin/tap/neon-postgres"
-
-  # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
-  # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
-  on_macos do
-    depends_on "bayandin/tap/curl-without-ipv6"
-  end
-
-  on_linux do
-    depends_on "curl"
-  end
+  uses_from_macos "curl"
 
   def extensions
     %w[neon_walredo neon neon_rmgr neon_utils]
