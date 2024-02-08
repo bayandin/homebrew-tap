@@ -1,3 +1,4 @@
 {
+    "curl-without-ipv6": "neondatabase/tap",
     "postgresql@16": "homebrew/core"
 }
