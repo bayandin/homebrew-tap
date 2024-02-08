@@ -5,6 +5,7 @@ class NeonStorage < Formula
     tag:      "release-4781",
     revision: "b9238059d6feb796dc0a8c1331aeaae8b22cb338"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   bottle do
@@ -21,6 +22,12 @@ class NeonStorage < Formula
   depends_on "protobuf"
 
   uses_from_macos "llvm" => :build
+
+  on_macos do
+    # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
+    # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
+    depends_on "neondatabase/tap/curl-without-ipv6"
+  end
 
   on_linux do
     # `attachment_service` got linked with system libpq on Linux.
@@ -47,7 +54,7 @@ class NeonStorage < Formula
       inreplace "control_plane/src/endpoint.rs", "cmd.args([\"--http-port\", &self.http_address.port().to_string()])",
                                                 <<~EOS
                                                   cmd.args(["--http-port", &self.http_address.port().to_string()])
-                                                     .env("DYLD_LIBRARY_PATH", "#{Formula["bayandin/tap/curl-without-ipv6"].opt_lib}")
+                                                     .env("DYLD_LIBRARY_PATH", "#{Formula["neondatabase/tap/curl-without-ipv6"].opt_lib}")
                                                 EOS
     end
 
