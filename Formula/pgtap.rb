@@ -1,8 +1,8 @@
 class Pgtap < Formula
   desc "PostgreSQL Unit Testing Suite"
   homepage "https://pgtap.org"
-  url "https://github.com/theory/pgtap/archive/refs/tags/v1.3.1.tar.gz"
-  sha256 "d60cf90f0efb69c3deb20ac8ef8021811b24adc61b8bc0e16002304b0f94b536"
+  url "https://github.com/theory/pgtap/archive/refs/tags/v1.3.2.tar.gz"
+  sha256 "8441d541dae7ddfcda72585e70074f420978af78a211b9bc48d87bdfe892ce13"
   license "PostgreSQL"
 
   bottle do
@@ -24,14 +24,8 @@ class Pgtap < Formula
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "make", "clean", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
-
-      mkdir_p lib/neon_postgres.name/v
-      mv "src/pgtap.#{dlsuffix}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "pgtap.control", share/neon_postgres.name/v/"extension"
