@@ -2,8 +2,8 @@ class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4916",
-    revision: "01180666b0f58c5d0be9434abbd3ce2880418024"
+    tag:      "release-4983",
+    revision: "6460beffcd0d9c4d4a1ed17e39295a869510d29f"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -15,16 +15,7 @@ class NeonExtension < Formula
   end
 
   depends_on "bayandin/tap/neon-postgres"
-
-  # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
-  # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
-  on_macos do
-    depends_on "bayandin/tap/curl-without-ipv6"
-  end
-
-  on_linux do
-    depends_on "curl"
-  end
+  uses_from_macos "curl"
 
   def extensions
     %w[neon_walredo neon neon_rmgr neon_utils]
