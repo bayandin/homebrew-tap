@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-4916",
-    revision: "01180666b0f58c5d0be9434abbd3ce2880418024"
+    tag:      "release-4983",
+    revision: "6460beffcd0d9c4d4a1ed17e39295a869510d29f"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -41,16 +41,6 @@ class NeonStorage < Formula
   end
 
   def install
-    # A workaround for `FATAL:  postmaster became multithreaded during startup` on macOS >= 14.2
-    # See https://www.postgresql.org/message-id/flat/CYMBV0OT7216.JNRUO6R6GH86%40neon.tech
-    if OS.mac?
-      inreplace "control_plane/src/endpoint.rs", "cmd.args([\"--http-port\", &self.http_address.port().to_string()])",
-                                                <<~EOS
-                                                  cmd.args(["--http-port", &self.http_address.port().to_string()])
-                                                     .env("DYLD_LIBRARY_PATH", "#{Formula["bayandin/tap/curl-without-ipv6"].opt_lib}")
-                                                EOS
-    end
-
     ENV["BUILD_TAG"] = build.stable? ? "release-#{version}" : "dev-#{Utils.git_short_head}"
     ENV["GIT_VERSION"] = Utils.git_head
     ENV["POSTGRES_INSTALL_DIR"] = neon_postgres.opt_libexec
