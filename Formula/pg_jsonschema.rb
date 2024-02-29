@@ -1,8 +1,8 @@
 class PgJsonschema < Formula
   desc "PostgreSQL extension providing JSON Schema validation"
   homepage "https://github.com/supabase/pg_jsonschema"
-  url "https://github.com/supabase/pg_jsonschema/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "9118fc508a6e231e7a39acaa6f066fcd79af17a5db757b47d2eefbe14f7794f0"
+  url "https://github.com/supabase/pg_jsonschema/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "91fb3665c704752dab824657f76f697c9f727637726171cc9b3e9418c4446e2c"
   license "Apache-2.0"
 
   bottle do
@@ -20,8 +20,8 @@ class PgJsonschema < Formula
   uses_from_macos "llvm" => :build
 
   resource "pgrx" do
-    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.10.2.tar.gz"
-    sha256 "040fd7195fc350ec7c823e7c2dcafad2cf621c8696fd2ce0db7626d7fbd3d877"
+    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.11.2.tar.gz"
+    sha256 "2f818d18c86fa292428766c9af52313cd80030e041948d67716f7c4005e4ff38"
   end
 
   def neon_postgres
@@ -51,16 +51,13 @@ class PgJsonschema < Formula
     system "cargo", "pgrx", "init", *args
 
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "cargo", "pgrx", "package", "--profile", "release",
                                         "--pg-config", neon_postgres.pg_bin_for(v)/"pg_config",
                                         "--out-dir", "stage-#{v}"
 
       stage_dir = Pathname("stage-#{v}#{HOMEBREW_PREFIX}")
       mkdir_p lib/neon_postgres.name/v
-      mv stage_dir/"lib/neon-postgres/#{v}/pg_jsonschema.#{dlsuffix}", lib/neon_postgres.name/v
+      mv stage_dir/"lib/neon-postgres/#{v}/pg_jsonschema.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       from_ext_dir = stage_dir/"share/neon-postgres/#{v}/extension"
       to_ext_dir = share/neon_postgres.name/v/"extension"
