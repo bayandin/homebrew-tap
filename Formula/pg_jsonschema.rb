@@ -7,10 +7,9 @@ class PgJsonschema < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sonoma: "ed90faaafde8626a6fa0690830cb3e893e700cc19fd835be1673b404626d7947"
-    sha256 cellar: :any,                 ventura:      "dd689f6403f9e237f336cd9e4620c4ef255d6f708adae4cf71384d189200648f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "9e68291f4e5a501d4faa92dd6e2fa5063f806be7bbb89415d82ad87d2292ad7b"
+    sha256 cellar: :any,                 arm64_sonoma: "6c3e8e726ebaef51e1865b8915f335200414eee3194a60431cb51aba13dd3d07"
+    sha256 cellar: :any,                 ventura:      "8c399166efe9eb44623ad269206fb1b78cfd1f1e6a77d13012e8a4cac9a10092"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "65f308b29d73fbaf2c809b172a05286579e55c7861db4b0e603fba041d44ec6d"
   end
 
   depends_on "rust" => :build
