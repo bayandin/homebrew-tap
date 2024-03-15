@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-5037",
-    revision: "bb7949ba00b1cf359cae6e8fcf92282ea0c48816"
+    tag:      "release-5090",
+    revision: "c6ed86d3d0690b52e7014b6a696effa95714e8cb"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -23,16 +23,16 @@ class NeonStorage < Formula
   uses_from_macos "llvm" => :build
 
   on_linux do
-    # `attachment_service` got linked with system libpq on Linux.
+    # `storage_controller` got linked with system libpq on Linux.
     # Not sure how to prevent it from doing that, so just depend on it to make audit happy
     depends_on "libpq"
   end
 
   def binaries
     %w[
-      attachment_service compute_ctl neon_local pagebench
-      pagectl pageserver pg_sni_router proxy s3_scrubber
-      safekeeper storage_broker trace wal_craft
+      compute_ctl neon_local pagebench pagectl pageserver
+      pg_sni_router proxy s3_scrubber safekeeper
+      storage_broker storage_controller trace wal_craft
     ]
   end
 
