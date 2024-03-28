@@ -2,10 +2,15 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-5090",
-    revision: "c6ed86d3d0690b52e7014b6a696effa95714e8cb"
+    tag:      "release-5733",
+    revision: "371020fe6acf3ed6b00f2687d06b3b2e7a6c73a0"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
+
+  livecheck do
+    url :head
+    regex(/^release-(\d+)$/i)
+  end
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -31,8 +36,8 @@ class NeonStorage < Formula
   def binaries
     %w[
       compute_ctl neon_local pagebench pagectl pageserver
-      pg_sni_router proxy s3_scrubber safekeeper
-      storage_broker storage_controller trace wal_craft
+      safekeeper storage_broker storage_controller
+      storage_scrubber storcon_cli trace wal_craft
     ]
   end
 
@@ -47,20 +52,20 @@ class NeonStorage < Formula
     ENV["POSTGRES_DISTRIB_DIR"] = neon_postgres.opt_libexec
 
     ENV["PQ_LIB_DIR"] = neon_postgres.pg_lib_for("v16") if OS.mac?
-    mkdir_p libexec/"control_plane/attachment_service"
-    cp_r "control_plane/attachment_service/migrations", libexec/"control_plane/attachment_service/"
+    mkdir_p libexec/"storage_controller"
+    cp_r "storage_controller/migrations", libexec/"storage_controller/"
 
     system "cargo", "install", *std_cargo_args(root: libexec, path: "compute_tools")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane")
-    system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane/attachment_service")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane/storcon_cli")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "libs/postgres_ffi/wal_craft")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/ctl")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/pagebench")
-    system "cargo", "install", *std_cargo_args(root: libexec, path: "proxy")
-    system "cargo", "install", *std_cargo_args(root: libexec, path: "s3_scrubber")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "safekeeper")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_broker")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_controller")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_scrubber")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "trace")
   end
 
