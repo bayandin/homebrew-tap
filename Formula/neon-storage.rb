@@ -2,10 +2,15 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-5090",
-    revision: "c6ed86d3d0690b52e7014b6a696effa95714e8cb"
+    tag:      "release-5201",
+    revision: "4e5724d9c36eff3987022145620a252b88b72298"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
+
+  livecheck do
+    url :head
+    regex(/^release-(\d+)$/i)
+  end
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -31,8 +36,8 @@ class NeonStorage < Formula
   def binaries
     %w[
       compute_ctl neon_local pagebench pagectl pageserver
-      pg_sni_router proxy s3_scrubber safekeeper
-      storage_broker storage_controller trace wal_craft
+      s3_scrubber safekeeper storage_broker
+      storage_controller trace wal_craft
     ]
   end
 
