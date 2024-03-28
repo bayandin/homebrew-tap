@@ -2,10 +2,15 @@ class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-5090",
-    revision: "c6ed86d3d0690b52e7014b6a696effa95714e8cb"
+    tag:      "release-5733",
+    revision: "371020fe6acf3ed6b00f2687d06b3b2e7a6c73a0"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
+
+  livecheck do
+    url :head
+    regex(/^release-(\d+)$/i)
+  end
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -68,15 +73,18 @@ class NeonLocal < Formula
     inreplace neon_repo_dir/"config" do |s|
       s.gsub! "http_port = 7676", "http_port = #{sk_http_port}"
       s.gsub! "pg_port = 5454", "pg_port = #{sk_pg_port}"
-      s.gsub! "listen_http_addr = \"127.0.0.1:9898\"", "listen_http_addr = \"127.0.0.1:#{ps_http_port}\""
-      s.gsub! "listen_pg_addr = \"127.0.0.1:64000\"", "listen_pg_addr = \"127.0.0.1:#{ps_pg_port}\""
       s.gsub! "listen_addr = \"127.0.0.1:50051\"", "listen_addr = \"127.0.0.1:#{broker_port}\""
     end
 
     inreplace neon_repo_dir/"pageserver_1/pageserver.toml" do |s|
-      s.gsub! "listen_http_addr ='127.0.0.1:9898'", "listen_http_addr = \"127.0.0.1:#{ps_http_port}\""
-      s.gsub! "listen_pg_addr ='127.0.0.1:64000'", "listen_pg_addr = \"127.0.0.1:#{ps_pg_port}\""
+      s.gsub! "listen_http_addr = \"127.0.0.1:9898\"", "listen_http_addr = \"127.0.0.1:#{ps_http_port}\""
+      s.gsub! "listen_pg_addr = \"127.0.0.1:64000\"", "listen_pg_addr = \"127.0.0.1:#{ps_pg_port}\""
       s.gsub! "broker_endpoint ='http://127.0.0.1:50051/'", "broker_endpoint = \"http://127.0.0.1:#{broker_port}/\""
+    end
+
+    inreplace neon_repo_dir/"pageserver_1/metadata.json" do |s|
+      s.gsub! "\"port\":64000", "\"port\":#{ps_pg_port}"
+      s.gsub! "\"http_port\":9898", "\"http_port\":#{ps_http_port}"
     end
 
     system bin/"neon_local", "start"
