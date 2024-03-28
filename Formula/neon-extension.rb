@@ -2,10 +2,15 @@ class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-5090",
-    revision: "c6ed86d3d0690b52e7014b6a696effa95714e8cb"
+    tag:      "release-5733",
+    revision: "371020fe6acf3ed6b00f2687d06b3b2e7a6c73a0"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
+
+  livecheck do
+    url :head
+    regex(/^release-(\d+)$/i)
+  end
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
