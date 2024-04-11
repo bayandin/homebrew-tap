@@ -7,9 +7,9 @@ class PgGraphql < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_sonoma: "f6d9d6499e0883b0621ad67e5db9657590313b4330dc46560675fb607a498b37"
-    sha256 cellar: :any,                 ventura:      "ec052b7cbd7132509cd7ac2287cb5b8555b6d892b18aaab61e7f3dfd548dcfd4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "5da3b5db4010164babc4f255f4607483afaf027c2e2653a6ab8f1aa6bbdb9745"
+    sha256 cellar: :any,                 arm64_sonoma: "d8d417270d9d2e558d04251420ec2c3a68acce6dcc471fee74b2656a7ffa42ec"
+    sha256 cellar: :any,                 ventura:      "806d6a06f6c96cead735ca35d15a5953776b6ca54639b00704e2cd60d2310cf6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "9232989dc9d1d3c61ae9994d1e4c4294747f33035d06ff8e4328085ec7931932"
   end
 
   depends_on "rust" => :build
