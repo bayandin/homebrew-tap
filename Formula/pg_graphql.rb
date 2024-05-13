@@ -1,8 +1,8 @@
 class PgGraphql < Formula
   desc "GraphQL support for PostgreSQL"
   homepage "https://supabase.github.io/pg_graphql"
-  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.5.3.tar.gz"
-  sha256 "cd89b8a737aa533749f84fcf640baed84197f7146b3b07de22d703d58d4b466c"
+  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.5.4.tar.gz"
+  sha256 "a823655f6164c72c3b1ff38bd0b18dafe52732433d9557de58f75fc07f58e081"
   license "Apache-2.0"
 
   bottle do
