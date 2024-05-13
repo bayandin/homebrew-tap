@@ -1,10 +1,9 @@
 class Hypopg < Formula
   desc "Hypothetical Indexes for PostgreSQL"
   homepage "https://hypopg.readthedocs.io"
-  url "https://github.com/HypoPG/hypopg/archive/refs/tags/1.4.0.tar.gz"
-  sha256 "0821011743083226fc9b813c1f2ef5897a91901b57b6bea85a78e466187c6819"
+  url "https://github.com/HypoPG/hypopg/archive/refs/tags/1.4.1.tar.gz"
+  sha256 "9afe6357fd389d8d33fad81703038ce520b09275ec00153c6c89282bcdedd6bc"
   license "PostgreSQL"
-  revision 1
 
   livecheck do
     url :stable
@@ -30,15 +29,12 @@ class Hypopg < Formula
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       ENV["PG_CONFIG"] = neon_postgres.pg_bin_for(v)/"pg_config"
       system "make", "clean"
       system "make"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "hypopg.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "hypopg.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "hypopg.control", share/neon_postgres.name/v/"extension"
