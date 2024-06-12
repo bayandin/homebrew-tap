@@ -1,8 +1,8 @@
 class Pgvector < Formula
   desc "Open-source vector similarity search for Postgres"
   homepage "https://github.com/pgvector/pgvector"
-  url "https://github.com/pgvector/pgvector/archive/refs/tags/v0.7.1.tar.gz"
-  sha256 "fe6c8cb4e0cd1a8cb60f5badf9e1701e0fcabcfc260931c26d01e155c4dd21d1"
+  url "https://github.com/pgvector/pgvector/archive/refs/tags/v0.7.2.tar.gz"
+  sha256 "617fba855c9bcb41a2a9bc78a78567fd2e147c72afd5bf9d37b31b9591632b30"
   license "PostgreSQL"
 
   bottle do
@@ -66,113 +66,65 @@ class Pgvector < Formula
 end
 
 __END__
-From 5518a806a70e7f40d5054a762ccda7d5e6b0d31c Mon Sep 17 00:00:00 2001
-From: Heikki Linnakangas <heikki.linnakangas@iki.fi>
-Date: Tue, 30 Jan 2024 14:33:00 +0200
-Subject: [PATCH 1/2] Make v0.6.0 work with Neon
-
-Now that the WAL-logging happens as a separate step at the end of the
-build, we need a few neon-specific hints to make it work.
----
- src/hnswbuild.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
 diff --git a/src/hnswbuild.c b/src/hnswbuild.c
-index 680789ba..41c5b709 100644
+index dcfb2bd..d5189ee 100644
 --- a/src/hnswbuild.c
 +++ b/src/hnswbuild.c
-@@ -1089,13 +1089,41 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
+@@ -860,9 +860,17 @@ HnswParallelBuildMain(dsm_segment *seg, shm_toc *toc)
+
+ 	hnswarea = shm_toc_lookup(toc, PARALLEL_KEY_HNSW_AREA, false);
+
++#ifdef NEON_SMGR
++	smgr_start_unlogged_build(RelationGetSmgr(indexRel));
++#endif
++
+ 	/* Perform inserts */
+ 	HnswParallelScanAndInsert(heapRel, indexRel, hnswshared, hnswarea, false);
+
++#ifdef NEON_SMGR
++	smgr_finish_unlogged_build_phase_1(RelationGetSmgr(indexRel));
++#endif
++
+ 	/* Close relations within worker */
+ 	index_close(indexRel, indexLockmode);
+ 	table_close(heapRel, heapLockmode);
+@@ -1117,12 +1125,38 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
  	SeedRandom(42);
  #endif
 
 +#ifdef NEON_SMGR
-+	smgr_start_unlogged_build(index->rd_smgr);
++	smgr_start_unlogged_build(RelationGetSmgr(index));
 +#endif
 +
  	InitBuildState(buildstate, heap, index, indexInfo, forkNum);
 
  	BuildGraph(buildstate, forkNum);
 
+-	if (RelationNeedsWAL(index) || forkNum == INIT_FORKNUM)
 +#ifdef NEON_SMGR
-+	smgr_finish_unlogged_build_phase_1(index->rd_smgr);
++	smgr_finish_unlogged_build_phase_1(RelationGetSmgr(index));
 +#endif
 +
- 	if (RelationNeedsWAL(index))
-+	{
- 		log_newpage_range(index, forkNum, 0, RelationGetNumberOfBlocks(index), true);
-
++	if (RelationNeedsWAL(index) || forkNum == INIT_FORKNUM) {
+ 		log_newpage_range(index, forkNum, 0, RelationGetNumberOfBlocksInFork(index, forkNum), true);
 +#ifdef NEON_SMGR
 +		{
 +#if PG_VERSION_NUM >= 160000
-+			RelFileLocator rlocator = index->rd_smgr->smgr_rlocator.locator;
++			RelFileLocator rlocator = RelationGetSmgr(index)->smgr_rlocator.locator;
 +#else
-+			RelFileNode rlocator = index->rd_smgr->smgr_rnode.node;
++			RelFileNode rlocator = RelationGetSmgr(index)->smgr_rnode.node;
 +#endif
 +
 +			SetLastWrittenLSNForBlockRange(XactLastRecEnd, rlocator,
-+										   MAIN_FORKNUM, 0, RelationGetNumberOfBlocks(index));
++									   MAIN_FORKNUM, 0, RelationGetNumberOfBlocks(index));
 +			SetLastWrittenLSNForRelation(XactLastRecEnd, rlocator, MAIN_FORKNUM);
 +		}
 +#endif
 +	}
 +
 +#ifdef NEON_SMGR
-+	smgr_end_unlogged_build(index->rd_smgr);
++	smgr_end_unlogged_build(RelationGetSmgr(index));
 +#endif
-+
+
  	FreeBuildState(buildstate);
  }
-
-
-From de575210ae7321cc685165fdfbb5e7b44a707d5a Mon Sep 17 00:00:00 2001
-From: Heikki Linnakangas <heikki.linnakangas@iki.fi>
-Date: Thu, 1 Feb 2024 17:37:36 +0200
-Subject: [PATCH 2/2] Fix: rd_smgr might not be open yet.
-
----
- src/hnswbuild.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/src/hnswbuild.c b/src/hnswbuild.c
-index 41c5b709..bfa657a0 100644
---- a/src/hnswbuild.c
-+++ b/src/hnswbuild.c
-@@ -1090,7 +1090,7 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
- #endif
-
- #ifdef NEON_SMGR
--	smgr_start_unlogged_build(index->rd_smgr);
-+	smgr_start_unlogged_build(RelationGetSmgr(index));
- #endif
-
- 	InitBuildState(buildstate, heap, index, indexInfo, forkNum);
-@@ -1098,7 +1098,7 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
- 	BuildGraph(buildstate, forkNum);
-
- #ifdef NEON_SMGR
--	smgr_finish_unlogged_build_phase_1(index->rd_smgr);
-+	smgr_finish_unlogged_build_phase_1(RelationGetSmgr(index));
- #endif
-
- 	if (RelationNeedsWAL(index))
-@@ -1108,9 +1108,9 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
- #ifdef NEON_SMGR
- 		{
- #if PG_VERSION_NUM >= 160000
--			RelFileLocator rlocator = index->rd_smgr->smgr_rlocator.locator;
-+			RelFileLocator rlocator = RelationGetSmgr(index)->smgr_rlocator.locator;
- #else
--			RelFileNode rlocator = index->rd_smgr->smgr_rnode.node;
-+			RelFileNode rlocator = RelationGetSmgr(index)->smgr_rnode.node;
- #endif
-
- 			SetLastWrittenLSNForBlockRange(XactLastRecEnd, rlocator,
-@@ -1121,7 +1121,7 @@ BuildIndex(Relation heap, Relation index, IndexInfo *indexInfo,
- 	}
-
- #ifdef NEON_SMGR
--	smgr_end_unlogged_build(index->rd_smgr);
-+	smgr_end_unlogged_build(RelationGetSmgr(index));
- #endif
-
- 	FreeBuildState(buildstate);
