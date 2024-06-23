@@ -31,10 +31,11 @@ psql -p 55432 -h 127.0.0.1 -U cloud_admin postgres
 
 - [`neon-local`](Formula/neon-local.rb). Meta-formula that installs all the required dependencies and configures Neon to run locally.
   - [`neon-storage`](Formula/neon-storage.rb). Storage part of Neon. It contains Pageserver, Safekeeper, and other required binaries
-  - [`neon-postgres`](Formula/neon-postgres.rb). Compute part of Neon. The formula contains Postgres 14 and 15
+  - [`neon-postgres`](Formula/neon-postgres.rb). Compute part of Neon. The formula contains all supported by Neon Postgres versions
   - [`neon-extension`](Formula/neon-extension.rb). Postgres extensions that provide communication between Compute and Storage
 - [`neon-proxy`](Formula/neon-proxy.rb). Proxy for Neon
 - [`curl-without-ipv6`](Formula/curl-without-ipv6.rb). Curl formula without IPv6 support
+- [`postgresql@17`](Formaula/postgresql@17.rb). Pre-release version of Postgres 17
 - [`tpc-h`](Formula/tpc-h.rb). TPC-H benchmark with patches for MacOS and Postgres support
 
 # Extensions:
