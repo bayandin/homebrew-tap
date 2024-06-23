@@ -5,6 +5,7 @@ class NeonProxy < Formula
     tag:      "release-proxy-5751",
     revision: "5d62c67e75160e967f80fb0eefaca30501b17dbe"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   livecheck do
@@ -24,25 +25,63 @@ class NeonProxy < Formula
 
   uses_from_macos "llvm" => :build
 
-  def binaries
-    %w[
-      pg_sni_router
-      proxy
-    ]
-  end
-
   def install
     ENV["BUILD_TAG"] = build.stable? ? "release-proxy-#{version}" : "dev-#{Utils.git_short_head}"
     ENV["GIT_VERSION"] = Utils.git_head
 
-    system "cargo", "install", *std_cargo_args(root: libexec, path: "proxy")
-    bin.install_symlink libexec/"bin/pg_sni_router" => "neon-pg-sni-router"
-    bin.install_symlink libexec/"bin/proxy" => "neon-proxy"
+    args = std_cargo_args(root: libexec, path: "proxy") + %w[
+      --features testing
+    ]
+    system "cargo", "install", *args
+
+    (bin/"neon-proxy").write <<~EOS
+      #!/bin/bash
+
+      CERTS_DIR="#{var}/neon-proxy/certs"
+      for arg in "$@"; do
+        case "$arg" in
+          "--tls-cert" | "-c" | "--tls-key" | "-k" | "--certs-dir")
+            CERTS_DIR=""
+            ;;
+          *)
+            ;;
+        esac
+      done
+
+      if [ -n "${CERTS_DIR}" ]; then
+        exec "#{libexec}/bin/proxy" --certs-dir="${CERTS_DIR}" "$@"
+      else
+        exec "#{libexec}/bin/proxy" "$@"
+      fi
+    EOS
+  end
+
+  def post_install
+    certs_dir = var/"neon-proxy/certs"
+    return if (certs_dir/"tls.crt").exist? && (certs_dir/"/tls.key").exist?
+
+    mkdir_p certs_dir
+    args = [
+      "req",
+      "-new",
+      "-x509",
+      "-days",
+      "365",
+      "-nodes",
+      "-text",
+      "-out",
+      "#{certs_dir}/tls.crt",
+      "-keyout",
+      "#{certs_dir}/tls.key",
+      "-subj",
+      "/CN=*.localtest.me",
+      "-addext",
+      "subjectAltName = DNS:*.localtest.me",
+    ]
+    system Formula["openssl@3"].opt_bin/"openssl", *args
   end
 
   test do
-    binaries.each do |file|
-      system libexec/"bin"/file, "--version"
-    end
+    system bin/"neon-proxy", "--version"
   end
 end
