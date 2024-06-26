@@ -9,9 +9,9 @@ class S5cmd < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "7708aec8ff8297789970797998a29688dd491e73b7c1bd8c0e09ac4d6f6f00f1"
-    sha256 cellar: :any_skip_relocation, ventura:      "90c918923ab13f2b1116c7ba39f73887b2758103dde90a16fa51f4b382e618ec"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "2a13f226103c575ad091b97ee3f9d82dfeb56461d0385dd03b1f009dfd1f3ca6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma: "d1a30c68927bfd34edf279273e513ec8a94d9506762b415bfe271115c4e94c3f"
+    sha256 cellar: :any_skip_relocation, ventura:      "41395b6466580317f8b68169d608efe5c042254a6dc9bef4b4dcf924f0465ecb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "ecd599d1092cc080b545b855945764abcce79b207f27d94899171ba32747d646"
   end
 
   depends_on "go" => :build
