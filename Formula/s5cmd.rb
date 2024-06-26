@@ -4,6 +4,7 @@ class S5cmd < Formula
   url "https://github.com/peak/s5cmd/archive/refs/tags/v2.2.2.tar.gz"
   sha256 "6f96a09a13198b84a23b7b7ff0b93f947434a185093284e13d05c0e864907f48"
   license "MIT"
+  revision 1
   head "https://github.com/peak/s5cmd.git", branch: "master"
 
   bottle do
@@ -22,6 +23,7 @@ class S5cmd < Formula
       -X=github.com/peak/s5cmd/v2/version.GitCommit=#{tap.user}
     ]
     system "go", "build", *std_go_args(ldflags:)
+    generate_completions_from_executable(bin/"s5cmd", "--install-completion")
   end
 
   test do
