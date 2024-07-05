@@ -2,8 +2,8 @@ class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-5779",
-    revision: "939b5954a5090f948054b36c0e0d7b57700edab8"
+    tag:      "release-5837",
+    revision: "feeb2dc6fa568bc890c7d037cc481836b328ace8"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
