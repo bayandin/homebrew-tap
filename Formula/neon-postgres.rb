@@ -14,9 +14,9 @@ class NeonPostgres < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 arm64_sonoma: "e739028f31a37b3fa5ea9df1014486bc4cf99253c9cf25c8ee2f65955b81a063"
-    sha256 ventura:      "54bdf2779e1b1f3ab5f4fe511b45a079a2c349d125ac8527bd06804bc3e4ae2a"
-    sha256 x86_64_linux: "38f1984a4f0e60dca7d4cae831216d8347ac762e40112a36c8a08555c47c3c38"
+    sha256 arm64_sonoma: "7fe9a4d2f94d6c8e2fdfc29b4c31584ad7c9c480688493d4c7e106fc3b8fb654"
+    sha256 ventura:      "1d937b31a9bfccb2787e38e352131ee51f178ffb5178255891f0130ac30391f6"
+    sha256 x86_64_linux: "0e7d456725561dd8a36a04f890673406df8f32afe6b6d5b7b0dbc1ec5d642b54"
   end
 
   depends_on "docbook" => :build
