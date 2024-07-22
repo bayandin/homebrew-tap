@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-5889",
-    revision: "a5491463e1cc6faf439d04a697630b7f00741d48"
+    tag:      "release-5940",
+    revision: "d74fb7b879ffeaaf9c0a4da3633f75a2728b460b"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -37,7 +37,7 @@ class NeonStorage < Formula
     %w[
       compute_ctl neon_local pagebench pagectl pageserver
       safekeeper storage_broker storage_controller
-      storage_scrubber storcon_cli trace wal_craft
+      storage_scrubber storcon_cli wal_craft
     ]
   end
 
@@ -66,7 +66,6 @@ class NeonStorage < Formula
     system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_broker")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_controller")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "storage_scrubber")
-    system "cargo", "install", *std_cargo_args(root: libexec, path: "trace")
   end
 
   test do
