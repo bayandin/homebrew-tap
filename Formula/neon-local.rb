@@ -2,8 +2,8 @@ class NeonLocal < Formula
   desc "CLI for running Neon locally"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-6138",
-    revision: "daf8edd986e1949e5a640c531d31d32fdcc7787e"
+    tag:      "release-6210",
+    revision: "df0748289b13e932059429ab6336fe0ef288c694"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -58,6 +58,8 @@ class NeonLocal < Formula
   end
 
   test do
+    require "securerandom"
+
     neon_repo_dir = testpath/"neon"
     ENV["NEON_REPO_DIR"] = neon_repo_dir
     ENV.prepend_path "PATH", Formula["openssl@3"].opt_bin
