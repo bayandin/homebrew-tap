@@ -1,8 +1,8 @@
 class Timescaledb < Formula
   desc "Time-series SQL database optimized for fast ingest and complex queries"
   homepage "https://www.timescale.com/"
-  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.15.3.tar.gz"
-  sha256 "7b8a32d267f2183e012157ac928c7a835aaa29334a586b2ff9fdd291ac26998d"
+  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.16.0.tar.gz"
+  sha256 "c68c12c3d62f2e3c46d277d2558c20e31d3826b84e15a8594d1084874a1ea9a4"
   license "Apache-2.0"
 
   bottle do
@@ -33,7 +33,7 @@ class Timescaledb < Formula
     ]
 
     pg_versions.each do |v|
-      rm_rf "build"
+      rm_r "build" if Dir.exist?("build")
       system "./bootstrap", *common_args, "-DPG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       cd "build" do
         system "make"
