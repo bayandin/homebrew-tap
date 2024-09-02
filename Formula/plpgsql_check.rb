@@ -1,8 +1,8 @@
 class PlpgsqlCheck < Formula
   desc "Plpgsql linter"
   homepage "https://github.com/okbob/plpgsql_check"
-  url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.7.8.tar.gz"
-  sha256 "082ff90c5e4c24355dd6a35815c6f82bcb04456465ca656921df6b95b8b8b23a"
+  url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.7.9.tar.gz"
+  sha256 "997935c7856ad3871303f40850ea1c9d2c7ccc93635e45dd8a7ecbd1c2f46af6"
   license "PostgreSQL"
 
   bottle do
