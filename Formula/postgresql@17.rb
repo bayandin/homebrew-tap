@@ -4,9 +4,9 @@
 class PostgresqlAT17 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v17beta3/postgresql-17beta3.tar.bz2"
-  version "17-beta3"
-  sha256 "010dfaff9fcca6afa2fd576eea89cdabcefc262aa0ba89a6845eaab4d4b08f71"
+  url "https://ftp.postgresql.org/pub/source/v17rc1/postgresql-17rc1.tar.bz2"
+  version "17-rc1"
+  sha256 "cef689e2de8c3d605d8406c065573b8d70859fc6f2a8d720b0d98a6d62ef16e8"
   license "PostgreSQL"
 
   bottle do
