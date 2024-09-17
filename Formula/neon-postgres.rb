@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-6548",
-    revision: "b5d41eaff48a3d4435a126c8e3ca9910dd785d7b"
+    tag:      "release-6616",
+    revision: "6ceaca96e599f96d3f99bb3ad6bbfbc4189ba68c"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -62,7 +62,7 @@ class NeonPostgres < Formula
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
     deps = %w[openssl@3 readline]
-    pg_versions.each do |v|
+    pg_versions(with: "v17").each do |v|
       cd "vendor/postgres-#{v}" do
         args = %W[
           --prefix=#{libexec}/#{v}
@@ -107,7 +107,7 @@ class NeonPostgres < Formula
   end
 
   test do
-    pg_versions.each do |v|
+    pg_versions(with: "v17").each do |v|
       system "#{pg_bin_for(v)}/initdb", testpath/"test-#{v}"
 
       pg_config = pg_bin_for(v)/"pg_config"
