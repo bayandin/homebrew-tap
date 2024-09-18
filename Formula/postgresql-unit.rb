@@ -1,8 +1,8 @@
 class PostgresqlUnit < Formula
   desc "SI Units for PostgreSQL"
   homepage "https://github.com/df7cb/postgresql-unit"
-  url "https://github.com/df7cb/postgresql-unit/archive/refs/tags/7.8.tar.gz"
-  sha256 "4709d439fba972ec4a0581f6a1504d120a0891dff706cc2c3b82025b000bf89d"
+  url "https://github.com/df7cb/postgresql-unit/archive/refs/tags/7.9.tar.gz"
+  sha256 "e46de6245dcc8b2c2ecf29873dbd43b2b346773f31dd5ce4b8315895a052b456"
   license "GPL-3.0-or-later"
 
   bottle do
@@ -24,14 +24,11 @@ class PostgresqlUnit < Formula
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "make", "clean", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "unit.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "unit.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "unit.control", share/neon_postgres.name/v/"extension"
