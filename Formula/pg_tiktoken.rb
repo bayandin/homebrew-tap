@@ -14,7 +14,6 @@ class PgTiktoken < Formula
   end
 
   depends_on "rust" => :build
-  depends_on "rustfmt" => :build
   depends_on "bayandin/tap/neon-postgres"
 
   uses_from_macos "llvm" => :build
