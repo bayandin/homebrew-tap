@@ -1,3 +1,4 @@
 {
-    "postgresql@16": "homebrew/core"
+    "postgresql@16": "homebrew/core",
+    "postgresql@17": "homebrew/core"
 }
