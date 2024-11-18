@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-6616",
-    revision: "6ceaca96e599f96d3f99bb3ad6bbfbc4189ba68c"
+    tag:      "release-7145",
+    revision: "1388bbae73cc714ed65d82240f6e0935eef805c6"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -22,7 +22,7 @@ class NeonPostgres < Formula
   depends_on "docbook" => :build
   depends_on "docbook-xsl" => :build
   depends_on "pkg-config" => :build
-  depends_on "icu4c"
+  depends_on "icu4c@76"
   depends_on "lz4"
   depends_on "openssl@3"
   depends_on "readline"
