@@ -1,10 +1,9 @@
 class Rum < Formula
   desc "Inverted index with additional information in posting lists"
   homepage "https://github.com/postgrespro/rum"
-  url "https://github.com/postgrespro/rum/archive/refs/tags/1.3.13.tar.gz"
-  sha256 "6ab370532c965568df6210bd844ac6ba649f53055e48243525b0b7e5c4d69a7d"
+  url "https://github.com/postgrespro/rum/archive/refs/tags/1.3.14.tar.gz"
+  sha256 "ca3412672beaf3dbf705521875ffa9a1ddb3fc6573449f8bd4557c577a3a6015"
   license "PostgreSQL"
-  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -20,20 +19,17 @@ class Rum < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       ENV["USE_PGXS"] = "1"
       system "make", "clean", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "rum.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "rum.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "rum.control", share/neon_postgres.name/v/"extension"
