@@ -1,8 +1,8 @@
 class PlpgsqlCheck < Formula
   desc "Plpgsql linter"
   homepage "https://github.com/okbob/plpgsql_check"
-  url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.7.11.tar.gz"
-  sha256 "208933f8dbe8e0d2628eb3851e9f52e6892b8e280c63700c0f1ce7883625d172"
+  url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.7.12.tar.gz"
+  sha256 "70012568e86344c96c4353f64e29f3ea2a70601db3632d9c05ff0305df9e869d"
   license "PostgreSQL"
 
   bottle do
@@ -19,7 +19,7 @@ class PlpgsqlCheck < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
