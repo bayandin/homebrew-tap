@@ -1,8 +1,8 @@
 class PgGraphql < Formula
   desc "GraphQL support for PostgreSQL"
   homepage "https://supabase.github.io/pg_graphql"
-  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.5.7.tar.gz"
-  sha256 "2b3e567a5b31019cb97ae0e33263c1bcc28580be5a444ac4c8ece5c4be2aea41"
+  url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.5.9.tar.gz"
+  sha256 "cf768385a41278be1333472204fc0328118644ae443182cf52f7b9b23277e497"
   license "Apache-2.0"
 
   bottle do
@@ -18,11 +18,11 @@ class PgGraphql < Formula
   uses_from_macos "llvm" => :build
 
   resource "pgrx" do
-    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.11.2.tar.gz"
-    sha256 "2f818d18c86fa292428766c9af52313cd80030e041948d67716f7c4005e4ff38"
+    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.12.6.tar.gz"
+    sha256 "ba04f50b3f9f160a1c70861ad2358b3eb6485dbc13608eef09b4094460487a57"
   end
 
-  def neon_postgres
+  def neon_postgres(with: "v17")
     Formula["bayandin/tap/neon-postgres"]
   end
 
