@@ -1,8 +1,8 @@
 class PgJsonschema < Formula
   desc "PostgreSQL extension providing JSON Schema validation"
   homepage "https://github.com/supabase/pg_jsonschema"
-  url "https://github.com/supabase/pg_jsonschema/archive/refs/tags/v0.3.1.tar.gz"
-  sha256 "61df3db1ed83cf24f6aa39c826f8818bfa4f0bd33b587fd6b2b1747985642297"
+  url "https://github.com/supabase/pg_jsonschema/archive/refs/tags/v0.3.3.tar.gz"
+  sha256 "40c2cffab4187e0233cb8c3bde013be92218c282f95f4469c5282f6b30d64eac"
   license "Apache-2.0"
 
   bottle do
@@ -18,15 +18,15 @@ class PgJsonschema < Formula
   uses_from_macos "llvm" => :build
 
   resource "pgrx" do
-    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.11.2.tar.gz"
-    sha256 "2f818d18c86fa292428766c9af52313cd80030e041948d67716f7c4005e4ff38"
+    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.12.6.tar.gz"
+    sha256 "ba04f50b3f9f160a1c70861ad2358b3eb6485dbc13608eef09b4094460487a57"
   end
 
   def neon_postgres
     Formula["bayandin/tap/neon-postgres"]
   end
 
-  def pg_versions
+  def pg_versions(with: "v17")
     neon_postgres.pg_versions
   end
 
