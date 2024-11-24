@@ -5,6 +5,7 @@ class NeonExtension < Formula
     tag:      "release-7145",
     revision: "1388bbae73cc714ed65d82240f6e0935eef805c6"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   livecheck do
@@ -32,7 +33,7 @@ class NeonExtension < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
