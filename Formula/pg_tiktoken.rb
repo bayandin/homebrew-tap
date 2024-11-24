@@ -8,9 +8,10 @@ class PgTiktoken < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_ventura: "69aaa6728aee67a92f3545c74aedcb1e98094944b5942b89fba621c7eb151178"
-    sha256 cellar: :any,                 ventura:       "61e8612ae023570de74631621839abf5e4e3e78a453abacedc2122d52f73bbb0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6cd8393f82b6f1f3bb2c29d8e8c09cf42c65359aca63d3cb920c11ee477043a3"
+    sha256 cellar: :any,                 arm64_sequoia: "29cb483f54c360698a03a2ef2c96e6874c4c9a2310b6dd2b0e1cf681e8a1b364"
+    sha256 cellar: :any,                 arm64_sonoma:  "e8b1b47703e57b958f779c85d1431bb4cf10073c9c1d23c276318e6f91cc9460"
+    sha256 cellar: :any,                 ventura:       "980a84f5d2d9c81a0f90ae6904c70b40a6f0c36e74e073b2af639161ac7de291"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "426c6d5cbdcf3573206d3a51365f8e306ccac97575f31677d029a325a1820a09"
   end
 
   depends_on "rust" => :build
