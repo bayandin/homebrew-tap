@@ -1,10 +1,10 @@
 class PgTiktoken < Formula
   desc "Tiktoken tokenizer for PostgreSQL"
   homepage "https://github.com/kelvich/pg_tiktoken"
-  url "https://github.com/kelvich/pg_tiktoken/archive/26806147b17b60763039c6a6878884c41a262318.tar.gz"
+  url "https://github.com/kelvich/pg_tiktoken/archive/9118dd4549b7d8c0bbc98e04322499f7bf2fa6f7.tar.gz"
   version "0.0.1"
-  sha256 "e64e55aaa38c259512d3e27c572da22c4637418cf124caba904cd50944e5004e"
-  revision 1
+  sha256 "a5bc447e7920ee149d3c064b8b9f0086c0e83939499753178f7d35788416f628"
+  revision 2
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -19,8 +19,8 @@ class PgTiktoken < Formula
   uses_from_macos "llvm" => :build
 
   resource "pgrx" do
-    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.10.2.tar.gz"
-    sha256 "040fd7195fc350ec7c823e7c2dcafad2cf621c8696fd2ce0db7626d7fbd3d877"
+    url "https://github.com/pgcentralfoundation/pgrx/archive/refs/tags/v0.12.6.tar.gz"
+    sha256 "ba04f50b3f9f160a1c70861ad2358b3eb6485dbc13608eef09b4094460487a57"
   end
 
   def neon_postgres
@@ -28,7 +28,7 @@ class PgTiktoken < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
@@ -47,16 +47,13 @@ class PgTiktoken < Formula
     system "cargo", "pgrx", "init", *args
 
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "cargo", "pgrx", "package", "--profile", "release",
                                          "--pg-config", neon_postgres.pg_bin_for(v)/"pg_config",
                                          "--out-dir", "stage-#{v}"
 
       stage_dir = Pathname("stage-#{v}#{HOMEBREW_PREFIX}")
       mkdir_p lib/neon_postgres.name/v
-      mv stage_dir/"lib/neon-postgres/#{v}/pg_tiktoken.#{dlsuffix}", lib/neon_postgres.name/v
+      mv stage_dir/"lib/neon-postgres/#{v}/pg_tiktoken.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       from_ext_dir = stage_dir/"share/neon-postgres/#{v}/extension"
       to_ext_dir = share/neon_postgres.name/v/"extension"
