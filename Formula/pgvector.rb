@@ -7,9 +7,10 @@ class Pgvector < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "cc89ca58eac428b3bd23317c5d123079b4bdf900dbbc47eee43915bcdb20f9fb"
-    sha256 cellar: :any_skip_relocation, ventura:      "97366238bbf3bf9d9c70b5931426546a2ffa7f3c2d491bd91f8eed429be7e061"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "275b087b85a0b3f137fd5385b07116804620bafc2c3e976ae2effb0375e2c3f0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "852db9a4876ba9e5ade4097b9ce160c4fe5f5366fba4ad6a152fc12f14a390db"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b7908bd7771ff20d4aa19d956fedb509d31b75947825e4f8d9d2aa7a406fc97b"
+    sha256 cellar: :any_skip_relocation, ventura:       "2da759509274c937a4ea6a3ddc5a9951c9bc6103c511ee7e97126a31ecc402d7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "023be84dc48ff22c770868d98028dbc98d60258b696dff5824ec70c742dfb30b"
   end
 
   depends_on "bayandin/tap/neon-postgres"
