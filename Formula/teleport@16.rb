@@ -1,8 +1,8 @@
 class TeleportAT16 < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://goteleport.com/"
-  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.10.tar.gz"
-  sha256 "9abb2dafc1a72a1dc53d1fbd2b9a3a7b8065ad5554778e867913f13ce77625a0"
+  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.11.tar.gz"
+  sha256 "bfb03624a001bc586925ea526398b5daefb6e42dfba9a8abcc79a7cb1a021da0"
   license all_of: ["AGPL-3.0-or-later", "Apache-2.0"]
   head "https://github.com/gravitational/teleport.git", branch: "master"
 
@@ -47,6 +47,12 @@ class TeleportAT16 < Formula
   conflicts_with "etsh", because: "both install `tsh` binaries"
   conflicts_with "tctl", because: "both install `tctl` binaries"
   # rubocop:enable FormulaAudit/Conflicts, Style/DisableCopsWithinSourceCodeDirective
+
+  # disable `wasm-opt` for ironrdp pkg release build, upstream pr ref, https://github.com/gravitational/teleport/pull/50178
+  patch do
+    url "https://github.com/gravitational/teleport/commit/994890fb05360b166afd981312345a4cf01bc422.patch?full_index=1"
+    sha256 "9d60180ff69a8a8985773d3b2a107ab910b22040e4cbf6afed11bd2b64fc6996"
+  end
 
   def install
     ENV.prepend_path "PATH", Formula["rustup"].bin
