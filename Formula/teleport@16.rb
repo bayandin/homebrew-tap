@@ -19,10 +19,10 @@ class TeleportAT16 < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_sequoia: "4d17d1826ac31ca15ca63edc5388656d0febe2cd90669f69bdeb01b9ab3289e3"
-    sha256 cellar: :any,                 arm64_sonoma:  "c77889acb724cf60a8d895091bc582d301dbaef0ce0eff719cf8d5976c25d6ef"
-    sha256 cellar: :any,                 ventura:       "a5c1d3315b2d6fd65cf47096c39815820e4ed31a162ff234e85f129c1cbe771d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "423f67a9f7f6803742557effd2212c638cdf637f45b351e8a896281fb7d10b89"
+    sha256 cellar: :any,                 arm64_sequoia: "800a1de11a8f18cc906613b10225a61ec4bc844bf3ad83ca33113990b92c4334"
+    sha256 cellar: :any,                 arm64_sonoma:  "b4cf5d3bbe4df32ad11aa3b8e547e6dad8d3c7eebd6d01b450a13a188274fc1a"
+    sha256 cellar: :any,                 ventura:       "9efacfbc27a06c596f633d1c9a9c2206c894d4b85788cf0a61902c4a7d00874b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ab8ceb86ff680c9786772612a615ecaf32c6bc6965ab8f2be3707baf330807e9"
   end
 
   # Use "go" again after https://github.com/gravitational/teleport/commit/e4010172501f0ed18bb260655c83606dfa872fbd
