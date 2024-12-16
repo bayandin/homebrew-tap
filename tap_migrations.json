@@ -1,4 +1,5 @@
 {
     "postgresql@16": "homebrew/core",
-    "postgresql@17": "homebrew/core"
+    "postgresql@17": "homebrew/core",
+    "s5cmd": "homebrew/core"
 }

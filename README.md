@@ -35,7 +35,6 @@ psql -p 55432 -h 127.0.0.1 -U cloud_admin postgres
   - [`neon-extension`](Formula/neon-extension.rb). Postgres extensions that provide communication between Compute and Storage
 - [`neon-proxy`](Formula/neon-proxy.rb). Proxy for Neon
 - [`curl-without-ipv6`](Formula/curl-without-ipv6.rb). Curl formula without IPv6 support
-- [`s5cmd`](Formula/s5cmd.rb). Parallel S3 and local filesystem execution tool
 - [`tpc-h`](Formula/tpc-h.rb). TPC-H benchmark with patches for MacOS and Postgres support
 
 # Extensions:
