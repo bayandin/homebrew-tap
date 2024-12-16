@@ -1,10 +1,9 @@
 class S5cmd < Formula
   desc "Parallel S3 and local filesystem execution tool"
   homepage "https://github.com/peak/s5cmd/"
-  url "https://github.com/peak/s5cmd/archive/refs/tags/v2.2.2.tar.gz"
-  sha256 "6f96a09a13198b84a23b7b7ff0b93f947434a185093284e13d05c0e864907f48"
+  url "https://github.com/peak/s5cmd/archive/refs/tags/v2.3.0.tar.gz"
+  sha256 "6910763a7320010aa75fe9ef26f622e440c2bd6de41afdbfd64e78c158ca19d4"
   license "MIT"
-  revision 1
   head "https://github.com/peak/s5cmd.git", branch: "master"
 
   bottle do
