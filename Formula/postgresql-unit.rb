@@ -1,8 +1,8 @@
 class PostgresqlUnit < Formula
   desc "SI Units for PostgreSQL"
   homepage "https://github.com/df7cb/postgresql-unit"
-  url "https://github.com/df7cb/postgresql-unit/archive/refs/tags/7.9.tar.gz"
-  sha256 "e46de6245dcc8b2c2ecf29873dbd43b2b346773f31dd5ce4b8315895a052b456"
+  url "https://github.com/df7cb/postgresql-unit/archive/refs/tags/7.10.tar.gz"
+  sha256 "95bd28deba70bd7d5a28ddceb28fa8dcabbb0821851e8ef62207459d780a2d70"
   license "GPL-3.0-or-later"
 
   bottle do
@@ -19,7 +19,7 @@ class PostgresqlUnit < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
