@@ -27,8 +27,8 @@ class PgJsonschema < Formula
     Formula["bayandin/tap/neon-postgres"]
   end
 
-  def pg_versions(with: "v17")
-    neon_postgres.pg_versions
+  def pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
