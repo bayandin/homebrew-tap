@@ -23,12 +23,12 @@ class PgGraphql < Formula
     sha256 "ba04f50b3f9f160a1c70861ad2358b3eb6485dbc13608eef09b4094460487a57"
   end
 
-  def neon_postgres(with: "v17")
+  def neon_postgres
     Formula["bayandin/tap/neon-postgres"]
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
