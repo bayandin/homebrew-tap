@@ -7,10 +7,10 @@ class PlpgsqlCheck < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9a9e18e4f18c1ade854c57c5832aea48ba496e701c390d09c086b954d44cbe7f"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "dbdbb92b04183ef74a94910d1a37990a91fd4bdf51841338cd8770858983d561"
-    sha256 cellar: :any_skip_relocation, ventura:       "ee1b93cada022ec59b3a63580c94f6e00620c87f6b8c2d725f55a761e32c6321"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "003e7c081a9ba2b035950dcff39d64f7128fcfd5238d94b406598ceda459969b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ac44e1b1218daac64a7aab90070e904641daaff9d4d427f1ba9fe49c109a2f99"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "db46649cb549d9444096ebb9a93253081dfd91349e12d177c94734f9633adf53"
+    sha256 cellar: :any_skip_relocation, ventura:       "f172ac748e5b16f74c6d4e0be101cc12068c17a4ddd5147312cc6a75c8f576f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1006a62fd8b647e2a5392d7924c795e644479413e631c6b42dc1cc06af69bc87"
   end
 
   depends_on "bayandin/tap/neon-postgres"
