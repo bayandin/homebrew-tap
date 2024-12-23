@@ -8,9 +8,10 @@ class PgHashids < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e64f08496229e20a1628a4a4cc5e8b5d0438820b6fd0f0e3dedcec82a5eedc3a"
-    sha256 cellar: :any_skip_relocation, ventura:       "c417dd5d763fb05d3c77d6afb17f866858a28b6e2c9fd3c734f20a279224a329"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5c0f54cef24350ef41cbdbdeb6e6f7676cc7f7434d0f8fbe786f158c60c6215a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c7e2b0e267f4e17df4ae1ea76326906b817d77a973956fd555b6850794b085c6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "48ed778ab2f0fdf0a05c6d835f352e1d40bd7b9cf67ebe3330137cbff32056e6"
+    sha256 cellar: :any_skip_relocation, ventura:       "248f0744fe2a51fa507bbc400e80f7eeca50de438e549f7b8214cb715111c74d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "71b207ce4f25724a6e56039e41ba7736181c17d4b6750239145217be1d1cfa73"
   end
 
   depends_on "bayandin/tap/neon-postgres"
