@@ -4,6 +4,7 @@ class Hypopg < Formula
   url "https://github.com/HypoPG/hypopg/archive/refs/tags/1.4.1.tar.gz"
   sha256 "9afe6357fd389d8d33fad81703038ce520b09275ec00153c6c89282bcdedd6bc"
   license "PostgreSQL"
+  revision 1
 
   livecheck do
     url :stable
@@ -24,7 +25,7 @@ class Hypopg < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
