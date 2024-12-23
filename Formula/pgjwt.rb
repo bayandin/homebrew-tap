@@ -9,9 +9,10 @@ class Pgjwt < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "73cff990d70323b12e517f7dfddbf94a71f8ce53dff9c47e3b4612c57c773d2c"
-    sha256 cellar: :any_skip_relocation, ventura:       "4dbe393d28121919a9e41e79bc7424e9523a7c723fd71bb369c1a2b7a4aa8a9f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ac30d9966b941fb9c5a022fb6a1b8e742d46369b25655e0aad5af9a3667e59e3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f84530e08ff4dc52db7a68b856244c5d0b16ea606968a0c813f4c41d70f4a620"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b7a20370d3ba0fca073ecfce74308abf9e4a905baa314fa2d1b98d8fb878b52a"
+    sha256 cellar: :any_skip_relocation, ventura:       "2fd2a2d82e5d04b1a1364feb94ee9b9ee41102f4f0db9526c1067970492630e8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7c5d0ccdfec3f632ed92f0234741a92bf7a4019965b63cc6901561b390ccba66"
   end
 
   depends_on "bayandin/tap/neon-postgres"
