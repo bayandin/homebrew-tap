@@ -8,9 +8,10 @@ class Prefix < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "4075d7e33fb452d6d77484b8818e86379c1dbb26c12eb57fa2416e7c197db98c"
-    sha256 cellar: :any_skip_relocation, ventura:       "37e2aa50772470cb7666fbd77db74efb51d8b40c29728e22db704a5802234745"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0ef1fbb10f28248d6b4d535633bd1c69a853bfb7cf34b64391f34569022c868a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "21c708008a7f019d845db8d54e49e8a40ff2268a42357bdeed309f5a674a352e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3f1cae543ca16806aa913dc2efc8eaa8aa682fe075032a7239585fc78ff6b553"
+    sha256 cellar: :any_skip_relocation, ventura:       "3d4c083811658a292653327dc80ee65955d3e25f86481f74446263b5a732f609"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "087ff1731bd7a8bb081dc84c23c991970cfcfa2c233c925b5d765c724d84d853"
   end
 
   depends_on "bayandin/tap/neon-postgres"
