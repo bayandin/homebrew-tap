@@ -14,6 +14,13 @@ class H3Pg < Formula
   depends_on "cmake" => :build
   depends_on "bayandin/tap/neon-postgres"
 
+  # Fix build on MacOS
+  # Remove in the next release
+  patch do
+    url "https://github.com/zachasme/h3-pg/commit/c6daef9b2dcf431a020bc780f9ba942dd1d825d5.patch?full_index=1"
+    sha256 "668ff699da4f8bd0662a47242e516ea73a9a55b2c97e82f77d8d8939ac2766e7"
+  end
+
   def neon_postgres
     Formula["bayandin/tap/neon-postgres"]
   end
