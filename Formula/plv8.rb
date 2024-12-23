@@ -9,9 +9,10 @@ class Plv8 < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "9f5827788c75de26af8d80b720829294aaf7a46df50bdac0e34ed979580acda5"
-    sha256 cellar: :any_skip_relocation, ventura:      "73793d0f3c647801cb60be118bb191460e76c322650191d96eff9bc70bda9d8d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "865356980e494878c5e4214e0e089ce1e4bcfdfc83547f4f725bd65abef0b2e3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d555347e003c2cfd6b7981845f434222d1d1a81ea6e01e6b4e4157ace154362e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0277867f1a814a11270c138293431dbb82a6bdae079e8a55bdc9ac42f7bfdbcc"
+    sha256 cellar: :any_skip_relocation, ventura:       "ab9e1895cd8a70ad12fd64d0385b91a7888d456df6f5bdec0c007e7cbd7a22a7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1863f71217a4757cfa8609055026934d9b2ef29bb06148e52364ce6f1e36d1a9"
   end
 
   depends_on "cmake" => :build
