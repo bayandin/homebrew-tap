@@ -40,7 +40,7 @@ class NeonPostgres < Formula
   end
 
   def pg_versions(with: nil, without: nil)
-    versions = Set.new(%w[v14 v15 v16])
+    versions = Set.new(%w[v14 v15 v16 v17])
     versions.merge(Array(with))
     versions.subtract(Array(without))
     versions.to_a.sort
@@ -63,7 +63,7 @@ class NeonPostgres < Formula
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
     deps = %w[openssl@3 readline]
-    pg_versions(with: "v17").each do |v|
+    pg_versions.each do |v|
       cd "vendor/postgres-#{v}" do
         args = %W[
           --prefix=#{libexec}/#{v}
@@ -108,7 +108,7 @@ class NeonPostgres < Formula
   end
 
   test do
-    pg_versions(with: "v17").each do |v|
+    pg_versions.each do |v|
       system "#{pg_bin_for(v)}/initdb", testpath/"test-#{v}"
 
       pg_config = pg_bin_for(v)/"pg_config"

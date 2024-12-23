@@ -29,7 +29,7 @@ class H3Pg < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions(with: "v17")
+    neon_postgres.pg_versions
   end
 
   def install
