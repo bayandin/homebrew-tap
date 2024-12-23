@@ -5,7 +5,7 @@ class Pgjwt < Formula
   version "2.0"
   sha256 "dae8ed99eebb7593b43013f6532d772b12dfecd55548d2673f2dfd0163f6d2b9"
   license "MIT"
-  revision 1
+  revision 2
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -21,7 +21,7 @@ class Pgjwt < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
