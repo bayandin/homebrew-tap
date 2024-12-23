@@ -4,6 +4,7 @@ class Prefix < Formula
   url "https://github.com/dimitri/prefix/archive/refs/tags/v1.2.10.tar.gz"
   sha256 "4342f251432a5f6fb05b8597139d3ccde8dcf87e8ca1498e7ee931ca057a8575"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -24,19 +25,16 @@ class Prefix < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       system "make", "clean", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
       system "make", "PG_CONFIG=#{neon_postgres.pg_bin_for(v)}/pg_config"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "prefix.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "prefix.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "prefix.control", share/neon_postgres.name/v/"extension"
