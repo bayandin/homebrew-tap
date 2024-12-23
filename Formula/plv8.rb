@@ -5,6 +5,7 @@ class Plv8 < Formula
     tag:      "v3.2.3",
     revision: "eef5d3a3b9235f947eb729b3d12a2dd148f6eba9"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -21,7 +22,7 @@ class Plv8 < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
