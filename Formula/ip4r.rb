@@ -8,9 +8,10 @@ class Ip4r < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "1fa2970c8694e6402247ccf8e5857126a4b994126db1d65248173f42b311ac6a"
-    sha256 cellar: :any_skip_relocation, ventura:       "45532761686d8b3aebbc3828ab662f813286cb7330e2a5ef23bb0f74798bec6e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c85e4192af4adf06e0620649839c94177f00b3826a15270fc25f8c7bb1d7abb4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7e39f0fde0364dfef3f1e739b242c68ac80ffe143e2b82e945cf7deb3e13b012"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8ca7da922e3c415b34227be0c6da74c7a49a7b02cee8ff90246aa74cd825580d"
+    sha256 cellar: :any_skip_relocation, ventura:       "ff19e1a8a6fd92bf17a23f012f418f9446d1fc037ba66582f63907ad9810d3d0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9d8bdd37b49f47b83610ce60bcf57046119a9f5fe38d5985c92fde8222dee873"
   end
 
   depends_on "bayandin/tap/neon-postgres"
