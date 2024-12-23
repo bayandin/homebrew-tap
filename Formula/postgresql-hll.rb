@@ -4,7 +4,7 @@ class PostgresqlHll < Formula
   url "https://github.com/citusdata/postgresql-hll/archive/refs/tags/v2.18.tar.gz"
   sha256 "e2f55a6f4c4ab95ee4f1b4a2b73280258c5136b161fe9d059559556079694f0e"
   license "Apache-2.0"
-  revision 1
+  revision 2
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
@@ -20,20 +20,17 @@ class PostgresqlHll < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions(with: "v17")
   end
 
   def install
     pg_versions.each do |v|
-      # Ref https://github.com/postgres/postgres/commit/b55f62abb2c2e07dfae99e19a2b3d7ca9e58dc1a
-      dlsuffix = (OS.linux? || "v14 v15".include?(v)) ? "so" : "dylib"
-
       ENV["PG_CONFIG"] = neon_postgres.pg_bin_for(v)/"pg_config"
       system "make", "clean"
       system "make"
 
       mkdir_p lib/neon_postgres.name/v
-      mv "hll.#{dlsuffix}", lib/neon_postgres.name/v
+      mv "hll.#{neon_postgres.dlsuffix(v)}", lib/neon_postgres.name/v
 
       mkdir_p share/neon_postgres.name/v/"extension"
       cp "hll.control", share/neon_postgres.name/v/"extension"
