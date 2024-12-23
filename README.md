@@ -35,6 +35,7 @@ psql -p 55432 -h 127.0.0.1 -U cloud_admin postgres
   - [`neon-extension`](Formula/neon-extension.rb). Postgres extensions that provide communication between Compute and Storage
 - [`neon-proxy`](Formula/neon-proxy.rb). Proxy for Neon
 - [`curl-without-ipv6`](Formula/curl-without-ipv6.rb). Curl formula without IPv6 support
+- [`teleport@16`](Formula/teleport@16.rb) — Modern SSH server for teams managing distributed infrastructure. Version 16
 - [`tpc-h`](Formula/tpc-h.rb). TPC-H benchmark with patches for MacOS and Postgres support
 
 # Extensions:
@@ -44,7 +45,6 @@ In addition, you can try Neon locally with extensions from this tap. To install 
 - [`hypopg`](Formula/hypopg.rb) — Hypothetical Indexes for PostgreSQL
 - [`ip4r`](Formula/ip4r.rb) — IPv4/v6 and IPv4/v6 range index type for PostgreSQL
 - [`pg_cron`](Formula/pg_cron.rb) — Run periodic jobs in PostgreSQL
-- [`pg_embedding`](Formula/pg_embedding.rb) — HNSW algorithm for vector similarity search in PostgreSQL
 - [`pg_graphql`](Formula/pg_graphql.rb) — GraphQL support for PostgreSQL
 - [`pg_hashids`](Formula/pg_hashids.rb) — Short unique id generator for PostgreSQL, using hashids
 - [`pg_jsonschema`](Formula/pg_jsonschema.rb) — PostgreSQL extension providing JSON Schema validation
@@ -58,7 +58,6 @@ In addition, you can try Neon locally with extensions from this tap. To install 
 - [`postgresql-unit`](Formula/postgresql-unit.rb) — SI Units for PostgreSQL
 - [`prefix`](Formula/prefix.rb) — Prefix Range module for PostgreSQL
 - [`rum`](Formula/rum.rb) — Inverted index with additional information in posting lists
-- [`teleport@16`](Formula/teleport@16.rb) — Modern SSH server for teams managing distributed infrastructure. Version 16
 - [`timescaledb`](Formula/timescaledb.rb) — Open-source time-series SQL database optimized for fast ingest and complex queries
 
 _Note: extensions provided by the tap could be different from what's [available in Neon Cloud offering](https://neon.tech/docs/extensions/pg-extensions)._
