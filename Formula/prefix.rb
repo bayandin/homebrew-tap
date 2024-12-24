@@ -6,6 +6,11 @@ class Prefix < Formula
   license "PostgreSQL"
   revision 1
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "21c708008a7f019d845db8d54e49e8a40ff2268a42357bdeed309f5a674a352e"
