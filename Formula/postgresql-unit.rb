@@ -5,6 +5,11 @@ class PostgresqlUnit < Formula
   sha256 "95bd28deba70bd7d5a28ddceb28fa8dcabbb0821851e8ef62207459d780a2d70"
   license "GPL-3.0-or-later"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "3bdd402ec5d72ab1457469118bf850695265582e27a3f6975022279bfb327cdb"
