@@ -2,8 +2,8 @@ class NeonPostgres < Formula
   desc "Neon's fork of PostgreSQL"
   homepage "https://github.com/neondatabase/postgres"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-7381",
-    revision: "671889b0e959a6520337ba3c56d645d6ff2ec1c1"
+    tag:      "release-compute-7611",
+    revision: "3cd601b37091a1a9e38d69c4b46dd9d457fdec38"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -33,6 +33,7 @@ class NeonPostgres < Formula
   uses_from_macos "flex" => :build
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
+  uses_from_macos "zlib"
 
   on_linux do
     depends_on "libseccomp"
@@ -61,6 +62,7 @@ class NeonPostgres < Formula
 
   def install
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
+    ENV.append_to_cflags "-DUSE_PREFETCH" if OS.mac?
 
     deps = %w[openssl@3 readline]
     pg_versions.each do |v|
