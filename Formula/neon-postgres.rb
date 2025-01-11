@@ -9,7 +9,7 @@ class NeonPostgres < Formula
 
   livecheck do
     url :head
-    regex(/^release-(\d+)$/i)
+    regex(/^release-compute-(\d+)$/i)
   end
 
   bottle do
