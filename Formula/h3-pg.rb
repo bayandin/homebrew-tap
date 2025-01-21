@@ -1,8 +1,8 @@
 class H3Pg < Formula
   desc "PostgreSQL bindings for H3, a hierarchical hexagonal geospatial indexing system"
   homepage "https://github.com/zachasme/h3-pg"
-  url "https://github.com/zachasme/h3-pg/archive/refs/tags/v4.1.4.tar.gz"
-  sha256 "a7b5de78ec3874b284e7ef4ee7639c0c40e3ab49fa6eba0c53caef90a913994a"
+  url "https://github.com/zachasme/h3-pg/archive/refs/tags/v4.2.0.tar.gz"
+  sha256 "b3c2f9f80aae37bdb6fb16b4a4d9d64a8ae78135fc13a32d132c5751db3d1898"
   license "Apache-2.0"
 
   bottle do
@@ -16,13 +16,6 @@ class H3Pg < Formula
 
   depends_on "cmake" => :build
   depends_on "bayandin/tap/neon-postgres"
-
-  # Fix build on MacOS
-  # Remove in the next release
-  patch do
-    url "https://github.com/zachasme/h3-pg/commit/c6daef9b2dcf431a020bc780f9ba942dd1d825d5.patch?full_index=1"
-    sha256 "668ff699da4f8bd0662a47242e516ea73a9a55b2c97e82f77d8d8939ac2766e7"
-  end
 
   def neon_postgres
     Formula["bayandin/tap/neon-postgres"]
