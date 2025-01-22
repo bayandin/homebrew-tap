@@ -1,8 +1,8 @@
 class TeleportAT16 < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://goteleport.com/"
-  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.13.tar.gz"
-  sha256 "a9f10b0c29ed2d70c4d0f0c84458831ad13398caf91d8cdb70646cdec520b2a7"
+  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.14.tar.gz"
+  sha256 "e48f988f9c866a58fcb167dab3bc4a513a0beea8320b77f089a3f4cffaab8b58"
   license all_of: ["AGPL-3.0-or-later", "Apache-2.0"]
   head "https://github.com/gravitational/teleport.git", branch: "master"
 
@@ -46,6 +46,7 @@ class TeleportAT16 < Formula
   # rubocop:disable FormulaAudit/Conflicts, Style/DisableCopsWithinSourceCodeDirective
   conflicts_with "etsh", because: "both install `tsh` binaries"
   conflicts_with "tctl", because: "both install `tctl` binaries"
+  conflicts_with "teleport", because: "both install the same binaries"
   # rubocop:enable FormulaAudit/Conflicts, Style/DisableCopsWithinSourceCodeDirective
 
   # disable `wasm-opt` for ironrdp pkg release build, upstream pr ref, https://github.com/gravitational/teleport/pull/50178
