@@ -7,10 +7,10 @@ class Timescaledb < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2a409b4f4cb8c75df72ee9e8ea68ce560f1e8e7c11890d5fe75fe1ef63e14fee"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "79094f02323956c5efd70bcc5203c8b7681905e1f3755808671f1b96e1896c10"
-    sha256 cellar: :any_skip_relocation, ventura:       "19fa43f4f1dc153d4ea0c229ccc3d896532a5e0a982727d8e8e432f8207d563c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d36cb032b9f8635f4711608f104b352dd369e374653a4000f8152d29c4d5964d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "58e2acf139104e15c9aff20641c901dedf161bfee64c1b5365cce912065468ac"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "aa92e0af5600fb977d0929d49ea972555767d860c036920993e282b727e98217"
+    sha256 cellar: :any_skip_relocation, ventura:       "dce6f5864a54401f32ed38790704ff721479065efac2dabb49b68bb607fc55f0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a97e880117ecaddc4e91d56abe6ce4aefe4b512cd3dd38899c1ffc710a999106"
   end
 
   depends_on "cmake" => :build
