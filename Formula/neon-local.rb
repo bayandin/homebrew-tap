@@ -14,10 +14,10 @@ class NeonLocal < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "39954764c5f52ff77a0038457c8ba7afd0f9736102255fbf35e725912fe48cff"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9125d7128d34ea9707d38a5d46abc28b40398f98a26cbf2783349d6a4b219230"
-    sha256 cellar: :any_skip_relocation, ventura:       "f9d4041c87b4550cc853e16c588c29899f0216565bd3a51436577cd138cfe0fd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2c7de0a66889cb7ef143ebabc97910b8b9b440b848e60f0c7c4f6cd4435ec989"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "afaa5a3078835c6dc000ce10eb3809072487e14eaab45481f2fabc4f75a642ec"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "17d04a56505267310b5145ae0e5d511d62dbbeb8b41fa227d2fc5880cd55ad91"
+    sha256 cellar: :any_skip_relocation, ventura:       "d3d7077eb494fd8e18ea3ae3db6e2bd7b1ee45afaaa4f5c8daf2b19774a3d3d0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e602bc2a0dbfd2b42a314dc5f4a91fe2f95079703a07d999bb0ce8a692e163e0"
   end
 
   depends_on "bayandin/tap/neon-extension"
