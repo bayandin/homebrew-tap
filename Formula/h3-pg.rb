@@ -1,8 +1,8 @@
 class H3Pg < Formula
   desc "PostgreSQL bindings for H3, a hierarchical hexagonal geospatial indexing system"
   homepage "https://github.com/zachasme/h3-pg"
-  url "https://github.com/zachasme/h3-pg/archive/refs/tags/v4.2.0.tar.gz"
-  sha256 "b3c2f9f80aae37bdb6fb16b4a4d9d64a8ae78135fc13a32d132c5751db3d1898"
+  url "https://github.com/zachasme/h3-pg/archive/refs/tags/v4.2.1.tar.gz"
+  sha256 "f8cd84fb5eefcbbd37eca997f917ce3d5834703b75dca5284dab42291a7e6ad9"
   license "Apache-2.0"
 
   bottle do
