@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-7614",
-    revision: "e5b3eb1e64c63abaf4fb0d53a370befb8562a3cd"
+    tag:      "release-7765",
+    revision: "a54853abd52570dea2eaebeee3b50bc04b569330"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -28,12 +28,6 @@ class NeonStorage < Formula
 
   uses_from_macos "llvm" => :build
 
-  on_linux do
-    # `storage_controller` got linked with system libpq on Linux.
-    # Not sure how to prevent it from doing that, so just depend on it to make audit happy
-    depends_on "libpq"
-  end
-
   def binaries
     %w[
       compute_ctl neon_local pagebench pagectl pageserver
@@ -52,7 +46,6 @@ class NeonStorage < Formula
     ENV["POSTGRES_INSTALL_DIR"] = neon_postgres.opt_libexec
     ENV["POSTGRES_DISTRIB_DIR"] = neon_postgres.opt_libexec
 
-    ENV["PQ_LIB_DIR"] = neon_postgres.pg_lib_for("v16") if OS.mac?
     mkdir_p libexec/"storage_controller"
     cp_r "storage_controller/migrations", libexec/"storage_controller/"
 
@@ -70,11 +63,12 @@ class NeonStorage < Formula
   end
 
   test do
-    (binaries - %w[pagebench wal_craft]).each do |file|
+    (binaries - %w[compute_ctl pagebench wal_craft]).each do |file|
       system libexec/"bin"/file, "--version"
     end
 
-    system libexec/"bin/wal_craft", "--help"
+    system libexec/"bin/compute_ctl", "--help"
     system libexec/"bin/pagebench", "--help"
+    system libexec/"bin/wal_craft", "--help"
   end
 end
