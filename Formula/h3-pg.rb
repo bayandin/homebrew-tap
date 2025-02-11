@@ -7,10 +7,10 @@ class H3Pg < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_sequoia: "4390b207e8388b0a987148b0f8a0da72ddf9712797e67ce1ecde76980abff73c"
-    sha256 cellar: :any,                 arm64_sonoma:  "641cdc1b1fc258ed1e7b33963d27480025c2a8623f9e1bd35f0ef73fdbe93d0c"
-    sha256 cellar: :any,                 ventura:       "130b263744bd6faa17a2585d9597c24b1397da92fa0547cd28948d4fe608327c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8efb02bbd876b9a1603741f120c8a24868991277b7cc3040218632ef72ec1a45"
+    sha256 cellar: :any,                 arm64_sequoia: "f21edffd622f7816518e110c66bf64ea8f785897a8a03dfe575afe0ce4ff3080"
+    sha256 cellar: :any,                 arm64_sonoma:  "06f8de694db9f5404874c1501d650bc7d9c3d0e45ac45c5166361901f8681b60"
+    sha256 cellar: :any,                 ventura:       "c6d644df18aab4eef06686456c1d3afcb4dce6dcc082b7fb58377409dfe84383"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3189a8aeac82053b4e2fbf45ecee1dea3eaa799e929a220e8b1138f9ef9294a4"
   end
 
   depends_on "cmake" => :build
