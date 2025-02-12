@@ -14,10 +14,10 @@ class NeonStorage < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_sequoia: "f3d6c934d2b4ee3d39e29d810f087d1572323d9b09802204d7f78b0a345e0f54"
-    sha256 cellar: :any,                 arm64_sonoma:  "da512218e11fad74a0a2e284f295dc42b6a8e09996c35f94143f8af38042bf71"
-    sha256 cellar: :any,                 ventura:       "958413618ce03d36ecd7599bcde700356cc1e26c88471aab721910a53cc4a570"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "18cc804298a8ce6be922a1b4251ce7e848cd4701c4b8a9d82010a13977d23fa5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b79900367c61294a62ec919aa6b77196170f5be5a5727420e65c6db192a8bfee"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5733d7ae2a8b39bcd9f82dcbeae0eaa7b0455fe1076118c4ebe039afa18a1656"
+    sha256 cellar: :any_skip_relocation, ventura:       "8a670e7a73cdb976408e33eb52367382a6c83efa69ad19f020346af4145e8264"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0a3073c87b6cff18324640fea30f50b334be005a13ec34782b0b371fc7a54315"
   end
 
   depends_on "pkg-config" => :build
