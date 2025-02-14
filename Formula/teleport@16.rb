@@ -1,8 +1,8 @@
 class TeleportAT16 < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://goteleport.com/"
-  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.14.tar.gz"
-  sha256 "e48f988f9c866a58fcb167dab3bc4a513a0beea8320b77f089a3f4cffaab8b58"
+  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.16.tar.gz"
+  sha256 "7b61ce5295a2eb9b254a8c326e41746f98670b1684392370fe5de46b38aec0a0"
   license all_of: ["AGPL-3.0-or-later", "Apache-2.0"]
   head "https://github.com/gravitational/teleport.git", branch: "master"
 
@@ -25,9 +25,7 @@ class TeleportAT16 < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "e0d71c459a7490000a4a54fb0f2762f6193b44aad7dfa0c82c69054343cd6a11"
   end
 
-  # Use "go" again after https://github.com/gravitational/teleport/commit/e4010172501f0ed18bb260655c83606dfa872fbd
-  # is released, likely in a version 17.x.x (or later?):
-  depends_on "go@1.22" => :build
+  depends_on "go" => :build
   depends_on "pkg-config" => :build
   depends_on "pnpm" => :build
   depends_on "rust" => :build
