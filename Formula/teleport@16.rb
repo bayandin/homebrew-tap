@@ -19,10 +19,10 @@ class TeleportAT16 < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_sequoia: "80b2a7b3f30a74428eca8c525eb3bfc37f2fc1f118f9a17cd18e6f2ad4dca71a"
-    sha256 cellar: :any,                 arm64_sonoma:  "4bda254c1613b8a06b3529cffc2ff57b30012211748ba4184fd8fd151029c6a2"
-    sha256 cellar: :any,                 ventura:       "4d6c819b30ee10d4599367714f6950cfbd94a074058b7c56ab2bc129cdfc17b9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e0d71c459a7490000a4a54fb0f2762f6193b44aad7dfa0c82c69054343cd6a11"
+    sha256 cellar: :any,                 arm64_sequoia: "62cf61b86d116c9dd06ba6f968c8dee047e61879ad4b318519f1876b39e8d9de"
+    sha256 cellar: :any,                 arm64_sonoma:  "20027250ff500efbceee7b5b2526a179bfb0766e593efe6ea0d7b7dc75f5c847"
+    sha256 cellar: :any,                 ventura:       "2afd9198c298631b2e3982369a73aae3ea5a9020e23bfe6c54b8fa0a0c015651"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e688c6637cdebc014db7a43e38a3c527fa581f9dc443794ac6fa2e0fa87cb276"
   end
 
   depends_on "go" => :build
