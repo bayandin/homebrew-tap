@@ -2,8 +2,8 @@ class NeonProxy < Formula
   desc "Proxy for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-proxy-7510",
-    revision: "3e624581cdc90e51d323154f7acec404eec972c1"
+    tag:      "release-proxy-7586",
+    revision: "23352dc2e9a2c1de705625f1b02f2f02a6dbf67f"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
