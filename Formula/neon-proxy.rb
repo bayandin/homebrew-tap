@@ -14,10 +14,10 @@ class NeonProxy < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "87c85c39aca999eb48b4dcfbdd55c09db650c6c6364edc64905bd017504b4317"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "131e396ed65ec709dd617cd60c9fcae37fabe01698a0e8f7b215e6435d623538"
-    sha256 cellar: :any_skip_relocation, ventura:       "e25b5d1d393cb4c778a598ceab0e6c3bba2c127c85c1ec5f7af572962a9bf7f3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "735246490aae185e8514abb7199061cb2d082f746a187a3a009f50afefa08cfa"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7247d7751eac859f390e5571a84c4802cf36a6988d2baf8a1a3eb93aecc730c5"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a94a9b59224cb6108a2e8632fc1436e841ae3fe769dd04d0c5b82fc50ca448e6"
+    sha256 cellar: :any_skip_relocation, ventura:       "0292f7b84d1d0a7421b0e24078ddea825637da6a2ae913aed14764b7ff261018"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "52a2528e7fe28e8c38d3ee0ac1ec9d4224ff2ee9146ecb60eb6adaf3291149d8"
   end
 
   depends_on "rust" => :build
