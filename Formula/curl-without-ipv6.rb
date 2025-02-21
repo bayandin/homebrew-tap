@@ -92,8 +92,8 @@ class CurlWithoutIpv6 < Formula
     filename.verify_checksum stable.checksum
 
     system libexec/"mk-ca-bundle.pl", "test.pem"
-    assert_predicate testpath/"test.pem", :exist?
-    assert_predicate testpath/"certdata.txt", :exist?
+    assert_path_exists testpath/"test.pem"
+    assert_path_exists testpath/"certdata.txt"
 
     refute_includes shell_output("#{bin}/curl -V"), "IPv6"
   end
