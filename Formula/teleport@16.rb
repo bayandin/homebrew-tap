@@ -1,8 +1,8 @@
 class TeleportAT16 < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://goteleport.com/"
-  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.18.tar.gz"
-  sha256 "d59875fc8f2eb0022e8ea037b9cb361b027e2f4eb681a948c3c3e572470ec6dd"
+  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.5.0.tar.gz"
+  sha256 "a62ece6c13d636a4a17db0e822062b7345c7398bbbd12a4cda395160b64faf48"
   license all_of: ["AGPL-3.0-or-later", "Apache-2.0"]
   head "https://github.com/gravitational/teleport.git", branch: "master"
 
@@ -27,7 +27,7 @@ class TeleportAT16 < Formula
 
   depends_on "go" => :build
   depends_on "pkg-config" => :build
-  depends_on "pnpm@9" => :build
+  depends_on "pnpm" => :build
   depends_on "rust" => :build
   # TODO: try to remove rustup dependancy, see https://github.com/Homebrew/homebrew-core/pull/191633#discussion_r1774378671
   depends_on "rustup" => :build
@@ -54,6 +54,11 @@ class TeleportAT16 < Formula
   end
 
   def install
+    # Prevent pnpm from downloading another copy due to `packageManager` feature
+    (buildpath/"pnpm-workspace.yaml").append_lines <<~YAML
+      managePackageManagerVersions: false
+    YAML
+
     ENV.prepend_path "PATH", Formula["rustup"].bin
     system "rustup", "default", "stable"
     system "rustup", "set", "profile", "minimal"
