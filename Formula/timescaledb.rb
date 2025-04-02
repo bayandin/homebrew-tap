@@ -1,8 +1,8 @@
 class Timescaledb < Formula
   desc "Time-series SQL database optimized for fast ingest and complex queries"
   homepage "https://www.timescale.com/"
-  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.19.0.tar.gz"
-  sha256 "783bfcb6513523827127304d3e51c27e95644f59446bef80d4a96d5de58ae5ee"
+  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.19.1.tar.gz"
+  sha256 "dc4966263b5354f21cd5c36a75d872923f18c9ab148e36d68c61c6fc6203801e"
   license "Apache-2.0"
 
   bottle do
