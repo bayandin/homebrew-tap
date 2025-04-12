@@ -3,6 +3,7 @@ class TpcH < Formula
   homepage "https://www.tpc.org/tpch/"
   url "https://github.com/bayandin/tpc-h/archive/refs/tags/v3.0.1.tar.gz"
   sha256 "fd55f79713de8cf4074a998f4ecbc1012cee529dc192ca529489830d3c951859"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
