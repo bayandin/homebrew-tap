@@ -2,8 +2,8 @@ class NeonStorage < Formula
   desc "Storage components for Neon"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-8427",
-    revision: "20723ea0394f7413e3051849124224e5943c7b7b"
+    tag:      "release-8467",
+    revision: "eb70d7a55c7d2562b7d3bcbcd4dc0ac501ec9cff"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -29,7 +29,7 @@ class NeonStorage < Formula
 
   def binaries
     %w[
-      compute_ctl neon_local object_storage pagectl
+      compute_ctl endpoint_storage neon_local pagectl
       pageserver safekeeper storage_broker storage_controller
       storage_scrubber storcon_cli wal_craft
     ]
@@ -52,7 +52,7 @@ class NeonStorage < Formula
     system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "control_plane/storcon_cli")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "libs/postgres_ffi/wal_craft")
-    system "cargo", "install", *std_cargo_args(root: libexec, path: "object_storage")
+    system "cargo", "install", *std_cargo_args(root: libexec, path: "endpoint_storage")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/ctl")
     system "cargo", "install", *std_cargo_args(root: libexec, path: "pageserver/pagebench")
@@ -63,7 +63,7 @@ class NeonStorage < Formula
   end
 
   test do
-    (binaries - %w[compute_ctl object_storage pagebench wal_craft]).each do |file|
+    (binaries - %w[compute_ctl endpoint_storage pagebench wal_craft]).each do |file|
       system libexec/"bin"/file, "--version"
     end
 
