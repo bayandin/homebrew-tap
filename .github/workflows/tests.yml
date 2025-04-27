@@ -25,7 +25,7 @@ jobs:
         with:
           path: ${{ steps.set-up-homebrew.outputs.gems-path }}
           key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
-          restore-keys: ${{ runner.os }}-rubygems-
+          restore-keys: ${{ matrix.os }}-rubygems-
 
       - run: brew test-bot --only-cleanup-before
 
