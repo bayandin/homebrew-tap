@@ -1,8 +1,8 @@
 class Timescaledb < Formula
   desc "Time-series SQL database optimized for fast ingest and complex queries"
   homepage "https://www.timescale.com/"
-  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.19.3.tar.gz"
-  sha256 "ef2c9019f3e292f77e274a95386e550cb8c358ec0e053f6b7097565f61381e01"
+  url "https://github.com/timescale/timescaledb/archive/refs/tags/2.20.0.tar.gz"
+  sha256 "b6ac4c29ef29e93249fcc25bf193dab2637422797360b12e00fd73067138a953"
   license "Apache-2.0"
 
   bottle do
@@ -20,7 +20,7 @@ class Timescaledb < Formula
   end
 
   def pg_versions
-    neon_postgres.pg_versions
+    neon_postgres.pg_versions without: "v14"
   end
 
   def install
