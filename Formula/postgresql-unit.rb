@@ -4,6 +4,7 @@ class PostgresqlUnit < Formula
   url "https://github.com/df7cb/postgresql-unit/archive/refs/tags/7.10.tar.gz"
   sha256 "95bd28deba70bd7d5a28ddceb28fa8dcabbb0821851e8ef62207459d780a2d70"
   license "GPL-3.0-or-later"
+  revision 1
 
   livecheck do
     url :stable
