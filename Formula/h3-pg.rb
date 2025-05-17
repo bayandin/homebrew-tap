@@ -4,6 +4,7 @@ class H3Pg < Formula
   url "https://github.com/zachasme/h3-pg/archive/refs/tags/v4.2.3.tar.gz"
   sha256 "3c420e8ee3324bfeac600cadf3c7a7bc26c3b95e123d48e40459d34dcd714654"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
