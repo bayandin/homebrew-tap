@@ -5,6 +5,7 @@ class NeonStorage < Formula
     tag:      "release-8516",
     revision: "946a0667ebd3af34ebd0483c4169b3290c8f715d"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   livecheck do
