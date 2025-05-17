@@ -4,6 +4,7 @@ class Rum < Formula
   url "https://github.com/postgrespro/rum/archive/refs/tags/1.3.14.tar.gz"
   sha256 "ca3412672beaf3dbf705521875ffa9a1ddb3fc6573449f8bd4557c577a3a6015"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"

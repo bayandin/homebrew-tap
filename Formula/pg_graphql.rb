@@ -4,6 +4,7 @@ class PgGraphql < Formula
   url "https://github.com/supabase/pg_graphql/archive/refs/tags/v1.5.11.tar.gz"
   sha256 "b93d195e3306bfcfbad51b7bc24d2873e7f42223448044cb6b0aecdb9e60de45"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"

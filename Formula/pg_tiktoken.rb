@@ -4,7 +4,7 @@ class PgTiktoken < Formula
   url "https://github.com/kelvich/pg_tiktoken/archive/9118dd4549b7d8c0bbc98e04322499f7bf2fa6f7.tar.gz"
   version "0.0.1"
   sha256 "a5bc447e7920ee149d3c064b8b9f0086c0e83939499753178f7d35788416f628"
-  revision 2
+  revision 3
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"

@@ -4,7 +4,7 @@ class Ip4r < Formula
   url "https://github.com/RhodiumToad/ip4r/archive/refs/tags/2.4.2.tar.gz"
   sha256 "0f7b1f159974f49a47842a8ab6751aecca1ed1142b6d5e38d81b064b2ead1b4b"
   license "PostgreSQL"
-  revision 2
+  revision 3
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"

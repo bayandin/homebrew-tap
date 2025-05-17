@@ -4,7 +4,7 @@ class Prefix < Formula
   url "https://github.com/dimitri/prefix/archive/refs/tags/v1.2.10.tar.gz"
   sha256 "4342f251432a5f6fb05b8597139d3ccde8dcf87e8ca1498e7ee931ca057a8575"
   license "PostgreSQL"
-  revision 1
+  revision 2
 
   livecheck do
     url :stable
