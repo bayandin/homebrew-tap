@@ -14,10 +14,9 @@ class CurlWithoutIpv6 < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any,                 arm64_sequoia: "b6195671b9abc232e15d0a8f34662e50a99825e879a1638505290e252d19e943"
-    sha256 cellar: :any,                 arm64_sonoma:  "12da27066dd0430665a18469e5cf4a718a7bf889170abf61f241bfdec3ba5e8f"
-    sha256 cellar: :any,                 ventura:       "831d704917444735f164718dd583db84e1e5a023831948767465e3b1468fe597"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "40359a3f1e2640136815857c0b424541bd39c3075f8e77cb1b9c413075460246"
+    sha256 cellar: :any,                 arm64_sequoia: "17ae728afb9c1257ce3ea9d813752f69234478935b5415151dba74c210236ab3"
+    sha256 cellar: :any,                 ventura:       "e424dba24bba18697312ed9b34c3226020fb0f7bc9b277a3f08cfc7920b7449c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "80bb1e94af45da709c2e3388f0eabd646d9207cd5c74cfed35c48a4fad04fc87"
   end
 
   head do
