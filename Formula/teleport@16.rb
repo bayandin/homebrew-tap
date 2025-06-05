@@ -4,6 +4,7 @@ class TeleportAT16 < Formula
   url "https://github.com/gravitational/teleport/archive/refs/tags/v16.5.10.tar.gz"
   sha256 "23815a22cc2b495c36cd8bc9eae0d438e9e306ca364a1f97898bb800e3858585"
   license all_of: ["AGPL-3.0-or-later", "Apache-2.0"]
+  revision 1
   head "https://github.com/gravitational/teleport.git", branch: "master"
 
   # As of writing, two major versions of `teleport` are being maintained
