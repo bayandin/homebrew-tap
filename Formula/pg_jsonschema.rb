@@ -4,6 +4,7 @@ class PgJsonschema < Formula
   url "https://github.com/supabase/pg_jsonschema/archive/refs/tags/v0.3.3.tar.gz"
   sha256 "40c2cffab4187e0233cb8c3bde013be92218c282f95f4469c5282f6b30d64eac"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"

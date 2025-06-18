@@ -5,6 +5,7 @@ class NeonPostgres < Formula
     tag:      "release-compute-7761",
     revision: "156c18e1ad42aa58cd835b2fef6c3c759b1eb413"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
   livecheck do
