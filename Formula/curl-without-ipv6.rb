@@ -6,6 +6,7 @@ class CurlWithoutIpv6 < Formula
   url "https://curl.se/download/curl-8.14.1.tar.bz2"
   sha256 "5760ed3c1a6aac68793fc502114f35c3e088e8cd5c084c2d044abdf646ee48fb"
   license "curl"
+  revision 1
 
   livecheck do
     url "https://curl.se/download/"

@@ -4,7 +4,7 @@ class PgHashids < Formula
   url "https://github.com/iCyberon/pg_hashids/archive/refs/tags/v1.2.1.tar.gz"
   sha256 "74576b992d9277c92196dd8d816baa2cc2d8046fe102f3dcd7f3c3febed6822a"
   license "MIT"
-  revision 2
+  revision 3
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"

@@ -4,7 +4,7 @@ class Pgtap < Formula
   url "https://github.com/theory/pgtap/archive/refs/tags/v1.3.3.tar.gz"
   sha256 "325ea79d0d2515bce96bce43f6823dcd3effbd6c54cb2a4d6c2384fffa3a14c7"
   license "PostgreSQL"
-  revision 1
+  revision 2
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
