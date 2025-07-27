@@ -2,10 +2,9 @@ class Plv8 < Formula
   desc "V8 Engine Javascript Procedural Language add-on for PostgreSQL"
   homepage "https://plv8.github.io/"
   url "https://github.com/plv8/plv8.git",
-    tag:      "v3.2.3",
-    revision: "eef5d3a3b9235f947eb729b3d12a2dd148f6eba9"
+    tag:      "v3.2.4",
+    revision: "cafc37f7aee850de5478773a4e56f7fadfad8e00"
   license "PostgreSQL"
-  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
