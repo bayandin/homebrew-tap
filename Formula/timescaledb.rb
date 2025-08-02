@@ -4,6 +4,7 @@ class Timescaledb < Formula
   url "https://github.com/timescale/timescaledb/archive/refs/tags/2.21.1.tar.gz"
   sha256 "4cce2b28956f13950a168b1eeb8f99828fdc45f998c2645962a9aac4c185077b"
   license "Apache-2.0"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"

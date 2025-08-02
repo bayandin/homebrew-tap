@@ -4,6 +4,7 @@ class PlpgsqlCheck < Formula
   url "https://github.com/okbob/plpgsql_check/archive/refs/tags/v2.8.2.tar.gz"
   sha256 "66cb840ab8b18d06077827e316800a2d92ed483f9bbacbfad6d4a2e8e26f4048"
   license "PostgreSQL"
+  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
