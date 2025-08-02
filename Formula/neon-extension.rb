@@ -65,7 +65,7 @@ class NeonExtension < Formula
       system pg_ctl, "initdb", "-D", testpath/"test-#{v}"
       (testpath/"test-#{v}/postgresql.conf").write <<~EOS, mode: "a+"
 
-        #{"v14 v15".include?(v) ? "shared_preload_libraries = 'neon'": ""}
+        #{"shared_preload_libraries = 'neon'" if "v14 v15".include?(v)}
         port = #{port}
       EOS
       system pg_ctl, "start", "-D", testpath/"test-#{v}", "-l", testpath/"log-#{v}"
