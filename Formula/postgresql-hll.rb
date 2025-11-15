@@ -1,10 +1,9 @@
 class PostgresqlHll < Formula
   desc "PostgreSQL extension adding HyperLogLog data structures as a native data type"
   homepage "https://github.com/citusdata/postgresql-hll"
-  url "https://github.com/citusdata/postgresql-hll/archive/refs/tags/v2.18.tar.gz"
-  sha256 "e2f55a6f4c4ab95ee4f1b4a2b73280258c5136b161fe9d059559556079694f0e"
+  url "https://github.com/citusdata/postgresql-hll/archive/refs/tags/v2.19.tar.gz"
+  sha256 "d63d56522145f2d737e0d056c9cfdfe3e8b61008c12ca4c45bde7d9b942f9c46"
   license "Apache-2.0"
-  revision 2
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
