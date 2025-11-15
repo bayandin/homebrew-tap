@@ -1,8 +1,8 @@
 class Rum < Formula
   desc "Inverted index with additional information in posting lists"
   homepage "https://github.com/postgrespro/rum"
-  url "https://github.com/postgrespro/rum/archive/refs/tags/1.3.14.tar.gz"
-  sha256 "ca3412672beaf3dbf705521875ffa9a1ddb3fc6573449f8bd4557c577a3a6015"
+  url "https://github.com/postgrespro/rum/archive/refs/tags/1.3.15.tar.gz"
+  sha256 "e79b3a67df9821bc0d86fd463dac7249f1729d9dd04f77db767e2815098247b8"
   license "PostgreSQL"
 
   bottle do
