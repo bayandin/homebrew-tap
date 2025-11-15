@@ -1,10 +1,9 @@
 class Pgtap < Formula
   desc "PostgreSQL Unit Testing Suite"
   homepage "https://pgtap.org"
-  url "https://github.com/theory/pgtap/archive/refs/tags/v1.3.3.tar.gz"
-  sha256 "325ea79d0d2515bce96bce43f6823dcd3effbd6c54cb2a4d6c2384fffa3a14c7"
+  url "https://github.com/theory/pgtap/archive/refs/tags/v1.3.4.tar.gz"
+  sha256 "d2c951afb296a001d21785611a8e966e3f8fa3f5bfbd929396a5130c0152f314"
   license "PostgreSQL"
-  revision 1
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
