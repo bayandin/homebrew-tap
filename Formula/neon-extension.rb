@@ -2,8 +2,8 @@ class NeonExtension < Formula
   desc "Extension enabling storage manager API and Pageserver communication"
   homepage "https://github.com/neondatabase/neon"
   url "https://github.com/neondatabase/neon.git",
-    tag:      "release-compute-7761",
-    revision: "156c18e1ad42aa58cd835b2fef6c3c759b1eb413"
+    tag:      "release-compute-9073",
+    revision: "98882548d80fdc2e5e28f2ea3c693307587b057e"
   license "Apache-2.0"
   head "https://github.com/neondatabase/neon.git", branch: "main"
 
@@ -20,6 +20,7 @@ class NeonExtension < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "9cec6e323d094293b7942b6889e55a4727e45e531c657d85a1a6054fb3da06f2"
   end
 
+  depends_on "rust" => :build
   depends_on "bayandin/tap/neon-postgres"
   uses_from_macos "curl"
 
