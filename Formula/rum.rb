@@ -7,10 +7,8 @@ class Rum < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/bayandin/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c4ef78671841588b470c8ec5729564d8947951ebb5d34f075cadb1f8584f3420"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d7f1da4d79f9d8e35719f4509be09c5db2f3f25089dd421a71dcd4c5003babdc"
-    sha256 cellar: :any_skip_relocation, ventura:       "f660ffd1d1963265337b2b82eba054bb3cea53afaa93294ca9fb0d006189780c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "21487ad1d6390ee00b5854a94f5f6db62be6ac36f265a5bfd2b477d9be528248"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "53774197572412303dddd89ac8974ac00167a19781d9ce2795eb1539e1b49f5f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "40b2406a8f126c57d72d7ad3cebd19561b676eaef28faca278a55bce3ecc4587"
   end
 
   depends_on "bayandin/tap/neon-postgres"
